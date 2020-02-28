@@ -1,0 +1,18 @@
+name: animator
+description: Create animations with less code in a chaining manner.
+version: 0.0.1
+author: Sharp3dges
+homepage: https://github.com/sharp3dges/animator
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
