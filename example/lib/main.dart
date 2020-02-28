@@ -1,4 +1,4 @@
-import 'package:animator/animator.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter/material.dart';
 
 enum AnimationType {

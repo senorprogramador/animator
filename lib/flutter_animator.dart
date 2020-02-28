@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-library animator;
+library flutter_animator;
 
 export 'utils/animator.dart';
 export 'utils/perspective.dart';
