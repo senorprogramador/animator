@@ -48,8 +48,7 @@ class Flash extends StatefulWidget {
   final Duration duration;
   final AnimationStatusListener animationStatusListener;
 
-  Flash({
-    @required this.child,
+  Flash({Key key, @required this.child,
     this.offset = Duration.zero,
     this.duration = const Duration(seconds: 1),
     this.animationStatusListener,
