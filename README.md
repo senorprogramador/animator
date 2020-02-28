@@ -104,3 +104,7 @@ Animator.sync(this)
   .add(...)//<- Add multiple animations from 1 to 2 seconds
   .generate();
 ```
+
+## Available default animations:
+### Attention seekers
+![Attention Seekers](https://cloud.githubusercontent.com/assets/378279/10590307/ef73b1ba-767d-11e5-8fb9-9779d3a53a50.gif)
