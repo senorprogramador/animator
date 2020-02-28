@@ -3,6 +3,7 @@
 Enables you to create stunning flutter animations, faster, efficient and with less code.
 
 Partly inspired by the amazing [Animate.css](https://daneden.github.io/animate.css/) package by Dan Eden.
+Please note, that although it's inspired by Animate.css, this still is a Flutter package, meaning it will be available for all flutter-supported platforms
 
 Features:
 - Combine and chain Tweens with multiple easing-curves.
@@ -106,5 +107,122 @@ Animator.sync(this)
 ```
 
 ## Available default animations:
-### Attention seekers
+### Attention Seekers
 ![Attention Seekers](https://cloud.githubusercontent.com/assets/378279/10590307/ef73b1ba-767d-11e5-8fb9-9779d3a53a50.gif)
+- Bounce
+- Flash
+- HeadShake
+- HeartBeat
+- Jello
+- Pulse
+- RubberBand
+- Shake
+- Swing
+- Tada
+- Wobble
+
+### Bouncing Entrances
+![Bouncing Entrances](https://cloud.githubusercontent.com/assets/378279/10590306/ef572bbc-767d-11e5-8440-8e61d401537a.gif)
+- BounceIn
+- BounceInDown
+- BounceInLeft
+- BounceInRight
+- BounceInUp
+
+### Bouncing Exits
+![Bouncing Exits](https://cloud.githubusercontent.com/assets/378279/10590305/ef56e4cc-767d-11e5-9562-6cd3210faf34.gif)
+- BounceOut
+- BounceOutDown
+- BounceOutLeft
+- BounceOutRight
+- BounceOutUp
+
+### Fading Entrances
+![Fading Entrances](https://cloud.githubusercontent.com/assets/378279/10590304/ef4f09b4-767d-11e5-9a43-06e97e8ee2c1.gif)
+- FadeIn
+- FadeInDown
+- FadeInDownBig
+- FadeInLeft
+- FadeInLeftBig
+- FadeInRight
+- FadeInRightBig
+- FadeInUp
+- FadeInUpBig
+
+### Fading Exits
+![Fading Exits](https://cloud.githubusercontent.com/assets/378279/10590303/ef3e9598-767d-11e5-83bc-bd48d6017131.gif)
+- FadeOut
+- FadeOutDown
+- FadeOutDownBig
+- FadeOutLeft
+- FadeOutLeftBig
+- FadeOutRight
+- FadeOutRightBig
+- FadeOutUp
+- FadeOutUpBig
+
+### Flippers
+![Flippers](https://cloud.githubusercontent.com/assets/378279/10590296/ef3076ca-767d-11e5-9f62-6b9c696dad51.gif)
+- Flip
+- FlipInX
+- FlipInY
+- FlipOutX
+- FlipOutY
+
+### Lightspeed
+![Lightspeed](https://cloud.githubusercontent.com/assets/378279/10590301/ef374c8e-767d-11e5-83ad-b249d2731f43.gif)
+- LightSpeedIn
+- LightSpeedOut
+
+### Rotating Entrances
+No previews available.
+- RotateIn
+- RotateInDownLeft
+- RotateInDownRight
+- RotateInUpLeft
+- RotateInUpRight
+
+### Rotating Exits
+No previews available.
+- RotateOut
+- RotateOutDownLeft
+- RotateOutDownRight
+- RotateOutUpLeft
+- RotateOutUpRight
+
+### Sliding Entrances
+![Sliding Entrances](https://cloud.githubusercontent.com/assets/378279/10590300/ef36dfe2-767d-11e5-932b-1cccce78087b.gif)
+- SlideInDown
+- SlideInLeft
+- SlideInRight
+- SlideInUp
+
+### Sliding Exits
+![Sliding Exits](https://cloud.githubusercontent.com/assets/378279/10590299/ef35a3ca-767d-11e5-94e0-441fd49b6444.gif)
+- SlideOutDown
+- SlideOutLeft
+- SlideOutRight
+- SlideOutUp
+
+### Specials
+No previews available.
+- Hinge
+- JackInTheBox
+- RollIn
+- RollOut
+
+### Zooming Entrances
+![Zooming Entrances](https://cloud.githubusercontent.com/assets/378279/10590302/ef37d438-767d-11e5-8480-a212e21c2192.gif)
+- ZoomIn
+- ZoomInDown
+- ZoomInLeft
+- ZoomInRight
+- ZoomInUp
+
+### Zooming Exits
+![Zooming Exits](https://cloud.githubusercontent.com/assets/378279/10590298/ef33fa52-767d-11e5-80fe-6b8dbb5e53d0.gif)
+- ZoomOut
+- ZoomOutDown
+- ZoomOutLeft
+- ZoomOutRight
+- ZoomOutUp
