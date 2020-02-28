@@ -92,3 +92,15 @@ class _FlashState extends State<Flash> with SingleAnimatorStateMixin { //<- impl
   }
 }
 ```
+#### Chaining animations
+You can chain animations in the following manner:
+```dart
+Animator.sync(this)
+  .at(duration: Duration(seconds: 1))
+  .add(...)
+  .add(...)//<- Add multiple animations from 0 to 1 seconds
+  .at(offset: Duration(seconds: 1), duration: Duration(seconds: 1))
+  .add(...)
+  .add(...)//<- Add multiple animations from 1 to 2 seconds
+  .generate();
+```
