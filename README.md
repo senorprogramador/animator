@@ -20,7 +20,7 @@ Put the dependency inside your pubspec.yml and run packages get.
 import 'package:flutter/widgets.dart';
 import 'package:animator/animator.dart';
 
-class AnimatedWidget extends StatelessWidget {
+class TestAnimatedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RubberBand(
