@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './animated_rubber_band.dart';
 
 void main() => runApp(ExampleApp());
 
@@ -34,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: AnimatedRubberBand(),
+        child: Text('TODO: add example app.'),
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }

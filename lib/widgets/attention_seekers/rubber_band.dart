@@ -49,15 +49,15 @@ class RubberBand extends StatefulWidget {
 class _RubberBandState extends State<RubberBand> with SingleAnimatorStateMixin {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(onTap: () => animation.controller.forward(from: 0.0), child: AnimatedBuilder(
+    return AnimatedBuilder(
       animation: animation.controller,
       child: widget.child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
         transform: animation.get("transform").value,
-        alignment: new FractionalOffset(0.5, 0.5),
+        alignment: Alignment.center,
       ),
-    ),);
+    );
   }
 
   @override
