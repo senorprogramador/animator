@@ -23,7 +23,6 @@
  */
 
 import 'dart:math';
-
 import 'package:vector_math/vector_math_64.dart';
 
 import 'package:flutter/foundation.dart';
@@ -326,7 +325,7 @@ abstract class _AnimatorAnimationsProvider {
 mixin AnimatorStateMixin<T extends StatefulWidget> on State<T>
     implements TickerProvider, _AnimatorAnimationsProvider {
   Map<String, Animator> animations = {};
-  Set<Ticker> _tickers = <Ticker>{};
+  List<Ticker> _tickers = <Ticker>[];
 
   @override
   void reassemble() {
@@ -364,7 +363,7 @@ mixin AnimatorStateMixin<T extends StatefulWidget> on State<T>
 
   _disposeTickers() {
     _tickers.forEach((it) => it.dispose());
-    _tickers = <Ticker>{};
+    _tickers = <Ticker>[];
   }
 
   @override
