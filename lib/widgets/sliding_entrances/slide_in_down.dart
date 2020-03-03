@@ -62,7 +62,10 @@ class _SlideInDownState extends State<SlideInDown> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _SlideInDownAnimation(
       child: widget.child,

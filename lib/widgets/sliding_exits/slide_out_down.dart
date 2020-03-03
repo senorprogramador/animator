@@ -62,7 +62,10 @@ class _SlideOutDownState extends State<SlideOutDown> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _SlideOutDownAnimation(
       child: widget.child,

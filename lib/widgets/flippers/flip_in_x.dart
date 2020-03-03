@@ -79,7 +79,9 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
   @override
   Animator createAnimation() {
     double multiplier = widget.from == FlipInXOrigin.front ? -1.0 : 1.0;
-    if (widget.alignment == Alignment.topCenter || widget.alignment == Alignment.topLeft || widget.alignment == Alignment.topRight) {
+    if (widget.alignment == Alignment.topCenter ||
+        widget.alignment == Alignment.topLeft ||
+        widget.alignment == Alignment.topRight) {
       multiplier *= -1;
     }
 
@@ -99,13 +101,17 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
           tweens: TweenList<double>(
             [
               TweenPercentage(
-                  percent: 0, value: multiplier * Math.radians(90.0), curve: Curves.easeIn),
+                  percent: 0,
+                  value: multiplier * Math.radians(90.0),
+                  curve: Curves.easeIn),
               TweenPercentage(
                   percent: 40,
                   value: multiplier * Math.radians(-20.0),
                   curve: Curves.easeIn),
-              TweenPercentage(percent: 60, value: multiplier * Math.radians(10.0)),
-              TweenPercentage(percent: 80, value: multiplier * Math.radians(-5.0)),
+              TweenPercentage(
+                  percent: 60, value: multiplier * Math.radians(10.0)),
+              TweenPercentage(
+                  percent: 80, value: multiplier * Math.radians(-5.0)),
               TweenPercentage(percent: 100, value: 0.0),
             ],
           ),

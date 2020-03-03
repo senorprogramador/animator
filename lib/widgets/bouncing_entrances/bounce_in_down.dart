@@ -62,7 +62,10 @@ class _BounceInDownState extends State<BounceInDown> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _BounceInDownAnimation(
       child: widget.child,

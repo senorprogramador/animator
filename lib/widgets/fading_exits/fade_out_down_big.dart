@@ -62,7 +62,10 @@ class _FadeOutDownBigState extends State<FadeOutDownBig> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _FadeOutDownBigAnimation(
       child: widget.child,

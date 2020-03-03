@@ -62,7 +62,10 @@ class _FadeInLeftBigState extends State<FadeInLeftBig> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _FadeInLeftBigAnimation(
       child: widget.child,

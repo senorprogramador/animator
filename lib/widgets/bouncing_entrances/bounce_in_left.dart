@@ -62,7 +62,10 @@ class _BounceInLeftState extends State<BounceInLeft> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _BounceInLeftAnimation(
       child: widget.child,

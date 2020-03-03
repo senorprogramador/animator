@@ -62,7 +62,10 @@ class _SlideInLeftState extends State<SlideInLeft> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _SlideInLeftAnimation(
       child: widget.child,

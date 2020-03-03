@@ -62,7 +62,10 @@ class _BounceOutUpState extends State<BounceOutUp> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _BounceOutUpAnimation(
       child: widget.child,

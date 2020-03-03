@@ -11,3 +11,7 @@
 
 * Added alignment property to FlipInX to control the origin of the transform
 * Added from property to FlipInX to rotate from visual front or back.
+
+## [1.0.02] - 2020/03/03
+
+* Adjusted widgets that use screenSize or widget size to first render with opacity 0.0.

@@ -62,7 +62,10 @@ class _ZoomOutDownState extends State<ZoomOutDown> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return widget.child;
+      return Opacity(
+        opacity: 0,
+        child: widget.child,
+      );
     }
     return _ZoomOutDownAnimation(
       child: widget.child,
