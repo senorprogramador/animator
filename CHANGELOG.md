@@ -15,3 +15,7 @@
 ## [1.0.02] - 2020/03/03
 
 * Adjusted widgets that use screenSize or widget size to first render with opacity 0.0.
+
+## [1.0.03] - 2020/03/03
+
+* Further adjusted widgets that use screenSize or widget size to first render with opacity 0.0.

@@ -64,7 +64,7 @@ class _FadeOutDownState extends State<FadeOutDown> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return Container(key: _key, child: widget.child);
+      return Opacity(key: _key, opacity: 0.0, child: widget.child);
     }
     return _FadeOutDownAnimation(
       child: widget.child,

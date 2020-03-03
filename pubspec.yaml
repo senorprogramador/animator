@@ -1,6 +1,6 @@
 name: flutter_animator
 description: Create animations with less code in a chaining manner. This package allows you to combine and chain multiple animations based on percentages of the duration.
-version: 1.0.02
+version: 1.0.03
 author: Sharp3dges <sharp3dges@outlook.com>
 homepage: https://github.com/sharp3dges/animator
 
