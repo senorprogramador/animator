@@ -63,7 +63,7 @@ class _SlideOutLeftState extends State<SlideOutLeft> {
   Widget build(BuildContext context) {
     if (size == null) {
       return Opacity(
-        opacity: 0,
+        opacity: 1.0,
         child: widget.child,
       );
     }

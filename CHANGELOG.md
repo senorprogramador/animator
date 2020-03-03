@@ -19,3 +19,7 @@
 ## [1.0.03] - 2020/03/03
 
 * Further adjusted widgets that use screenSize or widget size to first render with opacity 0.0.
+
+## [1.0.04] - 2020/03/03
+
+* Further adjusted widgets that use screenSize or widget size. Exit-animations now first render with opacity 1.0, entry-animations with 0.0.

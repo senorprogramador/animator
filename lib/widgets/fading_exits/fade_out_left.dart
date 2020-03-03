@@ -64,7 +64,7 @@ class _FadeOutLeftState extends State<FadeOutLeft> {
   @override
   Widget build(BuildContext context) {
     if (size == null) {
-      return Opacity(key: _key, opacity: 0.0, child: widget.child);
+      return Opacity(key: _key, opacity: 1.0, child: widget.child);
     }
     return _FadeOutLeftAnimation(
       child: widget.child,
