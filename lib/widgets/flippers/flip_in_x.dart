@@ -28,15 +28,24 @@ import 'package:flutter/widgets.dart';
 import '../../utils/perspective.dart';
 import '../../utils/animator.dart';
 
+enum FlipInXOrigin {
+  back,
+  front,
+}
+
 class FlipInX extends StatefulWidget {
   final Widget child;
   final Duration offset;
   final Duration duration;
+  final FlipInXOrigin from;
+  final Alignment alignment;
   final AnimationStatusListener animationStatusListener;
 
   FlipInX({
     @required this.child,
     this.offset = Duration.zero,
+    this.from = FlipInXOrigin.front,
+    this.alignment: Alignment.center,
     this.duration = const Duration(seconds: 1),
     this.animationStatusListener,
   }) {
@@ -61,7 +70,7 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
           transform: Perspective.matrix(4.0) *
               Matrix4.rotationX(-animation.get("rotateX").value),
           child: widget.child,
-          alignment: Alignment.center,
+          alignment: widget.alignment,
         ),
       ),
     );
@@ -69,6 +78,11 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
 
   @override
   Animator createAnimation() {
+    double multiplier = widget.from == FlipInXOrigin.front ? -1.0 : 1.0;
+    if (widget.alignment == Alignment.topCenter || widget.alignment == Alignment.topLeft || widget.alignment == Alignment.topRight) {
+      multiplier *= -1;
+    }
+
     return Animator.sync(this)
         .at(offset: widget.offset, duration: widget.duration)
         .add(
@@ -85,13 +99,13 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
           tweens: TweenList<double>(
             [
               TweenPercentage(
-                  percent: 0, value: Math.radians(90.0), curve: Curves.easeIn),
+                  percent: 0, value: multiplier * Math.radians(90.0), curve: Curves.easeIn),
               TweenPercentage(
                   percent: 40,
-                  value: Math.radians(-20.0),
+                  value: multiplier * Math.radians(-20.0),
                   curve: Curves.easeIn),
-              TweenPercentage(percent: 60, value: Math.radians(10.0)),
-              TweenPercentage(percent: 80, value: Math.radians(-5.0)),
+              TweenPercentage(percent: 60, value: multiplier * Math.radians(10.0)),
+              TweenPercentage(percent: 80, value: multiplier * Math.radians(-5.0)),
               TweenPercentage(percent: 100, value: 0.0),
             ],
           ),
