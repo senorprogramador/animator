@@ -22,94 +22,26 @@
  * SOFTWARE.
  */
 
-import 'dart:math';
-
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
 
-class Wobble extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
+class Wobble extends AnimatorWidget {
 
   Wobble({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
 
   @override
-  _WobbleState createState() => _WobbleState();
+  WobbleState createState() => WobbleState();
 }
 
-class _WobbleState extends State<Wobble> {
-  Size size;
+class WobbleState extends AnimatorWidgetState<Wobble> {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      RenderBox renderBox = context.findRenderObject();
-      final screenSize = MediaQuery.of(context).size;
-      setState(() {
-        size = Size(min(renderBox.size.width, 0.5 * screenSize.width - 10.0),
-            min(renderBox.size.height, 0.5 * screenSize.height - 10.0));
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(
-        opacity: 1.0,
-        child: widget.child,
-      );
-    }
-    return _WobbleAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _WobbleAnimation extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final Size size;
-  final AnimationStatusListener animationStatusListener;
-
-  _WobbleAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __WobbleAnimationState createState() => __WobbleAnimationState();
-}
-
-class __WobbleAnimationState extends State<_WobbleAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(
       animation: animation.controller,
       child: widget.child,
@@ -122,8 +54,8 @@ class __WobbleAnimationState extends State<_WobbleAnimation>
   }
 
   @override
-  Animator createAnimation() {
-    final width = widget.size.width;
+  Animator createAnimation(Animator animation) {
+    final width = screenSize.width;
     final axis = Math.Vector3(0.0, 0.0, 1.0);
     final m = Matrix4.identity();
     final m15 = Matrix4.translationValues(-0.25 * width, 0.0, 0.0);
@@ -141,8 +73,8 @@ class __WobbleAnimationState extends State<_WobbleAnimation>
     final m75 = Matrix4.translationValues(-0.05 * width, 0.0, 0.0);
     m75.rotate(axis, Math.radians(-1.0));
 
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "transform",
           tweens: TweenList<Matrix4>(
@@ -157,7 +89,6 @@ class __WobbleAnimationState extends State<_WobbleAnimation>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

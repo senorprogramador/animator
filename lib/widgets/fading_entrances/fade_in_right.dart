@@ -23,86 +23,24 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class FadeInRight extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class FadeInRight extends AnimatorWidget {
   FadeInRight({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsWidgetSize: true);
 
   @override
-  _FadeInRightState createState() => _FadeInRightState();
+  FadeInRightState createState() => FadeInRightState();
 }
 
-class _FadeInRightState extends State<FadeInRight> {
-  Size size;
-  GlobalKey _key = GlobalKey();
+class FadeInRightState extends AnimatorWidgetState<FadeInRight> {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox renderBox = _key.currentContext.findRenderObject();
-      setState(() {
-        size = renderBox.size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(key: _key, opacity: 0.0, child: widget.child);
-    }
-    return _FadeInRightAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _FadeInRightAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _FadeInRightAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __FadeInRightAnimationState createState() => __FadeInRightAnimationState();
-}
-
-class __FadeInRightAnimationState extends State<_FadeInRightAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -117,9 +55,9 @@ class __FadeInRightAnimationState extends State<_FadeInRightAnimation>
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -133,12 +71,12 @@ class __FadeInRightAnimationState extends State<_FadeInRightAnimation>
           key: "translateX",
           tweens: TweenList<double>(
             [
-              TweenPercentage(percent: 0, value: widget.size.width),
+              TweenPercentage(percent: 0, value: widgetSize.width),
               TweenPercentage(percent: 100, value: 0.0),
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener)
+        ;
   }
 }

@@ -23,88 +23,23 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class BounceInRight extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class BounceInRight extends AnimatorWidget {
   BounceInRight({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
 
   @override
-  _BounceInRightState createState() => _BounceInRightState();
+  BounceInRightState createState() => BounceInRightState();
 }
 
-class _BounceInRightState extends State<BounceInRight> {
-  Size size;
-
+class BounceInRightState extends AnimatorWidgetState<BounceInRight> {
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        size = MediaQuery.of(context).size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(
-        opacity: 0,
-        child: widget.child,
-      );
-    }
-    return _BounceInRightAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _BounceInRightAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _BounceInRightAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __BounceInRightAnimationState createState() =>
-      __BounceInRightAnimationState();
-}
-
-class __BounceInRightAnimationState extends State<_BounceInRightAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -119,10 +54,10 @@ class __BounceInRightAnimationState extends State<_BounceInRightAnimation>
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -137,7 +72,7 @@ class __BounceInRightAnimationState extends State<_BounceInRightAnimation>
           tweens: TweenList<double>(
             [
               TweenPercentage(
-                  percent: 0, value: widget.size.width, curve: curve),
+                  percent: 0, value: screenSize.width, curve: curve),
               TweenPercentage(percent: 60, value: -25.0, curve: curve),
               TweenPercentage(percent: 75, value: 10.0, curve: curve),
               TweenPercentage(percent: 90, value: -5.0, curve: curve),
@@ -145,7 +80,7 @@ class __BounceInRightAnimationState extends State<_BounceInRightAnimation>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener)
+        ;
   }
 }

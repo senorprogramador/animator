@@ -22,36 +22,24 @@
  * SOFTWARE.
  */
 
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-import '../../utils/animator.dart';
-
-class JackInTheBox extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
+class JackInTheBox extends AnimatorWidget {
   JackInTheBox({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _JackInTheBoxState createState() => _JackInTheBoxState();
+  JackInTheBoxState createState() => JackInTheBoxState();
 }
 
-class _JackInTheBoxState extends State<JackInTheBox>
-    with SingleAnimatorStateMixin {
+class JackInTheBoxState extends AnimatorWidgetState<JackInTheBox> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -68,9 +56,9 @@ class _JackInTheBoxState extends State<JackInTheBox>
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -100,7 +88,6 @@ class _JackInTheBoxState extends State<JackInTheBox>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

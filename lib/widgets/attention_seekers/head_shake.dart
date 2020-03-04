@@ -23,34 +23,27 @@
  */
 
 import 'package:flutter/material.dart';
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math.dart' as Math;
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
 
-class HeadShake extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
+
+class HeadShake extends AnimatorWidget {
 
   HeadShake({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(milliseconds: 500),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _HeadShakeState createState() => _HeadShakeState();
+  HeadShakeState createState() => HeadShakeState();
 }
 
-class _HeadShakeState extends State<HeadShake> with SingleAnimatorStateMixin {
+class HeadShakeState extends AnimatorWidgetState<HeadShake> {
+
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(
       animation: animation.controller,
       child: widget.child,
@@ -65,10 +58,10 @@ class _HeadShakeState extends State<HeadShake> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final curve = Curves.easeInOut;
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "translateX",
           tweens: TweenList<double>(
@@ -99,7 +92,6 @@ class _HeadShakeState extends State<HeadShake> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

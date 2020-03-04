@@ -23,3 +23,9 @@
 ## [1.0.04] - 2020/03/03
 
 * Further adjusted widgets that use screenSize or widget size. Exit-animations now first render with opacity 1.0, entry-animations with 0.0.
+
+## [1.1.01] - 2020/03/04
+
+* Created AnimatorWidget and AnimatorWidgetState, further reducing code by lots.
+* Added keys and control functions to animated widgets to enable starting/reversing/stopping animations from code.
+* Refactored some values to AnimatorPreferences.

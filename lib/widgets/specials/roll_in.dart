@@ -22,88 +22,25 @@
  * SOFTWARE.
  */
 
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
 
-class RollIn extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
+class RollIn extends AnimatorWidget {
   RollIn({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsWidgetSize: true);
 
   @override
-  _RollInState createState() => _RollInState();
+  RollInState createState() => RollInState();
 }
 
-class _RollInState extends State<RollIn> {
-  Size size;
-  GlobalKey _key = GlobalKey();
+class RollInState extends AnimatorWidgetState<RollIn> {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox renderBox = _key.currentContext.findRenderObject();
-      setState(() {
-        size = renderBox.size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(key: _key, opacity: 0.0, child: widget.child);
-    }
-    return _RollInAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _RollInAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _RollInAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __RollInAnimationState createState() => __RollInAnimationState();
-}
-
-class __RollInAnimationState extends State<_RollInAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -121,9 +58,9 @@ class __RollInAnimationState extends State<_RollInAnimation>
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -137,7 +74,7 @@ class __RollInAnimationState extends State<_RollInAnimation>
           key: "translateX",
           tweens: TweenList<double>(
             [
-              TweenPercentage(percent: 0, value: -widget.size.width),
+              TweenPercentage(percent: 0, value: -widgetSize.width),
               TweenPercentage(percent: 100, value: 0.0),
             ],
           ),
@@ -151,7 +88,6 @@ class __RollInAnimationState extends State<_RollInAnimation>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

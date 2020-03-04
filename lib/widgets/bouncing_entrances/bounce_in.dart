@@ -23,32 +23,20 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class BounceIn extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class BounceIn extends AnimatorWidget {
   BounceIn({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,@required Widget child,AnimatorPreferences prefs = const AnimatorPreferences(),}) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _BounceInState createState() => _BounceInState();
+  BounceInState createState() => BounceInState();
 }
 
-class _BounceInState extends State<BounceIn> with SingleAnimatorStateMixin {
+class BounceInState extends AnimatorWidgetState<BounceIn> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -64,10 +52,10 @@ class _BounceInState extends State<BounceIn> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -90,19 +78,7 @@ class _BounceInState extends State<BounceIn> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
-  }
-}
-
-class Test extends StatefulWidget {
-  @override
-  _TestState createState() => _TestState();
-}
-
-class _TestState extends State<Test> with SingleTickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+        .addStatusListener(widget.prefs.animationStatusListener)
+        ;
   }
 }

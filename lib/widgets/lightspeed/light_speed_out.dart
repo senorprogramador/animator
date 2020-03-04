@@ -23,89 +23,24 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
+
 import 'package:vector_math/vector_math_64.dart' as Math;
 
-class LightSpeedOut extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
+class LightSpeedOut extends AnimatorWidget {
   LightSpeedOut({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
 
   @override
-  _LightSpeedOutState createState() => _LightSpeedOutState();
+  LightSpeedOutState createState() => LightSpeedOutState();
 }
 
-class _LightSpeedOutState extends State<LightSpeedOut> {
-  Size size;
-
+class LightSpeedOutState extends AnimatorWidgetState<LightSpeedOut> {
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        size = MediaQuery.of(context).size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(
-        opacity: 1.0,
-        child: widget.child,
-      );
-    }
-    return _LightSpeedOutAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _LightSpeedOutAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _LightSpeedOutAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __LightSpeedOutAnimationState createState() =>
-      __LightSpeedOutAnimationState();
-}
-
-class __LightSpeedOutAnimationState extends State<_LightSpeedOutAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -123,9 +58,9 @@ class __LightSpeedOutAnimationState extends State<_LightSpeedOutAnimation>
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -140,7 +75,7 @@ class __LightSpeedOutAnimationState extends State<_LightSpeedOutAnimation>
           tweens: TweenList<double>(
             [
               TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: widget.size.width),
+              TweenPercentage(percent: 100, value: screenSize.width),
             ],
           ),
         )
@@ -153,7 +88,6 @@ class __LightSpeedOutAnimationState extends State<_LightSpeedOutAnimation>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

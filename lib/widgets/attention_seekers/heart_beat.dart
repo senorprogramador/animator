@@ -23,32 +23,23 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class HeartBeat extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class HeartBeat extends AnimatorWidget {
   HeartBeat({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(milliseconds: 1300),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _HeartBeatState createState() => _HeartBeatState();
+  HeartBeatState createState() => HeartBeatState();
 }
 
-class _HeartBeatState extends State<HeartBeat> with SingleAnimatorStateMixin {
+class HeartBeatState extends AnimatorWidgetState<HeartBeat> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(
       animation: animation.controller,
       child: widget.child,
@@ -61,10 +52,10 @@ class _HeartBeatState extends State<HeartBeat> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final curve = Curves.easeInOut;
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "scale",
           tweens: TweenList<double>(
@@ -77,7 +68,6 @@ class _HeartBeatState extends State<HeartBeat> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

@@ -22,45 +22,37 @@
  * SOFTWARE.
  */
 
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
 import '../../utils/perspective.dart';
-import '../../utils/animator.dart';
+
 
 enum FlipInXOrigin {
   back,
   front,
 }
 
-class FlipInX extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
+class FlipInX extends AnimatorWidget {
   final FlipInXOrigin from;
   final Alignment alignment;
-  final AnimationStatusListener animationStatusListener;
 
   FlipInX({
-    @required this.child,
-    this.offset = Duration.zero,
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
     this.from = FlipInXOrigin.front,
     this.alignment: Alignment.center,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _FlipInXState createState() => _FlipInXState();
+  FlipInXState createState() => FlipInXState();
 }
 
-class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
+class FlipInXState extends AnimatorWidgetState<FlipInX> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -77,7 +69,7 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     double multiplier = widget.from == FlipInXOrigin.front ? -1.0 : 1.0;
     if (widget.alignment == Alignment.topCenter ||
         widget.alignment == Alignment.topLeft ||
@@ -85,8 +77,8 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
       multiplier *= -1;
     }
 
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -116,7 +108,6 @@ class _FlipInXState extends State<FlipInX> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

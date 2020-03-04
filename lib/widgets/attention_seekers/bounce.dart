@@ -23,32 +23,23 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class Bounce extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class Bounce extends AnimatorWidget {
   Bounce({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _BounceState createState() => _BounceState();
+  BounceState createState() => BounceState();
 }
 
-class _BounceState extends State<Bounce> with SingleAnimatorStateMixin {
+class BounceState extends AnimatorWidgetState<Bounce> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(
       animation: animation.controller,
       child: widget.child,
@@ -62,11 +53,11 @@ class _BounceState extends State<Bounce> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final floorCurve = Cubic(0.215, 0.61, 0.355, 1);
     final ceilCurve = Cubic(0.755, 0.05, 0.855, 0.06);
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "translateY",
           tweens: TweenList<double>(
@@ -83,7 +74,6 @@ class _BounceState extends State<Bounce> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

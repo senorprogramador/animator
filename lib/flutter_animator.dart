@@ -28,7 +28,8 @@ export 'utils/animator.dart';
 export 'utils/perspective.dart';
 export 'utils/pair.dart';
 
-export 'widgets/attention_seekers/bounce.dart';
+export 'widgets/animator_widget.dart';
+export 'widgets/attention_seekers/flash.dart';
 export 'widgets/attention_seekers/flash.dart';
 export 'widgets/attention_seekers/head_shake.dart';
 export 'widgets/attention_seekers/heart_beat.dart';

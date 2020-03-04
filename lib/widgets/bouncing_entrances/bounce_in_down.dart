@@ -23,83 +23,24 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class BounceInDown extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class BounceInDown extends AnimatorWidget {
   BounceInDown({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
 
   @override
-  _BounceInDownState createState() => _BounceInDownState();
+  BounceInDownState createState() => BounceInDownState();
 }
 
-class _BounceInDownState extends State<BounceInDown> {
-  Size size;
+class BounceInDownState extends AnimatorWidgetState<BounceInDown> {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        size = MediaQuery.of(context).size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(
-        opacity: 0,
-        child: widget.child,
-      );
-    }
-    return _BounceInDownAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _BounceInDownAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _BounceInDownAnimation({
-    @required this.child,
-    @required this.size,
-    this.animationStatusListener,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-  });
-
-  @override
-  __BounceInDownAnimationState createState() => __BounceInDownAnimationState();
-}
-
-class __BounceInDownAnimationState extends State<_BounceInDownAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -114,10 +55,10 @@ class __BounceInDownAnimationState extends State<_BounceInDownAnimation>
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -132,7 +73,7 @@ class __BounceInDownAnimationState extends State<_BounceInDownAnimation>
           tweens: TweenList<double>(
             [
               TweenPercentage(
-                  percent: 0, value: -widget.size.height, curve: curve),
+                  percent: 0, value: -screenSize.height, curve: curve),
               TweenPercentage(percent: 60, value: 25.0, curve: curve),
               TweenPercentage(percent: 75, value: -10.0, curve: curve),
               TweenPercentage(percent: 90, value: 5.0, curve: curve),
@@ -140,7 +81,7 @@ class __BounceInDownAnimationState extends State<_BounceInDownAnimation>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener)
+        ;
   }
 }

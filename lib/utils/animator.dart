@@ -23,6 +23,7 @@
  */
 
 import 'dart:math';
+import 'package:flutter_animator/flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import 'package:flutter/foundation.dart';
@@ -76,12 +77,12 @@ import '../utils/pair.dart';
 class Animator {
   ///Initializes and returns a new Animator instance, setting it's TickerProvider
   ///and autoPlay values. (method-chain)
-  static Animator sync(TickerProvider vsync, {bool autoPlay = true}) {
+  static Animator sync(TickerProvider vsync) {
     assert(
       vsync != null,
       'vsync cannot be null.',
     );
-    return Animator._internal(vsync, autoPlay);
+    return Animator._internal(vsync);
   }
 
   ///Sets the offset and duration for the succeeding .add() calls. (method-chain)
@@ -176,9 +177,6 @@ class Animator {
   ///The tickerProvider for an Animator instance
   final TickerProvider _vsync;
 
-  ///Should it play it's animations automatically when created?
-  final bool autoPlay;
-
   ///Holds the total duration of an Ani8or instance
   Duration duration;
 
@@ -209,7 +207,7 @@ class Animator {
   Duration _currentDuration;
 
   ///Protected constructor (Use Animator.sync())
-  Animator._internal(this._vsync, this.autoPlay);
+  Animator._internal(this._vsync);
 
   void dispose() {
     if (_controllerInitialized && _controller != null) {
@@ -228,44 +226,50 @@ class Animator {
   }
 }
 
+abstract class AnimatorSingleAnimationContainer {
+  Animator get animation;
+}
+
 ///@section - Single Animation.
 abstract class _AnimatorSingleAnimationProvider {
-  Animator createAnimation();
+  Animator createAnimation(Animator animation);
 }
 
 ///Use this mixin to generate a Single Animator instance Widget.
 ///createAnimation() is used to request a new Animator instance, it's value is
 ///bound to the animation variable.
 mixin SingleAnimatorStateMixin<T extends StatefulWidget> on State<T>
-    implements TickerProvider, _AnimatorSingleAnimationProvider {
+    implements
+        TickerProvider,
+        _AnimatorSingleAnimationProvider,
+        AnimatorSingleAnimationContainer {
   Animator animation;
+
   Ticker _ticker;
 
   @override
   void reassemble() {
-    if (!kReleaseMode) {
-      _disposeExistingAnimation();
+    if (!kReleaseMode && !(this is AnimatorWidgetState)) {
+      disposeExistingAnimation();
       setState(() {
-        animation = createAnimation();
+        animation = createAnimation(Animator.sync(this)).generate();
       });
-      if (animation.autoPlay) {
-        animation.controller.forward(from: 0.0);
-      }
+      animation.controller.forward(from: 0.0);
     }
     super.reassemble();
   }
 
   @override
   void initState() {
-    _disposeExistingAnimation();
-    animation = createAnimation();
-    if (animation.autoPlay) {
+    if (!(this is AnimatorWidgetState)) {
+      disposeExistingAnimation();
+      animation = createAnimation(Animator.sync(this)).generate();
       animation.controller.forward(from: 0.0);
     }
     super.initState();
   }
 
-  _disposeExistingAnimation() {
+  disposeExistingAnimation() {
     if (animation != null) {
       animation.dispose();
     }
@@ -277,7 +281,7 @@ mixin SingleAnimatorStateMixin<T extends StatefulWidget> on State<T>
 
   @override
   Ticker createTicker(TickerCallback onTick) {
-    _disposeExistingAnimation();
+    disposeExistingAnimation();
 
     _ticker =
         Ticker(onTick, debugLabel: kDebugMode ? 'created by $this' : null);
@@ -286,7 +290,7 @@ mixin SingleAnimatorStateMixin<T extends StatefulWidget> on State<T>
 
   @override
   void dispose() {
-    _disposeExistingAnimation();
+    disposeExistingAnimation();
     super.dispose();
   }
 
@@ -334,7 +338,6 @@ mixin AnimatorStateMixin<T extends StatefulWidget> on State<T>
       setState(() {
         animations = createAnimations();
       });
-      _autoPlay();
     }
     super.reassemble();
   }
@@ -343,16 +346,7 @@ mixin AnimatorStateMixin<T extends StatefulWidget> on State<T>
   void initState() {
     _disposeExistingAnimations();
     animations = createAnimations();
-    _autoPlay();
     super.initState();
-  }
-
-  void _autoPlay() {
-    animations.values.forEach((it) {
-      if (it.autoPlay) {
-        it.controller.forward(from: 0.0);
-      }
-    });
   }
 
   _disposeExistingAnimations() {
@@ -470,10 +464,10 @@ class TweenList<T extends dynamic> extends Tween<T> {
       _pair = fetchFromTo(nt);
     }
 
-    if (nt * 100.0 < _pair.a.percent) {
+    if (nt * 100.0 <= _pair.a.percent) {
       return _pair.a.value;
     }
-    if (nt * 100.0 > _pair.b.percent) {
+    if (nt * 100.0 >= _pair.b.percent) {
       return _pair.b.value;
     }
 

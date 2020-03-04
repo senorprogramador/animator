@@ -23,32 +23,24 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class BounceOut extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class BounceOut extends AnimatorWidget {
   BounceOut({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(milliseconds: 750),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs =
+        const AnimatorPreferences(duration: Duration(milliseconds: 750)),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _BounceOutState createState() => _BounceOutState();
+  BounceOutState createState() => BounceOutState();
 }
 
-class _BounceOutState extends State<BounceOut> with SingleAnimatorStateMixin {
+class BounceOutState extends AnimatorWidgetState<BounceOut> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -64,9 +56,9 @@ class _BounceOutState extends State<BounceOut> with SingleAnimatorStateMixin {
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -88,7 +80,7 @@ class _BounceOutState extends State<BounceOut> with SingleAnimatorStateMixin {
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener)
+        ;
   }
 }

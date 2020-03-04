@@ -23,87 +23,23 @@
  */
 
 import 'package:flutter/widgets.dart';
-import '../../utils/animator.dart';
+import '../../flutter_animator.dart';
 
-class ZoomInRight extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
+class ZoomInRight extends AnimatorWidget {
   ZoomInRight({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
 
   @override
-  _ZoomInRightState createState() => _ZoomInRightState();
+  ZoomInRightState createState() => ZoomInRightState();
 }
 
-class _ZoomInRightState extends State<ZoomInRight> {
-  Size size;
+class ZoomInRightState extends AnimatorWidgetState<ZoomInRight> {
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        size = MediaQuery.of(context).size;
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (size == null) {
-      return Opacity(
-        opacity: 0,
-        child: widget.child,
-      );
-    }
-    return _ZoomInRightAnimation(
-      child: widget.child,
-      size: size,
-      offset: widget.offset,
-      duration: widget.duration,
-      animationStatusListener: widget.animationStatusListener,
-    );
-  }
-}
-
-class _ZoomInRightAnimation extends StatefulWidget {
-  final Widget child;
-  final Size size;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
-
-  _ZoomInRightAnimation({
-    @required this.child,
-    @required this.size,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
-
-  @override
-  __ZoomInRightAnimationState createState() => __ZoomInRightAnimationState();
-}
-
-class __ZoomInRightAnimationState extends State<_ZoomInRightAnimation>
-    with SingleAnimatorStateMixin {
-  @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -121,11 +57,11 @@ class __ZoomInRightAnimationState extends State<_ZoomInRightAnimation>
   }
 
   @override
-  Animator createAnimation() {
+  Animator createAnimation(Animator animation) {
     final c0 = Cubic(0.55, 0.55, 0.675, 0.19);
     final c1 = Cubic(0.175, 0.885, 0.32, 1.0);
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -149,13 +85,12 @@ class __ZoomInRightAnimationState extends State<_ZoomInRightAnimation>
           key: "translateX",
           tweens: TweenList<double>(
             [
-              TweenPercentage(percent: 0, value: widget.size.width, curve: c0),
+              TweenPercentage(percent: 0, value: screenSize.width, curve: c0),
               TweenPercentage(percent: 60, value: -60.0, curve: c1),
               TweenPercentage(percent: 100, value: 0.0, curve: c1),
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

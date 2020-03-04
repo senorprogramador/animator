@@ -22,36 +22,26 @@
  * SOFTWARE.
  */
 
+import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-import '../../utils/animator.dart';
 
-class RotateInDownRight extends StatefulWidget {
-  final Widget child;
-  final Duration offset;
-  final Duration duration;
-  final AnimationStatusListener animationStatusListener;
 
+class RotateInDownRight extends AnimatorWidget {
   RotateInDownRight({
-    @required this.child,
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.animationStatusListener,
-  }) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(offset != null, 'Error: offset in $this cannot be null');
-    assert(duration != null, 'Error: duration in $this cannot be null');
-  }
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
-  _RotateInDownRightState createState() => _RotateInDownRightState();
+  RotateInDownRightState createState() => RotateInDownRightState();
 }
 
-class _RotateInDownRightState extends State<RotateInDownRight>
-    with SingleAnimatorStateMixin {
+class RotateInDownRightState extends AnimatorWidgetState<RotateInDownRight> {
   @override
-  Widget build(BuildContext context) {
+  Widget renderAnimation(BuildContext context) {
     return FadeTransition(
       opacity: animation.get("opacity"),
       child: AnimatedBuilder(
@@ -67,9 +57,9 @@ class _RotateInDownRightState extends State<RotateInDownRight>
   }
 
   @override
-  Animator createAnimation() {
-    return Animator.sync(this)
-        .at(offset: widget.offset, duration: widget.duration)
+  Animator createAnimation(Animator animation) {
+    return animation
+        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
         .add(
           key: "opacity",
           tweens: TweenList<double>(
@@ -88,7 +78,6 @@ class _RotateInDownRightState extends State<RotateInDownRight>
             ],
           ),
         )
-        .addStatusListener(widget.animationStatusListener)
-        .generate();
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }
