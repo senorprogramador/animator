@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class BounceInRight extends AnimatorWidget {
   BounceInRight({
     Key key,
@@ -80,7 +79,6 @@ class BounceInRightState extends AnimatorWidgetState<BounceInRight> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

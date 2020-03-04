@@ -37,7 +37,6 @@ class ZoomInDown extends AnimatorWidget {
 }
 
 class ZoomInDownState extends AnimatorWidgetState<ZoomInDown> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(
@@ -85,8 +84,7 @@ class ZoomInDownState extends AnimatorWidgetState<ZoomInDown> {
           key: "translateY",
           tweens: TweenList<double>(
             [
-              TweenPercentage(
-                  percent: 0, value: -screenSize.height, curve: c0),
+              TweenPercentage(percent: 0, value: -screenSize.height, curve: c0),
               TweenPercentage(percent: 60, value: 60.0, curve: c1),
               TweenPercentage(percent: 100, value: 0.0, curve: c1),
             ],

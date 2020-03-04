@@ -37,7 +37,6 @@ class SlideInDown extends AnimatorWidget {
 }
 
 class SlideInDownState extends AnimatorWidgetState<SlideInDown> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(

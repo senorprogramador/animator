@@ -25,10 +25,12 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class BounceIn extends AnimatorWidget {
   BounceIn({
-    Key key,@required Widget child,AnimatorPreferences prefs = const AnimatorPreferences(),}) : super(key: key, child: child, prefs: prefs);
+    Key key,
+    @required Widget child,
+    AnimatorPreferences prefs = const AnimatorPreferences(),
+  }) : super(key: key, child: child, prefs: prefs);
 
   @override
   BounceInState createState() => BounceInState();
@@ -78,7 +80,6 @@ class BounceInState extends AnimatorWidgetState<BounceIn> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

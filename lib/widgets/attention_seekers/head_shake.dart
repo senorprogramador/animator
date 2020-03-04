@@ -27,9 +27,7 @@ import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-
 class HeadShake extends AnimatorWidget {
-
   HeadShake({
     Key key,
     @required Widget child,
@@ -41,7 +39,6 @@ class HeadShake extends AnimatorWidget {
 }
 
 class HeadShakeState extends AnimatorWidgetState<HeadShake> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(

@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class FadeOutRightBig extends AnimatorWidget {
   FadeOutRightBig({
     Key key,
@@ -38,7 +37,6 @@ class FadeOutRightBig extends AnimatorWidget {
 }
 
 class FadeOutRightBigState extends AnimatorWidgetState<FadeOutRightBig> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(

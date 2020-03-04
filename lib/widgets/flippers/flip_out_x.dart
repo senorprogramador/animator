@@ -28,7 +28,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../utils/perspective.dart';
 
-
 class FlipOutX extends AnimatorWidget {
   FlipOutX({
     Key key,

@@ -37,7 +37,6 @@ class SlideInLeft extends AnimatorWidget {
 }
 
 class SlideInLeftState extends AnimatorWidgetState<SlideInLeft> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(

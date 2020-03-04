@@ -28,7 +28,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../utils/perspective.dart';
 
-
 enum FlipInXOrigin {
   back,
   front,

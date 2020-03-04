@@ -37,7 +37,6 @@ class ZoomInRight extends AnimatorWidget {
 }
 
 class ZoomInRightState extends AnimatorWidgetState<ZoomInRight> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(

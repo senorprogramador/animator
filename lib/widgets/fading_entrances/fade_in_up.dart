@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class FadeInUp extends AnimatorWidget {
   FadeInUp({
     Key key,
@@ -38,7 +37,6 @@ class FadeInUp extends AnimatorWidget {
 }
 
 class FadeInUpState extends AnimatorWidgetState<FadeInUp> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(
@@ -76,7 +74,6 @@ class FadeInUpState extends AnimatorWidgetState<FadeInUp> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

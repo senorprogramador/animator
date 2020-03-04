@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class BounceOutLeft extends AnimatorWidget {
   BounceOutLeft({
     Key key,
@@ -38,7 +37,6 @@ class BounceOutLeft extends AnimatorWidget {
 }
 
 class BounceOutLeftState extends AnimatorWidgetState<BounceOutLeft> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(
@@ -81,7 +79,6 @@ class BounceOutLeftState extends AnimatorWidgetState<BounceOutLeft> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

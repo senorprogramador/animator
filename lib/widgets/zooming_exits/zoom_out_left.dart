@@ -37,7 +37,6 @@ class ZoomOutLeft extends AnimatorWidget {
 }
 
 class ZoomOutLeftState extends AnimatorWidgetState<ZoomOutLeft> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(

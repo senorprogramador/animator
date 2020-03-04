@@ -37,7 +37,6 @@ class ZoomOutRight extends AnimatorWidget {
 }
 
 class ZoomOutRightState extends AnimatorWidgetState<ZoomOutRight> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(
@@ -87,8 +86,7 @@ class ZoomOutRightState extends AnimatorWidgetState<ZoomOutRight> {
             [
               TweenPercentage(percent: 0, value: 0.0, curve: c0),
               TweenPercentage(percent: 40, value: -60.0, curve: c0),
-              TweenPercentage(
-                  percent: 100, value: screenSize.width, curve: c1),
+              TweenPercentage(percent: 100, value: screenSize.width, curve: c1),
             ],
           ),
         )

@@ -25,9 +25,7 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class RubberBand extends AnimatorWidget {
-
   RubberBand({
     Key key,
     @required Widget child,

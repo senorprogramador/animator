@@ -25,9 +25,7 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class Pulse extends AnimatorWidget {
-
   Pulse({
     Key key,
     @required Widget child,

@@ -25,9 +25,7 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class Shake extends AnimatorWidget {
-
   Shake({
     Key key,
     @required Widget child,
@@ -78,7 +76,6 @@ class ShakeState extends AnimatorWidgetState<Shake> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

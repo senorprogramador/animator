@@ -27,7 +27,6 @@ import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
 class Wobble extends AnimatorWidget {
-
   Wobble({
     Key key,
     @required Widget child,
@@ -39,7 +38,6 @@ class Wobble extends AnimatorWidget {
 }
 
 class WobbleState extends AnimatorWidgetState<Wobble> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return AnimatedBuilder(

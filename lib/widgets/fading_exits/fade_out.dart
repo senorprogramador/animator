@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class FadeOut extends AnimatorWidget {
   FadeOut({
     Key key,

@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class HeartBeat extends AnimatorWidget {
   HeartBeat({
     Key key,

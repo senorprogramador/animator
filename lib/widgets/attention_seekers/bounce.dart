@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class Bounce extends AnimatorWidget {
   Bounce({
     Key key,

@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class BounceOut extends AnimatorWidget {
   BounceOut({
     Key key,
@@ -80,7 +79,6 @@ class BounceOutState extends AnimatorWidgetState<BounceOut> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

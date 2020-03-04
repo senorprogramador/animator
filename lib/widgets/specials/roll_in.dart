@@ -38,7 +38,6 @@ class RollIn extends AnimatorWidget {
 }
 
 class RollInState extends AnimatorWidgetState<RollIn> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(

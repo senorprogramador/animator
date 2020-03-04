@@ -26,7 +26,6 @@ import '../../flutter_animator.dart';
 import 'package:vector_math/vector_math.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-
 class Jello extends AnimatorWidget {
   Jello({
     Key key,

@@ -25,7 +25,6 @@
 import 'package:flutter/widgets.dart';
 import '../../flutter_animator.dart';
 
-
 class FadeInUpBig extends AnimatorWidget {
   FadeInUpBig({
     Key key,
@@ -38,7 +37,6 @@ class FadeInUpBig extends AnimatorWidget {
 }
 
 class FadeInUpBigState extends AnimatorWidgetState<FadeInUpBig> {
-
   @override
   Widget renderAnimation(BuildContext context) {
     return FadeTransition(
@@ -76,7 +74,6 @@ class FadeInUpBigState extends AnimatorWidgetState<FadeInUpBig> {
             ],
           ),
         )
-        .addStatusListener(widget.prefs.animationStatusListener)
-        ;
+        .addStatusListener(widget.prefs.animationStatusListener);
   }
 }

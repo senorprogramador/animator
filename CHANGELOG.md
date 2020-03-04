@@ -29,3 +29,7 @@
 * Created AnimatorWidget and AnimatorWidgetState, further reducing code by lots.
 * Added keys and control functions to animated widgets to enable starting/reversing/stopping animations from code.
 * Refactored some values to AnimatorPreferences.
+
+## [1.1.02] - 2020/03/04
+
+* Applied dart pub suggestions on code formatting.
