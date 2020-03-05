@@ -5,11 +5,13 @@ import 'package:flutter_animator/utils/animator.dart';
 class AnimatorPreferences {
   final Duration offset;
   final Duration duration;
+  final bool autoPlay;
   final AnimationStatusListener animationStatusListener;
 
   const AnimatorPreferences({
     this.offset = Duration.zero,
     this.duration = const Duration(seconds: 1),
+    this.autoPlay = true,
     this.animationStatusListener,
   });
 }
@@ -49,15 +51,19 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
 
   AnimationController get controller => animation.controller;
 
-  forward({double from = 0.0}) {
+  void loop({bool yoYo = false}) {
+    controller.repeat(reverse: yoYo);
+  }
+
+  void forward({double from = 0.0}) {
     controller.forward(from: from);
   }
 
-  reverse({double from = 1.0}) {
+  void reverse({double from = 1.0}) {
     controller.reverse(from: from);
   }
 
-  stop() {
+  void stop() {
     controller.stop();
   }
 
@@ -76,15 +82,10 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
             screenSize = MediaQuery.of(context).size;
           }
         });
-
-        disposeExistingAnimation();
-        animation = createAnimation(Animator.sync(this)).generate();
-        animation.controller.forward(from: 0.0);
+        refreshAnimation();
       });
     } else {
-      disposeExistingAnimation();
-      animation = createAnimation(Animator.sync(this)).generate();
-      animation.controller.forward(from: 0.0);
+      refreshAnimation();
     }
     super.initState();
   }
@@ -107,14 +108,20 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     return renderAnimation(context);
   }
 
+  void refreshAnimation() {
+    disposeExistingAnimation();
+    animation = createAnimation(Animator.sync(this)).generate();
+    if (widget.prefs.autoPlay) {
+      animation.controller.forward(from: 0.0);
+    }
+  }
+
   @override
   void reassemble() {
     if (!kReleaseMode) {
-      disposeExistingAnimation();
       setState(() {
-        animation = createAnimation(Animator.sync(this)).generate();
+        refreshAnimation();
       });
-      animation.controller.forward(from: 0.0);
     }
     super.reassemble();
   }

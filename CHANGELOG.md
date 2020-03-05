@@ -33,3 +33,8 @@
 ## [1.1.02] - 2020/03/04
 
 * Applied dart pub suggestions on code formatting.
+
+## [1.1.03] - 2020/03/05
+
+* Added autoPlay feature to AnimatorPreferences and implemented it in AnimatorWidget.
+* Added loop method to AnimatorWidget with an optional yoYo boolean parameter.
