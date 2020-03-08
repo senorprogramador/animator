@@ -158,7 +158,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 
 ## Available default animations:
 ### Attention Seekers
-![Attention Seekers](https://github.com/sharp3dges/animator/blob/master/animations/attention_seekers.gif)
+![Attention Seekers](https://github.com/sharp3dges/animator/blob/master/animations/attention_seekers.gif =320)
 - Bounce
 - Flash
 - HeadShake
@@ -172,7 +172,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - Wobble
 
 ### Bouncing Entrances
-![Bouncing Entrances](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_entrances.gif)
+![Bouncing Entrances](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_entrances.gif =320)
 - BounceIn
 - BounceInDown
 - BounceInLeft
@@ -180,7 +180,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - BounceInUp
 
 ### Bouncing Exits
-![Bouncing Exits](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_exits.gif)
+![Bouncing Exits](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_exits.gif =320)
 - BounceOut
 - BounceOutDown
 - BounceOutLeft
@@ -188,7 +188,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - BounceOutUp
 
 ### Fading Entrances
-![Fading Entrances](https://github.com/sharp3dges/animator/blob/master/animations/fading_entrances.gif)
+![Fading Entrances](https://github.com/sharp3dges/animator/blob/master/animations/fading_entrances.gif =320)
 - FadeIn
 - FadeInDown
 - FadeInDownBig
@@ -200,7 +200,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - FadeInUpBig
 
 ### Fading Exits
-![Fading Exits](https://github.com/sharp3dges/animator/blob/master/animations/fading_exits.gif)
+![Fading Exits](https://github.com/sharp3dges/animator/blob/master/animations/fading_exits.gif =320)
 - FadeOut
 - FadeOutDown
 - FadeOutDownBig
@@ -212,7 +212,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - FadeOutUpBig
 
 ### Flippers
-![Flippers](https://github.com/sharp3dges/animator/blob/master/animations/flippers.gif)
+![Flippers](https://github.com/sharp3dges/animator/blob/master/animations/flippers.gif =320)
 - Flip
 - FlipInX
 - FlipInY
@@ -220,12 +220,12 @@ class FadeInDownAnimation extends AnimationDefinition {
 - FlipOutY
 
 ### Lightspeed
-![Lightspeed](https://github.com/sharp3dges/animator/blob/master/animations/light_speed.gif)
+![Lightspeed](https://github.com/sharp3dges/animator/blob/master/animations/light_speed.gif =320)
 - LightSpeedIn
 - LightSpeedOut
 
 ### Rotating Entrances
-![Rotating Entrances](https://github.com/sharp3dges/animator/blob/master/animations/rotating_entrances.gif)
+![Rotating Entrances](https://github.com/sharp3dges/animator/blob/master/animations/rotating_entrances.gif =320)
 - RotateIn
 - RotateInDownLeft
 - RotateInDownRight
@@ -233,7 +233,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - RotateInUpRight
 
 ### Rotating Exits
-![Rotating Exits](https://github.com/sharp3dges/animator/blob/master/animations/rotating_exits.gif)
+![Rotating Exits](https://github.com/sharp3dges/animator/blob/master/animations/rotating_exits.gif =320)
 - RotateOut
 - RotateOutDownLeft
 - RotateOutDownRight
@@ -241,28 +241,28 @@ class FadeInDownAnimation extends AnimationDefinition {
 - RotateOutUpRight
 
 ### Sliding Entrances
-![Sliding Entrances](https://github.com/sharp3dges/animator/blob/master/animations/sliding_entrances.gif)
+![Sliding Entrances](https://github.com/sharp3dges/animator/blob/master/animations/sliding_entrances.gif =320)
 - SlideInDown
 - SlideInLeft
 - SlideInRight
 - SlideInUp
 
 ### Sliding Exits
-![Sliding Exits](https://github.com/sharp3dges/animator/blob/master/animations/sliding_exits.gif)
+![Sliding Exits](https://github.com/sharp3dges/animator/blob/master/animations/sliding_exits.gif =320)
 - SlideOutDown
 - SlideOutLeft
 - SlideOutRight
 - SlideOutUp
 
 ### Specials
-![Specials](https://github.com/sharp3dges/animator/blob/master/animations/specials.gif)
+![Specials](https://github.com/sharp3dges/animator/blob/master/animations/specials.gif =320)
 - Hinge
 - JackInTheBox
 - RollIn
 - RollOut
 
 ### Zooming Entrances
-![Zooming Entrances](https://github.com/sharp3dges/animator/blob/master/animations/zooming_entrances.gif)
+![Zooming Entrances](https://github.com/sharp3dges/animator/blob/master/animations/zooming_entrances.gif = 320)
 - ZoomIn
 - ZoomInDown
 - ZoomInLeft
@@ -270,7 +270,7 @@ class FadeInDownAnimation extends AnimationDefinition {
 - ZoomInUp
 
 ### Zooming Exits
-![Zooming Exits](https://github.com/sharp3dges/animator/blob/master/animations/zooming_exits.gif)
+![Zooming Exits](https://github.com/sharp3dges/animator/blob/master/animations/zooming_exits.gif =320)
 - ZoomOut
 - ZoomOutDown
 - ZoomOutLeft
