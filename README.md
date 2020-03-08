@@ -3,16 +3,16 @@
 Enables you to create stunning flutter animations, faster, efficient and with less code.
 
 Partly inspired by the amazing [Animate.css](https://daneden.github.io/animate.css/) package by Dan Eden.
-Please note, that although it's inspired by Animate.css, this still is a Flutter package, meaning it will be available for all flutter-supported platforms
+Please note, although it's inspired by Animate.css, this still is a Flutter package, meaning it will be available for all flutter-supported platforms.
 
 Features:
 - Combine and chain Tweens with multiple easing-curves.
-- Less boilerplate code by using a mixin which directly provides the controller, animations etc.
+- Less boilerplate code by using a widget which directly handles the controller, animations etc.
 - Automatically (re)starts animations on hot-reload after saving.
 - Animate your project with ease using the Animate.css based Widgets.
 
 ## Getting Started
-_Note: To see all of the animated widgets in action be sure to run the app in the example package, or view them on the [Animate.css](https://daneden.github.io/animate.css/) page._
+_Note: To see all of the animated widgets in action be sure to run the app in the demo_app package, or view them on the [Animate.css](https://daneden.github.io/animate.css/) page._
 
 Put the dependency inside your pubspec.yml and run packages get.
 
@@ -27,7 +27,7 @@ class TestAnimatedWidget extends StatelessWidget {
     return RubberBand(
       child: Text(
         'Rubber',
-        style: TextStyle(fontSize: 60),
+        style: TextStyle(fontSize: 20),
       ),
     );
   }
@@ -79,146 +79,86 @@ class _TestAnimatedWidgetState extends State<TestAnimatedWidget> {
 ```
 
 #### Create your own:
-Below is the code (with extra comments) from the actual Flash animated widget.
+Below is the code (with extra comments) from the actual FadeInDown animated widget.
 It should give you a clear insight on how to animate with the Animator using the _AnimatorWidget_.
 
 ```dart
 import 'package:flutter/widgets.dart';
-import 'package:animator/animator.dart';
 
-class Flash extends AnimatorWidget {
-  Flash({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
 
+///Firstly, we create an _AnimationDefinition_.
+///This is the actual animation part, which gets driven by the _AnimatorWidget_.
+class FadeInDownAnimation extends AnimationDefinition {
+  FadeInDownAnimation({
+  ///[AnimationPreferences] allows us to use the animation with different parameters for:
+  ///offset, duration, autoPlay and an animationStatusListener.
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+          preferences: preferences,
+          ///If you want to use the size of the widget, you need to define it here. (needsScreenSize is also available)
+          needsWidgetSize: true,
+          ///The opacity to use on the first render when using screenSize or widgetSize.
+          ///In some cases 'flickering' may appear when this isn't set to 1.0 or 0.0 respectively.
+          preRenderOpacity: 0.0,
+        );
+
+  ///Use the build function to actually render the animated values.
+  ///Performance-wise it's better to use a FadeTransition for opacity animation.
+  ///Use AnimatedBuilder to update te animation and it's values.
   @override
-  FlashState createState() => FlashState();
-}
-
-class FlashState extends AnimatorWidgetState<Flash> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
-      child: widget.child,
-    );
-  }
-
-  @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 25, value: 0.0),
-              TweenPercentage(percent: 50, value: 1.0),
-              TweenPercentage(percent: 75, value: 0.0),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
-  }
-}
-```
-#### Use widget or screen size inside your animations
-If you would like to use widget or screen size (or both)
-You can enable this by initializing the _AnimatorWidget_ with _needsScreenSize: true_ and _needsWidgetSize: true_.
-The widget will then expose the screenSize and/or widgetSize variables for you to use.
-Please not that in both cases the widget will pre-render the child once to extract screen/widget- sizes.
-This pre-rendering can lead to unwanted artifacts (in this case, an unwanted visible render) and can be resolved by overriding the ```double get preRenderOpacity => 1.0;``` and set it to ```0.0``` 
-```dart
-import 'package:vector_math/vector_math_64.dart' as Math;
-import 'package:flutter/widgets.dart';
-import 'package:animator/animator.dart';
-
-class RollIn extends AnimatorWidget {
-  RollIn({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsWidgetSize: true);
-
-  @override
-  RollInState createState() => RollInState();
-}
-
-class RollInState extends AnimatorWidgetState<RollIn> {
-
-  @override
-  Widget renderAnimation(BuildContext context) {
-    return FadeTransition(
-      opacity: animation.get("opacity"),
+      ///Use animator.get([KEY]) to get to the Animation object.
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
-        builder: (BuildContext context, Widget child) => Transform(
+        ///[Animator] exposes the AnimationController via animator.controller.
+        animation: animator.controller,
+        child: child,
+        builder: (BuildContext context, Widget child) => Transform.translate(
           child: child,
-          transform: Matrix4.translationValues(
-                  animation.get("translateX").value, 0.0, 0.0) *
-              Matrix4.rotationZ(animation.get("rotateZ").value),
-          alignment: Alignment.center,
+          ///Use animator.get([KEY]).value to get the animated value.
+          offset: Offset(0.0, animator.get("translateY").value),
         ),
       ),
     );
   }
 
+  ///Inside the getDefinition method we return the actual animation.
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .add(
-          key: "translateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: -widgetSize.width),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: Math.radians(-120.0)),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      ///Define a [KEY] and a list of Animated values from 0 to 100 percent.
+      ///Please not that you can also define an animation curve inside the [TweenPercentage] class:
+      ///TweenPercentage(percent: 0, value: 0.0, curve: Curves.ease),
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+      "translateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: -widgetSize.height),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
 }
-```
 
-#### Chaining animations
-You can chain animations in the following manner:
-```dart
-return animator
-  .at(duration: Duration(seconds: 1))
-  .add(...)
-  .add(...)//<- Add multiple animations from 0 to 1 seconds
-  .at(offset: Duration(seconds: 1), duration: Duration(seconds: 1))
-  .add(...)
-  .add(...);//<- Add multiple animations from 1 to 2 seconds
+///To use the AnimationDefinition we just created we could do the following:
+///For a single animation:
+/// AnimatorWidget(child: [child], definition: FadeInDownAnimation());
+/// 
+///For In & Out Animations:
+///  InOutAnimation(child: [child), inDefinition: FadeInDownAnimation(), outDefinition: ...);
+/// 
 ```
 
 ## Available default animations:
 ### Attention Seekers
-![Attention Seekers](https://cloud.githubusercontent.com/assets/378279/10590307/ef73b1ba-767d-11e5-8fb9-9779d3a53a50.gif)
+![Attention Seekers](https://github.com/sharp3dges/animator/blob/master/animations/attention_seekers.gif)
 - Bounce
 - Flash
 - HeadShake
@@ -232,7 +172,7 @@ return animator
 - Wobble
 
 ### Bouncing Entrances
-![Bouncing Entrances](https://cloud.githubusercontent.com/assets/378279/10590306/ef572bbc-767d-11e5-8440-8e61d401537a.gif)
+![Bouncing Entrances](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_entrances.gif)
 - BounceIn
 - BounceInDown
 - BounceInLeft
@@ -240,7 +180,7 @@ return animator
 - BounceInUp
 
 ### Bouncing Exits
-![Bouncing Exits](https://cloud.githubusercontent.com/assets/378279/10590305/ef56e4cc-767d-11e5-9562-6cd3210faf34.gif)
+![Bouncing Exits](https://github.com/sharp3dges/animator/blob/master/animations/bouncing_exits.gif)
 - BounceOut
 - BounceOutDown
 - BounceOutLeft
@@ -248,7 +188,7 @@ return animator
 - BounceOutUp
 
 ### Fading Entrances
-![Fading Entrances](https://cloud.githubusercontent.com/assets/378279/10590304/ef4f09b4-767d-11e5-9a43-06e97e8ee2c1.gif)
+![Fading Entrances](https://github.com/sharp3dges/animator/blob/master/animations/fading_entrances.gif)
 - FadeIn
 - FadeInDown
 - FadeInDownBig
@@ -260,7 +200,7 @@ return animator
 - FadeInUpBig
 
 ### Fading Exits
-![Fading Exits](https://cloud.githubusercontent.com/assets/378279/10590303/ef3e9598-767d-11e5-83bc-bd48d6017131.gif)
+![Fading Exits](https://github.com/sharp3dges/animator/blob/master/animations/fading_exits.gif)
 - FadeOut
 - FadeOutDown
 - FadeOutDownBig
@@ -272,7 +212,7 @@ return animator
 - FadeOutUpBig
 
 ### Flippers
-![Flippers](https://cloud.githubusercontent.com/assets/378279/10590296/ef3076ca-767d-11e5-9f62-6b9c696dad51.gif)
+![Flippers](https://github.com/sharp3dges/animator/blob/master/animations/flippers.gif)
 - Flip
 - FlipInX
 - FlipInY
@@ -280,12 +220,12 @@ return animator
 - FlipOutY
 
 ### Lightspeed
-![Lightspeed](https://cloud.githubusercontent.com/assets/378279/10590301/ef374c8e-767d-11e5-83ad-b249d2731f43.gif)
+![Lightspeed](https://github.com/sharp3dges/animator/blob/master/animations/light_speed.gif)
 - LightSpeedIn
 - LightSpeedOut
 
 ### Rotating Entrances
-No previews available.
+![Rotating Entrances](https://github.com/sharp3dges/animator/blob/master/animations/rotating_entrances.gif)
 - RotateIn
 - RotateInDownLeft
 - RotateInDownRight
@@ -293,7 +233,7 @@ No previews available.
 - RotateInUpRight
 
 ### Rotating Exits
-No previews available.
+![Rotating Exits](https://github.com/sharp3dges/animator/blob/master/animations/rotating_exits.gif)
 - RotateOut
 - RotateOutDownLeft
 - RotateOutDownRight
@@ -301,28 +241,28 @@ No previews available.
 - RotateOutUpRight
 
 ### Sliding Entrances
-![Sliding Entrances](https://cloud.githubusercontent.com/assets/378279/10590300/ef36dfe2-767d-11e5-932b-1cccce78087b.gif)
+![Sliding Entrances](https://github.com/sharp3dges/animator/blob/master/animations/sliding_entrances.gif)
 - SlideInDown
 - SlideInLeft
 - SlideInRight
 - SlideInUp
 
 ### Sliding Exits
-![Sliding Exits](https://cloud.githubusercontent.com/assets/378279/10590299/ef35a3ca-767d-11e5-94e0-441fd49b6444.gif)
+![Sliding Exits](https://github.com/sharp3dges/animator/blob/master/animations/sliding_exits.gif)
 - SlideOutDown
 - SlideOutLeft
 - SlideOutRight
 - SlideOutUp
 
 ### Specials
-No previews available.
+![Specials](https://github.com/sharp3dges/animator/blob/master/animations/specials.gif)
 - Hinge
 - JackInTheBox
 - RollIn
 - RollOut
 
 ### Zooming Entrances
-![Zooming Entrances](https://cloud.githubusercontent.com/assets/378279/10590302/ef37d438-767d-11e5-8480-a212e21c2192.gif)
+![Zooming Entrances](https://github.com/sharp3dges/animator/blob/master/animations/zooming_entrances.gif)
 - ZoomIn
 - ZoomInDown
 - ZoomInLeft
@@ -330,7 +270,7 @@ No previews available.
 - ZoomInUp
 
 ### Zooming Exits
-![Zooming Exits](https://cloud.githubusercontent.com/assets/378279/10590298/ef33fa52-767d-11e5-80fe-6b8dbb5e53d0.gif)
+![Zooming Exits](https://github.com/sharp3dges/animator/blob/master/animations/zooming_exits.gif)
 - ZoomOut
 - ZoomOutDown
 - ZoomOutLeft

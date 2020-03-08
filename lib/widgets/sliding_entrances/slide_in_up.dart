@@ -23,45 +23,50 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class SlideInUp extends AnimatorWidget {
-  SlideInUp({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
+class SlideInUpAnimation extends AnimationDefinition {
+  SlideInUpAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+          preferences: preferences,
+          needsScreenSize: true,
+          preRenderOpacity: 0.0,
+        );
 
   @override
-  SlideInUpState createState() => SlideInUpState();
-}
-
-class SlideInUpState extends AnimatorWidgetState<SlideInUp> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform.translate(
         child: child,
-        offset: Offset(0.0, animation.get("translateY").value),
+        offset: Offset(0.0, animator.get("translateY").value),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "translateY",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: screenSize.height),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "translateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: screenSize.height),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class SlideInUp extends AnimatorWidget {
+  SlideInUp({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: SlideInUpAnimation(preferences: preferences));
 }

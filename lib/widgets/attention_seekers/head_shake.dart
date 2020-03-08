@@ -22,73 +22,65 @@
  * SOFTWARE.
  */
 
-import 'package:flutter/material.dart';
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class HeadShake extends AnimatorWidget {
-  HeadShake({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
+
+class HeadShakeAnimation extends AnimationDefinition {
+  HeadShakeAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  HeadShakeState createState() => HeadShakeState();
-}
-
-class HeadShakeState extends AnimatorWidgetState<HeadShake> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-                animation.get("translateX").value, 0.0, 0.0) *
-            Matrix4.rotationY(animation.get("rotateY").value),
+                animator.get("translateX").value, 0.0, 0.0) *
+            Matrix4.rotationY(animator.get("rotateY").value),
         alignment: Alignment.bottomCenter,
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final curve = Curves.easeInOut;
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "translateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: curve),
-              TweenPercentage(percent: 13, value: -6.0, curve: curve),
-              TweenPercentage(percent: 37, value: 5.0, curve: curve),
-              TweenPercentage(percent: 63, value: -3.0, curve: curve),
-              TweenPercentage(percent: 87, value: 2.0, curve: curve),
-              TweenPercentage(percent: 100, value: 0.0, curve: curve),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateY",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: curve),
-              TweenPercentage(
-                  percent: 13, value: Math.radians(-9.0), curve: curve),
-              TweenPercentage(
-                  percent: 37, value: Math.radians(7.0), curve: curve),
-              TweenPercentage(
-                  percent: 63, value: Math.radians(-5.0), curve: curve),
-              TweenPercentage(
-                  percent: 87, value: Math.radians(3.0), curve: curve),
-              TweenPercentage(percent: 100, value: 0.0, curve: curve),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "translateX": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: curve),
+          TweenPercentage(percent: 13, value: -6.0, curve: curve),
+          TweenPercentage(percent: 37, value: 5.0, curve: curve),
+          TweenPercentage(percent: 63, value: -3.0, curve: curve),
+          TweenPercentage(percent: 87, value: 2.0, curve: curve),
+          TweenPercentage(percent: 100, value: 0.0, curve: curve),
+        ],
+      ),
+      "rotateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: curve),
+          TweenPercentage(percent: 13, value: -9.0 * toRad, curve: curve),
+          TweenPercentage(percent: 37, value: 7.0 * toRad, curve: curve),
+          TweenPercentage(percent: 63, value: -5.0 * toRad, curve: curve),
+          TweenPercentage(percent: 87, value: 3.0 * toRad, curve: curve),
+          TweenPercentage(percent: 100, value: 0.0, curve: curve),
+        ],
+      ),
+    };
   }
+}
+
+class HeadShake extends AnimatorWidget {
+  HeadShake({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: HeadShakeAnimation(preferences: preferences));
 }

@@ -22,37 +22,28 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-import '../../utils/perspective.dart';
+import '../../flutter_animator.dart';
 
-class Hinge extends AnimatorWidget {
-  Hinge({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class HingeAnimation extends AnimationDefinition {
+  HingeAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  HingeState createState() => HingeState();
-}
-
-class HingeState extends AnimatorWidgetState<Hinge> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform(
           transform: Perspective.matrix(4.0) *
               Matrix4.translationValues(
-                  0.0, animation.get("translateY").value, 0.0) *
-              Matrix4.rotationZ(animation.get("rotateZ").value),
-          child: widget.child,
+                  0.0, animator.get("translateY").value, 0.0) *
+              Matrix4.rotationZ(animator.get("rotateZ").value),
+          child: child,
           alignment: Alignment.topLeft,
         ),
       ),
@@ -60,55 +51,42 @@ class HingeState extends AnimatorWidgetState<Hinge> {
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 80, value: 1.0, curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 100, value: 0.0, curve: Curves.easeInOut),
-            ],
-          ),
-        )
-        .add(
-          key: "translateY",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 80, value: 0.0, curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 100, value: 700.0, curve: Curves.easeInOut),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 20,
-                  value: Math.radians(80.0),
-                  curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 40,
-                  value: Math.radians(60.0),
-                  curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 60,
-                  value: Math.radians(80.0),
-                  curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 80,
-                  value: Math.radians(60.0),
-                  curve: Curves.easeInOut),
-              TweenPercentage(
-                  percent: 100, value: 0.0, curve: Curves.easeInOut),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    const curve = Curves.easeInOut;
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 80, value: 1.0, curve: curve),
+          TweenPercentage(percent: 100, value: 0.0, curve: curve),
+        ],
+      ),
+      "translateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 80, value: 0.0, curve: curve),
+          TweenPercentage(percent: 100, value: 700.0, curve: curve),
+        ],
+      ),
+      "rotateZ": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: curve),
+          TweenPercentage(percent: 20, value: 80.0 * toRad, curve: curve),
+          TweenPercentage(percent: 40, value: 60.0 * toRad, curve: curve),
+          TweenPercentage(percent: 60, value: 80.0 * toRad, curve: curve),
+          TweenPercentage(percent: 80, value: 60.0 * toRad, curve: curve),
+          TweenPercentage(percent: 100, value: 0.0, curve: curve),
+        ],
+      ),
+    };
   }
+}
+
+class Hinge extends AnimatorWidget {
+  Hinge({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: HingeAnimation(preferences: preferences));
 }

@@ -22,33 +22,26 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class JackInTheBox extends AnimatorWidget {
-  JackInTheBox({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
+
+class JackInTheBoxAnimation extends AnimationDefinition {
+  JackInTheBoxAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  JackInTheBoxState createState() => JackInTheBoxState();
-}
-
-class JackInTheBoxState extends AnimatorWidgetState<JackInTheBox> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform(
-          transform: Matrix4.rotationZ(-animation.get("rotateZ").value) *
-              Matrix4.identity().scaled(animation.get("scale").value),
-          child: widget.child,
+          transform: Matrix4.rotationZ(-animator.get("rotateZ").value) *
+              Matrix4.identity().scaled(animator.get("scale").value),
+          child: child,
           alignment: Alignment.center,
         ),
       ),
@@ -56,38 +49,39 @@ class JackInTheBoxState extends AnimatorWidgetState<JackInTheBox> {
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .add(
-          key: "scale",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.1),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: Math.radians(30.0)),
-              TweenPercentage(percent: 50, value: Math.radians(-10.0)),
-              TweenPercentage(percent: 70, value: Math.radians(3.0)),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+      "scale": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.1),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+      "rotateZ": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 30.0 * toRad),
+          TweenPercentage(percent: 50, value: -10.0 * toRad),
+          TweenPercentage(percent: 70, value: 3.0 * toRad),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class JackInTheBox extends AnimatorWidget {
+  JackInTheBox({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: JackInTheBoxAnimation(preferences: preferences));
 }

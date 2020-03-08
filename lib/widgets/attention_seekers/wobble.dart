@@ -22,71 +22,76 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
+import 'package:vector_math/vector_math_64.dart' as Math;
 
-class Wobble extends AnimatorWidget {
-  Wobble({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
+import '../../flutter_animator.dart';
+
+class WobbleAnimation extends AnimationDefinition {
+  WobbleAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+          preferences: preferences,
+          needsScreenSize: true,
+        );
 
   @override
-  WobbleState createState() => WobbleState();
-}
-
-class WobbleState extends AnimatorWidgetState<Wobble> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
-        transform: animation.get("transform").value,
+        transform: animator.get("transform").value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final width = screenSize.width;
     final axis = Math.Vector3(0.0, 0.0, 1.0);
+
     final m = Matrix4.identity();
     final m15 = Matrix4.translationValues(-0.25 * width, 0.0, 0.0);
-    m15.rotate(axis, Math.radians(-5.0));
+    m15.rotate(axis, -5.0 * toRad);
 
     final m30 = Matrix4.translationValues(0.2 * width, 0.0, 0.0);
-    m30.rotate(axis, Math.radians(3.0));
+    m30.rotate(axis, 3.0 * toRad);
 
     final m45 = Matrix4.translationValues(-0.15 * width, 0.0, 0.0);
-    m45.rotate(axis, Math.radians(-3.0));
+    m45.rotate(axis, -3.0 * toRad);
 
     final m60 = Matrix4.translationValues(0.1 * width, 0.0, 0.0);
-    m60.rotate(axis, Math.radians(2.0));
+    m60.rotate(axis, 2.0 * toRad);
 
     final m75 = Matrix4.translationValues(-0.05 * width, 0.0, 0.0);
-    m75.rotate(axis, Math.radians(-1.0));
+    m75.rotate(axis, -1.0 * toRad);
 
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "transform",
-          tweens: TweenList<Matrix4>(
-            [
-              TweenPercentage(percent: 0, value: m),
-              TweenPercentage(percent: 15, value: m15),
-              TweenPercentage(percent: 30, value: m30),
-              TweenPercentage(percent: 45, value: m45),
-              TweenPercentage(percent: 60, value: m60),
-              TweenPercentage(percent: 75, value: m75),
-              TweenPercentage(percent: 100, value: m),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "transform": TweenList<Matrix4>(
+        [
+          TweenPercentage(percent: 0, value: m),
+          TweenPercentage(percent: 15, value: m15),
+          TweenPercentage(percent: 30, value: m30),
+          TweenPercentage(percent: 45, value: m45),
+          TweenPercentage(percent: 60, value: m60),
+          TweenPercentage(percent: 75, value: m75),
+          TweenPercentage(percent: 100, value: m),
+        ],
+      ),
+    };
   }
+}
+
+class Wobble extends AnimatorWidget {
+  Wobble({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: WobbleAnimation(preferences: preferences));
 }

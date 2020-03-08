@@ -23,62 +23,63 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class BounceOutUp extends AnimatorWidget {
-  BounceOutUp({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsScreenSize: true);
+class BounceOutUpAnimation extends AnimationDefinition {
+  BounceOutUpAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+          preferences: preferences,
+          needsScreenSize: true,
+        );
 
   @override
-  BounceOutUpState createState() => BounceOutUpState();
-}
-
-class BounceOutUpState extends AnimatorWidgetState<BounceOutUp> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.translate(
           child: child,
-          offset: Offset(0.0, animation.get("translateY").value),
+          offset: Offset(0.0, animator.get("translateY").value),
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 45, value: 1.0, curve: curve),
-              TweenPercentage(percent: 100, value: 0.0, curve: curve),
-            ],
-          ),
-        )
-        .add(
-          key: "translateY",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: curve),
-              TweenPercentage(percent: 20, value: -10.0, curve: curve),
-              TweenPercentage(percent: 40, value: 20.0, curve: curve),
-              TweenPercentage(percent: 45, value: 20.0, curve: curve),
-              TweenPercentage(
-                  percent: 100, value: -screenSize.height, curve: curve),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 45, value: 1.0, curve: curve),
+          TweenPercentage(percent: 100, value: 0.0, curve: curve),
+        ],
+      ),
+      "translateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: curve),
+          TweenPercentage(percent: 20, value: -10.0, curve: curve),
+          TweenPercentage(percent: 40, value: 20.0, curve: curve),
+          TweenPercentage(percent: 45, value: 20.0, curve: curve),
+          TweenPercentage(
+              percent: 100, value: -screenSize.height, curve: curve),
+        ],
+      ),
+    };
   }
+}
+
+class BounceOutUp extends AnimatorWidget {
+  BounceOutUp({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: BounceOutUpAnimation(preferences: preferences));
 }

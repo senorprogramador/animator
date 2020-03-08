@@ -23,63 +23,61 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class BounceIn extends AnimatorWidget {
-  BounceIn({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class BounceInAnimation extends AnimationDefinition {
+  BounceInAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  BounceInState createState() => BounceInState();
-}
-
-class BounceInState extends AnimatorWidgetState<BounceIn> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.scale(
           child: child,
-          scale: animation.get("scale").value,
-          alignment: new FractionalOffset(0.5, 0.5),
+          scale: animator.get("scale").value,
+          alignment: Alignment.center,
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: curve),
-              TweenPercentage(percent: 60, value: 1.0, curve: curve),
-            ],
-          ),
-        )
-        .add(
-          key: "scale",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.3, curve: curve),
-              TweenPercentage(percent: 20, value: 1.1, curve: curve),
-              TweenPercentage(percent: 40, value: 0.9, curve: curve),
-              TweenPercentage(percent: 60, value: 1.03, curve: curve),
-              TweenPercentage(percent: 80, value: 0.97, curve: curve),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: curve),
+          TweenPercentage(percent: 60, value: 1.0, curve: curve),
+        ],
+      ),
+      "scale": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.3, curve: curve),
+          TweenPercentage(percent: 20, value: 1.1, curve: curve),
+          TweenPercentage(percent: 40, value: 0.9, curve: curve),
+          TweenPercentage(percent: 60, value: 1.03, curve: curve),
+          TweenPercentage(percent: 80, value: 0.97, curve: curve),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+    };
   }
+}
+
+class BounceIn extends AnimatorWidget {
+  BounceIn({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: BounceInAnimation(preferences: preferences));
 }

@@ -22,37 +22,27 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-import '../../utils/perspective.dart';
+import '../../flutter_animator.dart';
 
-class FlipOutX extends AnimatorWidget {
-  FlipOutX({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(
-      duration: Duration(milliseconds: 750),
-    ),
-  }) : super(key: key, child: child, prefs: prefs);
+class FlipOutXAnimation extends AnimationDefinition {
+  FlipOutXAnimation({
+    AnimationPreferences preferences =
+        const AnimationPreferences(duration: Duration(milliseconds: 750)),
+  }) : super(preferences: preferences);
 
   @override
-  FlipOutXState createState() => FlipOutXState();
-}
-
-class FlipOutXState extends AnimatorWidgetState<FlipOutX> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform(
           transform: Perspective.matrix(4.0) *
-              Matrix4.rotationX(-animation.get("rotateX").value),
-          child: widget.child,
+              Matrix4.rotationX(-animator.get("rotateX").value),
+          child: child,
           alignment: Alignment.center,
         ),
       ),
@@ -60,28 +50,32 @@ class FlipOutXState extends AnimatorWidgetState<FlipOutX> {
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 30, value: 1.0),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 30, value: Math.radians(-20.0)),
-              TweenPercentage(percent: 100, value: Math.radians(90.0)),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 30, value: 1.0),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+      "rotateX": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 30, value: -20.0 * toRad),
+          TweenPercentage(percent: 100, value: 90.0 * toRad),
+        ],
+      ),
+    };
   }
+}
+
+class FlipOutX extends AnimatorWidget {
+  FlipOutX({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: FlipOutXAnimation(preferences: preferences));
 }

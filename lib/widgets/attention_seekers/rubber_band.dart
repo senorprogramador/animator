@@ -23,52 +23,53 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class RubberBand extends AnimatorWidget {
-  RubberBand({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class RubberBandAnimation extends AnimationDefinition {
+  RubberBandAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  RubberBandState createState() => RubberBandState();
-}
-
-class RubberBandState extends AnimatorWidgetState<RubberBand> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
-        transform: animation.get("transform").value,
+        transform: animator.get("transform").value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final m = Matrix4.identity();
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "transform",
-          tweens: TweenList<Matrix4>(
-            [
-              TweenPercentage(percent: 0, value: m),
-              TweenPercentage(percent: 30, value: m.scaled(1.25, 0.75, 1.0)),
-              TweenPercentage(percent: 40, value: m.scaled(0.75, 1.25, 1.0)),
-              TweenPercentage(percent: 50, value: m.scaled(1.15, 0.85, 1.0)),
-              TweenPercentage(percent: 65, value: m.scaled(0.95, 1.05, 1.0)),
-              TweenPercentage(percent: 75, value: m.scaled(1.05, 0.95, 1.0)),
-              TweenPercentage(percent: 100, value: m),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "transform": TweenList<Matrix4>(
+        [
+          TweenPercentage(percent: 0, value: m),
+          TweenPercentage(percent: 30, value: m.scaled(1.25, 0.75, 1.0)),
+          TweenPercentage(percent: 40, value: m.scaled(0.75, 1.25, 1.0)),
+          TweenPercentage(percent: 50, value: m.scaled(1.15, 0.85, 1.0)),
+          TweenPercentage(percent: 65, value: m.scaled(0.95, 1.05, 1.0)),
+          TweenPercentage(percent: 75, value: m.scaled(1.05, 0.95, 1.0)),
+          TweenPercentage(percent: 100, value: m),
+        ],
+      ),
+    };
   }
+}
+
+class RubberBand extends AnimatorWidget {
+  RubberBand({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: RubberBandAnimation(preferences: preferences));
 }

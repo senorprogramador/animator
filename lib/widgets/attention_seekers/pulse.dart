@@ -23,47 +23,48 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class Pulse extends AnimatorWidget {
-  Pulse({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class PulseAnimation extends AnimationDefinition {
+  PulseAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  PulseState createState() => PulseState();
-}
-
-class PulseState extends AnimatorWidgetState<Pulse> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
-        transform: Matrix4.identity().scaled(animation.get("scale").value),
+        transform: Matrix4.identity().scaled(animator.get("scale").value),
         alignment: new FractionalOffset(0.5, 0.5),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "scale",
-          tweens: TweenList(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 50, value: 1.05),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "scale": TweenList(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 50, value: 1.05),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+    };
   }
+}
+
+class Pulse extends AnimatorWidget {
+  Pulse({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: PulseAnimation(preferences: preferences));
 }

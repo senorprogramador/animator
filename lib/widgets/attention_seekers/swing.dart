@@ -22,52 +22,52 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class Swing extends AnimatorWidget {
-  Swing({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
+
+class SwingAnimation extends AnimationDefinition {
+  SwingAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  SwingState createState() => SwingState();
-}
-
-class SwingState extends AnimatorWidgetState<Swing> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform.rotate(
         child: child,
-        angle: animation.get("rotateZ").value,
+        angle: animator.get("rotateZ").value,
         alignment: new FractionalOffset(0.5, 0.0),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 20, value: Math.radians(15.0)),
-              TweenPercentage(percent: 40, value: Math.radians(-10.0)),
-              TweenPercentage(percent: 60, value: Math.radians(5.0)),
-              TweenPercentage(percent: 80, value: Math.radians(-5.0)),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "rotateZ": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 20, value: 15.0 * toRad),
+          TweenPercentage(percent: 40, value: -10.0 * toRad),
+          TweenPercentage(percent: 60, value: 5.0 * toRad),
+          TweenPercentage(percent: 80, value: -5.0 * toRad),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class Swing extends AnimatorWidget {
+  Swing({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: SwingAnimation(preferences: preferences));
 }

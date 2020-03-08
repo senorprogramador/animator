@@ -23,56 +23,57 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class Bounce extends AnimatorWidget {
-  Bounce({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class BounceAnimation extends AnimationDefinition {
+  BounceAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  BounceState createState() => BounceState();
-}
-
-class BounceState extends AnimatorWidgetState<Bounce> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-            0.0, animation.get("translateY").value, 0.0),
+            0.0, animator.get("translateY").value, 0.0),
         alignment: new FractionalOffset(0.5, 1.0),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final floorCurve = Cubic(0.215, 0.61, 0.355, 1);
     final ceilCurve = Cubic(0.755, 0.05, 0.855, 0.06);
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "translateY",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: floorCurve),
-              TweenPercentage(percent: 20, value: 0.0, curve: floorCurve),
-              TweenPercentage(percent: 40, value: -30.0, curve: ceilCurve),
-              TweenPercentage(percent: 43, value: -30.0, curve: ceilCurve),
-              TweenPercentage(percent: 53, value: 0.0, curve: floorCurve),
-              TweenPercentage(percent: 70, value: -15.0, curve: ceilCurve),
-              TweenPercentage(percent: 80, value: 0.0, curve: floorCurve),
-              TweenPercentage(percent: 90, value: -4.0),
-              TweenPercentage(percent: 100, value: 0.0, curve: floorCurve),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "translateY": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: floorCurve),
+          TweenPercentage(percent: 20, value: 0.0, curve: floorCurve),
+          TweenPercentage(percent: 40, value: -30.0, curve: ceilCurve),
+          TweenPercentage(percent: 43, value: -30.0, curve: ceilCurve),
+          TweenPercentage(percent: 53, value: 0.0, curve: floorCurve),
+          TweenPercentage(percent: 70, value: -15.0, curve: ceilCurve),
+          TweenPercentage(percent: 80, value: 0.0, curve: floorCurve),
+          TweenPercentage(percent: 90, value: -4.0),
+          TweenPercentage(percent: 100, value: 0.0, curve: floorCurve),
+        ],
+      ),
+    };
   }
+}
+
+class Bounce extends AnimatorWidget {
+  Bounce({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: BounceAnimation(preferences: preferences));
 }

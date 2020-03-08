@@ -23,62 +23,61 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class BounceOut extends AnimatorWidget {
-  BounceOut({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs =
-        const AnimatorPreferences(duration: Duration(milliseconds: 750)),
-  }) : super(key: key, child: child, prefs: prefs);
+class BounceOutAnimation extends AnimationDefinition {
+  BounceOutAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(
+      duration: Duration(milliseconds: 750),
+    ),
+  }) : super(preferences: preferences);
 
   @override
-  BounceOutState createState() => BounceOutState();
-}
-
-class BounceOutState extends AnimatorWidgetState<BounceOut> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.scale(
           child: child,
-          scale: animation.get("scale").value,
-          alignment: new FractionalOffset(0.5, 0.5),
+          scale: animator.get("scale").value,
+          alignment: Alignment.center,
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 55, value: 1.0),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "scale",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 20, value: 0.9),
-              TweenPercentage(percent: 50, value: 1.1),
-              TweenPercentage(percent: 55, value: 1.1),
-              TweenPercentage(percent: 100, value: 0.3),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 55, value: 1.0),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+      "scale": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 20, value: 0.9),
+          TweenPercentage(percent: 50, value: 1.1),
+          TweenPercentage(percent: 55, value: 1.1),
+          TweenPercentage(percent: 100, value: 0.3),
+        ],
+      ),
+    };
   }
+}
+
+class BounceOut extends AnimatorWidget {
+  BounceOut({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: BounceOutAnimation(preferences: preferences));
 }

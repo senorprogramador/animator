@@ -23,50 +23,51 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class HeartBeat extends AnimatorWidget {
-  HeartBeat({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class HeartBeatAnimation extends AnimationDefinition {
+  HeartBeatAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  HeartBeatState createState() => HeartBeatState();
-}
-
-class HeartBeatState extends AnimatorWidgetState<HeartBeat> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform.scale(
         child: child,
-        scale: animation.get("scale").value,
+        scale: animator.get("scale").value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
     final curve = Curves.easeInOut;
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "scale",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0, curve: curve),
-              TweenPercentage(percent: 14, value: 1.3, curve: curve),
-              TweenPercentage(percent: 28, value: 1.0, curve: curve),
-              TweenPercentage(percent: 42, value: 1.3, curve: curve),
-              TweenPercentage(percent: 70, value: 1.0, curve: curve),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "scale": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0, curve: curve),
+          TweenPercentage(percent: 14, value: 1.3, curve: curve),
+          TweenPercentage(percent: 28, value: 1.0, curve: curve),
+          TweenPercentage(percent: 42, value: 1.3, curve: curve),
+          TweenPercentage(percent: 70, value: 1.0, curve: curve),
+        ],
+      ),
+    };
   }
+}
+
+class HeartBeat extends AnimatorWidget {
+  HeartBeat({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: HeartBeatAnimation(preferences: preferences));
 }

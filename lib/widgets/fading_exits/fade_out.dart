@@ -23,41 +23,42 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
+
+class FadeOutAnimation extends AnimationDefinition {
+  FadeOutAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
+
+  @override
+  Widget build(BuildContext context, Animator animator, Widget child) {
+    return FadeTransition(
+      opacity: animator.get("opacity"),
+      child: child,
+    );
+  }
+
+  @override
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
+  }
+}
 
 class FadeOut extends AnimatorWidget {
   FadeOut({
     Key key,
     @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
-
-  @override
-  FadeOutState createState() => FadeOutState();
-}
-
-class FadeOutState extends AnimatorWidgetState<FadeOut> {
-  @override
-  Widget renderAnimation(BuildContext context) {
-    return FadeTransition(
-      opacity: animation.get("opacity"),
-      child: widget.child,
-    );
-  }
-
-  @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
-  }
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: FadeOutAnimation(preferences: preferences));
 }

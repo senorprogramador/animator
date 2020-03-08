@@ -1,139 +1,197 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_animator/utils/animator.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
-class AnimatorPreferences {
-  final Duration offset;
-  final Duration duration;
-  final bool autoPlay;
-  final AnimationStatusListener animationStatusListener;
-
-  const AnimatorPreferences({
-    this.offset = Duration.zero,
-    this.duration = const Duration(seconds: 1),
-    this.autoPlay = true,
-    this.animationStatusListener,
-  });
-}
+import '../animation/animation_definition.dart';
+import '../animation/animator.dart';
 
 class AnimatorWidget extends StatefulWidget {
   final Widget child;
-  final AnimatorPreferences prefs;
-  final bool needsWidgetSize;
-  final bool needsScreenSize;
+  final AnimationDefinition definition;
 
   AnimatorWidget({
     Key key,
     @required this.child,
-    this.prefs = const AnimatorPreferences(),
-    this.needsWidgetSize = false,
-    this.needsScreenSize = false,
+    @required this.definition,
   }) : super(key: key) {
-    assert(child != null, 'Error: child in $this cannot be null');
-    assert(prefs != null, 'Error: preferences in $this cannot be null');
-    assert(prefs.offset != null, 'Error: offset in $this cannot be null');
-    assert(prefs.duration != null, 'Error: duration in $this cannot be null');
+    assert(this.child != null, '$this child cannot be null');
+    assert(this.definition != null, '$this definition cannot be null');
   }
-
-  Duration get offset => prefs.offset;
-  Duration get duration => prefs.duration;
-  AnimationStatusListener get animationStatusListener =>
-      prefs.animationStatusListener;
 
   @override
   AnimatorWidgetState createState() => AnimatorWidgetState();
 }
 
 class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
-    with SingleAnimatorStateMixin {
+    implements TickerProvider {
   Size widgetSize;
   Size screenSize;
 
-  AnimationController get controller => animation.controller;
+  Animator animator;
+  Ticker _ticker;
 
-  void loop({bool yoYo = false}) {
-    controller.repeat(reverse: yoYo);
+  void loop({bool pingPong = false}) {
+    if (animator != null) {
+      animator.loop();
+    }
   }
 
   void forward({double from = 0.0}) {
-    controller.forward(from: from);
+    if (animator != null) {
+      animator.forward(from: from);
+    }
   }
 
   void reverse({double from = 1.0}) {
-    controller.reverse(from: from);
+    if (animator != null) {
+      animator.reverse(from: from);
+    }
   }
 
   void stop() {
-    controller.stop();
+    if (animator != null) {
+      animator.stop();
+    }
   }
 
-  double get preRenderOpacity => 1.0;
-
-  @override
-  void initState() {
-    if (widget.needsWidgetSize || widget.needsScreenSize) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          if (widget.needsWidgetSize) {
-            RenderBox renderBox = context.findRenderObject();
-            widgetSize = renderBox.size;
-          }
-          if (widget.needsScreenSize) {
-            screenSize = MediaQuery.of(context).size;
-          }
-        });
-        refreshAnimation();
-      });
-    } else {
-      refreshAnimation();
+  void handlePlayState(AnimationPlayStates playState) {
+    switch (playState) {
+      case AnimationPlayStates.None:
+        break;
+      case AnimationPlayStates.Forward:
+        forward();
+        break;
+      case AnimationPlayStates.Reverse:
+        reverse();
+        break;
+      case AnimationPlayStates.Loop:
+        loop();
+        break;
+      case AnimationPlayStates.PingPong:
+        loop(pingPong: true);
+        break;
     }
-    super.initState();
   }
 
   @override
   @mustCallSuper
   Widget build(BuildContext context) {
-    if (widget.needsWidgetSize && widgetSize == null) {
+    if (widget.definition.needsWidgetSize && widgetSize == null) {
       return Opacity(
-        opacity: preRenderOpacity,
+        opacity: widget.definition.preRenderOpacity,
         child: widget.child,
       );
     }
-    if (widget.needsScreenSize && screenSize == null) {
+    if (widget.definition.needsScreenSize && screenSize == null) {
       return Opacity(
-        opacity: preRenderOpacity,
+        opacity: widget.definition.preRenderOpacity,
         child: widget.child,
       );
     }
-    return renderAnimation(context);
+    return animator.build(context, widget.child);
   }
 
-  void refreshAnimation() {
-    disposeExistingAnimation();
-    animation = createAnimation(Animator.sync(this)).generate();
-    if (widget.prefs.autoPlay) {
-      animation.controller.forward(from: 0.0);
+  void _createAnimator() {
+    animator = Animator(vsync: this);
+    animator.setAnimationDefinition(widget.definition);
+    if (widget.definition.needsWidgetSize ||
+        widget.definition.needsScreenSize) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          if (widget.definition.needsWidgetSize) {
+            RenderBox renderBox = context.findRenderObject();
+            widgetSize = renderBox.size;
+          }
+          if (widget.definition.needsScreenSize) {
+            screenSize = MediaQuery.of(context).size;
+          }
+        });
+        animator.resolveDefinition(
+          widgetSize: widgetSize,
+          screenSize: screenSize,
+        );
+        handlePlayState(widget.definition.preferences.autoPlay);
+      });
+    } else {
+      animator.resolveDefinition(
+        widgetSize: widgetSize,
+        screenSize: screenSize,
+      );
+      handlePlayState(widget.definition.preferences.autoPlay);
     }
   }
 
   @override
   void reassemble() {
     if (!kReleaseMode) {
+      disposeExistingAnimation();
       setState(() {
-        refreshAnimation();
+        screenSize = null;
+        widgetSize = null;
+        _createAnimator();
       });
     }
     super.reassemble();
   }
 
-  Widget renderAnimation(BuildContext context) {
-    throw Exception(
-        "AnimatorWidgetState.createAnimation() is marked for override.");
+  @override
+  void initState() {
+    disposeExistingAnimation();
+    screenSize = null;
+    widgetSize = null;
+    _createAnimator();
+    super.initState();
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    throw Exception(
-        "AnimatorWidgetState.createAnimation() is marked for override.");
+  void dispose() {
+    disposeExistingAnimation();
+    super.dispose();
+  }
+
+  disposeExistingAnimation() {
+    if (animator != null) {
+      animator.dispose();
+    }
+    if (_ticker != null) {
+      _ticker.dispose();
+      _ticker = null;
+    }
+  }
+
+  @override
+  Ticker createTicker(TickerCallback onTick) {
+    disposeExistingAnimation();
+
+    _ticker =
+        Ticker(onTick, debugLabel: kDebugMode ? 'created by $this' : null);
+    return _ticker;
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_ticker != null) _ticker.muted = !TickerMode.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    String tickerDescription;
+    if (_ticker != null) {
+      if (_ticker.isActive && _ticker.muted)
+        tickerDescription = 'active but muted';
+      else if (_ticker.isActive)
+        tickerDescription = 'active';
+      else if (_ticker.muted)
+        tickerDescription = 'inactive and muted';
+      else
+        tickerDescription = 'inactive';
+    }
+    properties.add(DiagnosticsProperty<Ticker>('ticker', _ticker,
+        description: tickerDescription,
+        showSeparator: false,
+        defaultValue: null));
   }
 }

@@ -22,91 +22,83 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-import '../../utils/perspective.dart';
+import '../../flutter_animator.dart';
 
 enum FlipInXOrigin {
   back,
   front,
 }
 
-class FlipInX extends AnimatorWidget {
+class FlipInXAnimation extends AnimationDefinition {
   final FlipInXOrigin from;
   final Alignment alignment;
 
-  FlipInX({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
+  FlipInXAnimation({
     this.from = FlipInXOrigin.front,
     this.alignment: Alignment.center,
-  }) : super(key: key, child: child, prefs: prefs);
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  FlipInXState createState() => FlipInXState();
-}
-
-class FlipInXState extends AnimatorWidgetState<FlipInX> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform(
           transform: Perspective.matrix(4.0) *
-              Matrix4.rotationX(-animation.get("rotateX").value),
-          child: widget.child,
-          alignment: widget.alignment,
+              Matrix4.rotationX(-animator.get("rotateX").value),
+          child: child,
+          alignment: alignment,
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    double multiplier = widget.from == FlipInXOrigin.front ? -1.0 : 1.0;
-    if (widget.alignment == Alignment.topCenter ||
-        widget.alignment == Alignment.topLeft ||
-        widget.alignment == Alignment.topRight) {
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    double multiplier = from == FlipInXOrigin.front ? -1.0 : 1.0;
+    if (alignment == Alignment.topCenter ||
+        alignment == Alignment.topLeft ||
+        alignment == Alignment.topRight) {
       multiplier *= -1;
     }
-
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeIn),
-              TweenPercentage(percent: 60, value: 1.0),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(
-                  percent: 0,
-                  value: multiplier * Math.radians(90.0),
-                  curve: Curves.easeIn),
-              TweenPercentage(
-                  percent: 40,
-                  value: multiplier * Math.radians(-20.0),
-                  curve: Curves.easeIn),
-              TweenPercentage(
-                  percent: 60, value: multiplier * Math.radians(10.0)),
-              TweenPercentage(
-                  percent: 80, value: multiplier * Math.radians(-5.0)),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeIn),
+          TweenPercentage(percent: 60, value: 1.0),
+        ],
+      ),
+      "rotateX": TweenList<double>(
+        [
+          TweenPercentage(
+              percent: 0,
+              value: multiplier * 90.0 * toRad,
+              curve: Curves.easeIn),
+          TweenPercentage(
+              percent: 40,
+              value: multiplier * -20.0 * toRad,
+              curve: Curves.easeIn),
+          TweenPercentage(percent: 60, value: multiplier * 10.0 * toRad),
+          TweenPercentage(percent: 80, value: multiplier * -5.0 * toRad),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class FlipInX extends AnimatorWidget {
+  FlipInX({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: FlipInXAnimation(preferences: preferences));
 }

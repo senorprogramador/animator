@@ -24,12 +24,21 @@
 
 library flutter_animator;
 
-export 'utils/animator.dart';
-export 'utils/perspective.dart';
+export 'animation/animator.dart';
+export 'animation/animator_play_states.dart';
+export 'animation/animation_definition.dart';
+export 'animation/animation_preferences.dart';
+export 'animation/tween_list.dart';
+export 'animation/tween_percentage.dart';
+
+export 'utils/math.dart';
 export 'utils/pair.dart';
+export 'utils/perspective.dart';
+export 'utils/string_case_formatter.dart';
 
 export 'widgets/animator_widget.dart';
-export 'widgets/attention_seekers/flash.dart';
+export 'widgets/in_out_animation.dart';
+export 'widgets/attention_seekers/bounce.dart';
 export 'widgets/attention_seekers/flash.dart';
 export 'widgets/attention_seekers/head_shake.dart';
 export 'widgets/attention_seekers/heart_beat.dart';
@@ -79,8 +88,8 @@ export 'widgets/flippers/flip_in_y.dart';
 export 'widgets/flippers/flip_out_x.dart';
 export 'widgets/flippers/flip_out_y.dart';
 
-export 'widgets/lightspeed/light_speed_in.dart';
-export 'widgets/lightspeed/light_speed_out.dart';
+export 'widgets/light_speed/light_speed_in.dart';
+export 'widgets/light_speed/light_speed_out.dart';
 
 export 'widgets/rotating_entrances/rotate_in.dart';
 export 'widgets/rotating_entrances/rotate_in_down_left.dart';

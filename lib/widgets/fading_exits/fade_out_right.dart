@@ -23,57 +23,55 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class FadeOutRight extends AnimatorWidget {
-  FadeOutRight({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsWidgetSize: true);
+class FadeOutRightAnimation extends AnimationDefinition {
+  FadeOutRightAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences, needsWidgetSize: true);
 
   @override
-  FadeOutRightState createState() => FadeOutRightState();
-}
-
-class FadeOutRightState extends AnimatorWidgetState<FadeOutRight> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.translate(
           child: child,
-          offset: Offset(animation.get("translateX").value, 0.0),
+          offset: Offset(animator.get("translateX").value, 0.0),
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "translateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: widgetSize.width),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+      "translateX": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: widgetSize.width),
+        ],
+      ),
+    };
   }
+}
+
+class FadeOutRight extends AnimatorWidget {
+  FadeOutRight({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: FadeOutRightAnimation(preferences: preferences));
 }

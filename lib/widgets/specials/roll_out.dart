@@ -22,34 +22,27 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class RollOut extends AnimatorWidget {
-  RollOut({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs, needsWidgetSize: true);
+import '../../flutter_animator.dart';
+
+class RollOutAnimation extends AnimationDefinition {
+  RollOutAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences, needsWidgetSize: true);
 
   @override
-  RollOutState createState() => RollOutState();
-}
-
-class RollOutState extends AnimatorWidgetState<RollOut> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform(
           child: child,
           transform: Matrix4.translationValues(
-                  animation.get("translateX").value, 0.0, 0.0) *
-              Matrix4.rotationZ(animation.get("rotateZ").value),
+                  animator.get("translateX").value, 0.0, 0.0) *
+              Matrix4.rotationZ(animator.get("rotateZ").value),
           alignment: Alignment.center,
         ),
       ),
@@ -57,36 +50,37 @@ class RollOutState extends AnimatorWidgetState<RollOut> {
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "translateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: widgetSize.width),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: Math.radians(120.0)),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+      "translateX": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: widgetSize.width),
+        ],
+      ),
+      "rotateZ": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: 120.0 * toRad),
+        ],
+      ),
+    };
   }
+}
+
+class RollOut extends AnimatorWidget {
+  RollOut({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: RollOutAnimation(preferences: preferences));
 }

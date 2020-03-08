@@ -23,59 +23,60 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class Shake extends AnimatorWidget {
-  Shake({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class ShakeAnimation extends AnimationDefinition {
+  ShakeAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  ShakeState createState() => ShakeState();
-}
-
-class ShakeState extends AnimatorWidgetState<Shake> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-            animation.get("translateX").value, 0.0, 0.0),
+            animator.get("translateX").value, 0.0, 0.0),
         alignment: new FractionalOffset(0.5, 0.5),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    final m = 0.0;
-    final m1 = -10.0;
-    final m2 = 10.0;
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "translateX",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: m),
-              TweenPercentage(percent: 10, value: m1),
-              TweenPercentage(percent: 20, value: m2),
-              TweenPercentage(percent: 30, value: m1),
-              TweenPercentage(percent: 40, value: m2),
-              TweenPercentage(percent: 50, value: m1),
-              TweenPercentage(percent: 60, value: m2),
-              TweenPercentage(percent: 70, value: m1),
-              TweenPercentage(percent: 80, value: m2),
-              TweenPercentage(percent: 90, value: m1),
-              TweenPercentage(percent: 100, value: m),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    final a = 0.0;
+    final b = -10.0;
+    final c = 10.0;
+    return {
+      "translateX": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: a),
+          TweenPercentage(percent: 10, value: b),
+          TweenPercentage(percent: 20, value: c),
+          TweenPercentage(percent: 30, value: b),
+          TweenPercentage(percent: 40, value: c),
+          TweenPercentage(percent: 50, value: b),
+          TweenPercentage(percent: 60, value: c),
+          TweenPercentage(percent: 70, value: b),
+          TweenPercentage(percent: 80, value: c),
+          TweenPercentage(percent: 90, value: b),
+          TweenPercentage(percent: 100, value: a),
+        ],
+      ),
+    };
   }
+}
+
+class Shake extends AnimatorWidget {
+  Shake({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: ShakeAnimation(preferences: preferences));
 }

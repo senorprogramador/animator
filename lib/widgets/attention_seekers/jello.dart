@@ -22,77 +22,56 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class Jello extends AnimatorWidget {
-  Jello({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
+
+class JelloAnimation extends AnimationDefinition {
+  JelloAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  JelloState createState() => JelloState();
-}
-
-class JelloState extends AnimatorWidgetState<Jello> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animation.controller,
-      child: widget.child,
+      animation: animator.controller,
+      child: child,
       builder: (BuildContext context, Widget child) => Transform(
         child: child,
         transform: Matrix4.skew(
-            animation.get("transform").value, animation.get("transform").value),
-        alignment: new FractionalOffset(0.5, 0.5),
+            animator.get("transform").value, animator.get("transform").value),
+        alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "transform",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 11, value: 0.0),
-              TweenPercentage(
-                percent: 22,
-                value: Math.radians(-12.5),
-              ),
-              TweenPercentage(
-                percent: 33,
-                value: Math.radians(6.25),
-              ),
-              TweenPercentage(
-                percent: 44,
-                value: Math.radians(-3.125),
-              ),
-              TweenPercentage(
-                percent: 55,
-                value: Math.radians(-1.5625),
-              ),
-              TweenPercentage(
-                percent: 66,
-                value: Math.radians(-0.78125),
-              ),
-              TweenPercentage(
-                percent: 77,
-                value: Math.radians(0.390625),
-              ),
-              TweenPercentage(
-                percent: 88,
-                value: Math.radians(-0.1953125),
-              ),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "transform": TweenList<double>(
+        [
+          TweenPercentage(percent: 11, value: 0.0),
+          TweenPercentage(percent: 22, value: -12.5 * toRad),
+          TweenPercentage(percent: 33, value: 6.25 * toRad),
+          TweenPercentage(percent: 44, value: -3.125 * toRad),
+          TweenPercentage(percent: 55, value: -1.5625 * toRad),
+          TweenPercentage(percent: 66, value: -0.78125 * toRad),
+          TweenPercentage(percent: 77, value: 0.390625 * toRad),
+          TweenPercentage(percent: 88, value: -0.1953125 * toRad),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class Jello extends AnimatorWidget {
+  Jello({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: JelloAnimation(preferences: preferences));
 }

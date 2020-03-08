@@ -38,3 +38,9 @@
 
 * Added autoPlay feature to AnimatorPreferences and implemented it in AnimatorWidget.
 * Added loop method to AnimatorWidget with an optional yoYo boolean parameter.
+
+## [2.0.0] - 2020/03/05
+
+* Complete rebuild of packages to further reduce code needed per animation.
+* Added AnimationDefinitions.
+* Added AnimationPlayState to control play states.

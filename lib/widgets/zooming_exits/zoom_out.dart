@@ -23,58 +23,56 @@
  */
 
 import 'package:flutter/widgets.dart';
+
 import '../../flutter_animator.dart';
 
-class ZoomOut extends AnimatorWidget {
-  ZoomOut({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+class ZoomOutAnimation extends AnimationDefinition {
+  ZoomOutAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  ZoomOutState createState() => ZoomOutState();
-}
-
-class ZoomOutState extends AnimatorWidgetState<ZoomOut> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.scale(
-          scale: animation.get("scale").value,
-          child: widget.child,
+          scale: animator.get("scale").value,
+          child: child,
         ),
       ),
     );
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 50, value: 0.0),
-            ],
-          ),
-        )
-        .add(
-          key: "scale",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 1.0),
-              TweenPercentage(percent: 50, value: 0.3),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 50, value: 0.0),
+        ],
+      ),
+      "scale": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 1.0),
+          TweenPercentage(percent: 50, value: 0.3),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class ZoomOut extends AnimatorWidget {
+  ZoomOut({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: ZoomOutAnimation(preferences: preferences));
 }

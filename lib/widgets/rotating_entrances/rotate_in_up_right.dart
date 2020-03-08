@@ -22,32 +22,25 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
-class RotateInUpRight extends AnimatorWidget {
-  RotateInUpRight({
-    Key key,
-    @required Widget child,
-    AnimatorPreferences prefs = const AnimatorPreferences(),
-  }) : super(key: key, child: child, prefs: prefs);
+import '../../flutter_animator.dart';
+
+class RotateInUpRightAnimation extends AnimationDefinition {
+  RotateInUpRightAnimation({
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(preferences: preferences);
 
   @override
-  RotateInUpRightState createState() => RotateInUpRightState();
-}
-
-class RotateInUpRightState extends AnimatorWidgetState<RotateInUpRight> {
-  @override
-  Widget renderAnimation(BuildContext context) {
+  Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animation.get("opacity"),
+      opacity: animator.get("opacity"),
       child: AnimatedBuilder(
-        animation: animation.controller,
-        child: widget.child,
+        animation: animator.controller,
+        child: child,
         builder: (BuildContext context, Widget child) => Transform.rotate(
-          angle: animation.get("rotateZ").value,
-          child: widget.child,
+          angle: animator.get("rotateZ").value,
+          child: child,
           alignment: Alignment.bottomRight,
         ),
       ),
@@ -55,27 +48,31 @@ class RotateInUpRightState extends AnimatorWidgetState<RotateInUpRight> {
   }
 
   @override
-  Animator createAnimation(Animator animation) {
-    return animation
-        .at(offset: widget.prefs.offset, duration: widget.prefs.duration)
-        .add(
-          key: "opacity",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: 0.0),
-              TweenPercentage(percent: 100, value: 1.0),
-            ],
-          ),
-        )
-        .add(
-          key: "rotateZ",
-          tweens: TweenList<double>(
-            [
-              TweenPercentage(percent: 0, value: Math.radians(-90.0)),
-              TweenPercentage(percent: 100, value: 0.0),
-            ],
-          ),
-        )
-        .addStatusListener(widget.prefs.animationStatusListener);
+  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+    return {
+      "opacity": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: 0.0),
+          TweenPercentage(percent: 100, value: 1.0),
+        ],
+      ),
+      "rotateZ": TweenList<double>(
+        [
+          TweenPercentage(percent: 0, value: -90.0 * toRad),
+          TweenPercentage(percent: 100, value: 0.0),
+        ],
+      ),
+    };
   }
+}
+
+class RotateInUpRight extends AnimatorWidget {
+  RotateInUpRight({
+    Key key,
+    @required Widget child,
+    AnimationPreferences preferences = const AnimationPreferences(),
+  }) : super(
+            key: key,
+            child: child,
+            definition: RotateInUpRightAnimation(preferences: preferences));
 }
