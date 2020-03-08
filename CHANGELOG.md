@@ -44,3 +44,7 @@
 * Complete rebuild of packages to further reduce code needed per animation.
 * Added AnimationDefinitions.
 * Added AnimationPlayState to control play states.
+
+## [2.0.1] - 2020/03/08
+
+* Minor documentation Update
