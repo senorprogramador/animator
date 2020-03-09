@@ -117,6 +117,7 @@ export 'widgets/specials/hinge.dart';
 export 'widgets/specials/jack_in_the_box.dart';
 export 'widgets/specials/roll_in.dart';
 export 'widgets/specials/roll_out.dart';
+export 'widgets/specials/cross_fade_a_b.dart';
 
 export 'widgets/zooming_entrances/zoom_in.dart';
 export 'widgets/zooming_entrances/zoom_in_down.dart';

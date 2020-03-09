@@ -27,6 +27,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<CrossFadeABState> crossFadeAnimation =
+      GlobalKey<CrossFadeABState>();
+
   final GlobalKey<AnimatorWidgetState> basicAnimation =
       GlobalKey<AnimatorWidgetState>();
 
@@ -44,6 +47,21 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 20)),
+            CrossFadeAB(
+              key: crossFadeAnimation,
+              childA: Text('A', style: TextStyle(fontSize: 20)),
+              childB: Text('B', style: TextStyle(fontSize: 20)),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20)),
+            FlatButton(
+              onPressed: () {
+                crossFadeAnimation.currentState.cross();
+              },
+              child: Text(
+                'Cross Animate',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
             BounceIn(
               key: basicAnimation,
               child: Text(
