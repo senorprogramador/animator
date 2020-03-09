@@ -72,10 +72,10 @@ packages:
   flutter_animator:
     dependency: "direct main"
     description:
-      name: flutter_animator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
+      path: ".."
+      relative: true
+    source: path
+    version: "2.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

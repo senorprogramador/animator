@@ -113,6 +113,14 @@ export 'widgets/sliding_exits/slide_out_left.dart';
 export 'widgets/sliding_exits/slide_out_right.dart';
 export 'widgets/sliding_exits/slide_out_up.dart';
 
+export 'widgets/slit_entrances/slit_in_diagonal.dart';
+export 'widgets/slit_entrances/slit_in_vertical.dart';
+export 'widgets/slit_entrances/slit_in_horizontal.dart';
+
+export 'widgets/slit_exits/slit_out_diagonal.dart';
+export 'widgets/slit_exits/slit_out_vertical.dart';
+export 'widgets/slit_exits/slit_out_horizontal.dart';
+
 export 'widgets/specials/hinge.dart';
 export 'widgets/specials/jack_in_the_box.dart';
 export 'widgets/specials/roll_in.dart';

@@ -11,6 +11,8 @@ Features:
 - Automatically (re)starts animations on hot-reload after saving.
 - Animate your project with ease using the Animate.css based Widgets.
 
+#### Please press the like button if you like this package, or star it on github.
+
 ## Getting Started
 _Note: To see all of the animated widgets in action be sure to run the app in the demo_app package, or view them on the [Animate.css](https://daneden.github.io/animate.css/) page._
 
@@ -254,8 +256,21 @@ class FadeInDownAnimation extends AnimationDefinition {
 - SlideOutRight
 - SlideOutUp
 
+### Slit Entrances
+![Sliding Entrances](https://github.com/sharp3dges/animator/blob/master/animations/slit_entrances.gif)
+- SlitInDiagonal
+- SlitInHorizontal
+- SlitInVertical
+
+### Slit Exits
+![Sliding Exits](https://github.com/sharp3dges/animator/blob/master/animations/slit_exits.gif)
+- SlitOutDiagonal
+- SlitOutHorizontal
+- SlitOutVertical
+
 ### Specials
 ![Specials](https://github.com/sharp3dges/animator/blob/master/animations/specials.gif)
+- CrossFadeAB _(*not in preview)_
 - Hinge
 - JackInTheBox
 - RollIn
@@ -276,5 +291,3 @@ class FadeInDownAnimation extends AnimationDefinition {
 - ZoomOutLeft
 - ZoomOutRight
 - ZoomOutUp
-
-#### Please press the like button if you like this package, or star it on github.

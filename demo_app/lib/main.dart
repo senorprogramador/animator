@@ -16,6 +16,8 @@ import './rotating_entrances.dart';
 import './rotating_exits.dart';
 import './sliding_entrances.dart';
 import './sliding_exits.dart';
+import './slit_entrances.dart';
+import './slit_exits.dart';
 import './specials.dart';
 import './zooming_entrances.dart';
 import './zooming_exits.dart';
@@ -32,6 +34,8 @@ enum AnimationGroupType {
   RotatingExits,
   SlidingEntrances,
   SlidingExits,
+  SlitEntrances,
+  SlitExits,
   Specials,
   ZoomingEntrances,
   ZoomingExits,
@@ -205,6 +209,16 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       case AnimationGroupType.SlidingExits:
         return SlidingExits(
+          key: _key,
+          playState: AnimationPlayStates.Forward,
+        );
+      case AnimationGroupType.SlitEntrances:
+        return SlitEntrances(
+          key: _key,
+          playState: AnimationPlayStates.Forward,
+        );
+      case AnimationGroupType.SlitExits:
+        return SlitExits(
           key: _key,
           playState: AnimationPlayStates.Forward,
         );

@@ -57,3 +57,6 @@
 
 * Added crossToA and crossToB to CrossFadeAB.
 
+## [2.0.4] - 2020/03/09
+
+* Added slit_entrances and slit_exits.
