@@ -51,4 +51,9 @@
 
 ## [2.0.2] - 2020/03/09
 
-* Added CrossFadeAB to support cross-fading between 2 child widgets/
+* Added CrossFadeAB to support cross-fading between 2 child widgets
+
+## [2.0.3] - 2020/03/09
+
+* Added crossToA and crossToB to CrossFadeAB.
+

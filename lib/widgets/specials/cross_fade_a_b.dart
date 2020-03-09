@@ -29,14 +29,22 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
   void cross() {
     switch (status) {
       case CrossFadePlayStatus.A:
-        animatorA.forward();
-        animatorB.reverse();
+        crossToB();
         break;
       case CrossFadePlayStatus.B:
-        animatorA.reverse();
-        animatorB.forward();
+        crossToA();
         break;
     }
+  }
+
+  void crossToA() {
+    animatorA.reverse();
+    animatorB.forward();
+  }
+
+  void crossToB() {
+    animatorA.forward();
+    animatorB.reverse();
   }
 
   @override
