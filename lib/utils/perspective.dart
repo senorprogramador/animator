@@ -24,7 +24,9 @@
 
 import 'package:flutter/widgets.dart';
 
+///Provides a static function to create a perspective-like [Matrix4].
 class Perspective {
+  ///Returns a perspective-like [Matrix4].
   static Matrix4 matrix(num pv) {
     return new Matrix4(
       1.0, 0.0, 0.0, 0.0, //

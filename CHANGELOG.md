@@ -60,3 +60,7 @@
 ## [2.0.4] - 2020/03/09
 
 * Added slit_entrances and slit_exits.
+
+## [2.0.5] - 2020/03/11
+
+* Added documentation to classes in order to improve code later on.

@@ -33,45 +33,8 @@ import 'tween_list.dart';
 ///The [Animator] class is the heart of this library.
 ///It registers and converts [TweenList]s, creates and manages controllers, etc.
 ///
-///To create a single animation, use the following code:
-///
-///```dart
-///class YourWidget extends StatefulWidget {
-///   @override
-///   _YourWidgetState createState() => _YourWidgetState();
-///}
-///
-///class _YourWidgetState extends State<YourWidget> with SingleAnimatorStateMixin {
-///
-///   @override
-///     Widget build(BuildContext context) {
-///       //Note that when implementing SingleAnimatorStateMixin, the animation variable
-///       //will be the instance of Animator as returned in createAnimation
-///       return FadeTransition(
-///         opacity: animation.get("opacity"), //get the opacity animation object. (Use animation.get("opacity").value when using an AnimatedBuilder)
-///         child: widget.child,
-///       );
-///     }
-///   }
-///
-///   @override
-///   Animator createAnimation() {
-///     return Animator.sync(this) //initializes an Animator with this widget as tickerprovider
-///         .at(offset: Duration.zero, duration: Duration(seconds: 1)) //set optional offset and duration for the list below
-///         .add( //add an animation "opacity" using the offset and duration above
-///           key: "opacity",
-///           tweens: TweenList<double>(
-///             [
-///               TweenPercentage(percent: 0, value: 1.0),
-///               TweenPercentage(percent: 100, value: 0.0),
-///             ],
-///           ),
-///         )
-///         .generate(); //finally, don't forget to call generate()
-///   }
-///}
-///```
-///
+///To create an animation, please see [AnimatorWidget] and [AnimationDefinition]
+///classes for a description.
 class Animator {
   ///The tickerProvider for an Animator instance
   final TickerProvider vsync;
@@ -84,8 +47,11 @@ class Animator {
 
   ///Thee generated [AnimationController]
   AnimationController _controller;
+
+  ///Getter for the [AnimationController]
   AnimationController get controller => _controller;
 
+  ///constructor, requires a [TickerProvider]
   Animator({@required this.vsync}) {
     assert(
       vsync != null,
@@ -93,34 +59,43 @@ class Animator {
     );
   }
 
+  ///Loop an animation. Pass pingPong to loop forward and reversed.
   void loop({bool pingPong = false}) {
     if (_controller != null) {
       _controller.repeat(reverse: pingPong);
     }
   }
 
+  ///Plays the animation forward from passed parameter.
   void forward({double from = 0.0}) {
     if (_controller != null) {
       _controller.forward(from: from);
     }
   }
 
+  ///Plays the animation backwards from passed parameter.
   void reverse({double from = 1.0}) {
     if (_controller != null) {
       _controller.reverse(from: from);
     }
   }
 
+  ///Pauses the animation.
   void stop() {
     if (_controller != null) {
       _controller.stop();
     }
   }
 
+  ///Sets the [AnimationDefinition] to be used for creating a controller.
   void setAnimationDefinition(AnimationDefinition definition) {
     _definition = definition;
   }
 
+  ///Resolves the [AnimationDefinition], creates a controller and sets offset
+  ///and duration from the passed in [AnimationPreferences].
+  ///If needsWidgetSize and/or needsScreenSize are true inside the definition
+  ///these will be passed to the [AnimationDefinition]
   void resolveDefinition({Size widgetSize, Size screenSize}) {
     _sequence = _definition.getDefinition(
       widgetSize: widgetSize,
@@ -146,10 +121,12 @@ class Animator {
     }
   }
 
+  ///Builds the [AnimationDefinition].
   Widget build(BuildContext context, Widget child) {
     return _definition.build(context, this, child);
   }
 
+  ///Disposes the controller.
   void dispose() {
     if (_controller != null) {
       _controller.dispose();
@@ -157,7 +134,8 @@ class Animator {
     }
   }
 
-  ///Returns an [Animation] registered by the user in the .add() function.
+  ///Returns an [Animation] registered by the user in
+  ///[AnimationDefinition].getDefinition() function.
   Animation get(String key) {
     assert(
       _controller != null,

@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+/// Holds 2 values of same or different classes.
 class Pair<A, B> {
   final A a;
   final B b;

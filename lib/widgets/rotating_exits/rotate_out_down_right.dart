@@ -23,7 +23,6 @@
  */
 
 import '../../flutter_animator.dart';
-import 'package:vector_math/vector_math_64.dart' as Math;
 import 'package:flutter/widgets.dart';
 
 class RotateOutDownRightAnimation extends AnimationDefinition {
