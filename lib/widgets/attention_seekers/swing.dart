@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [Swing] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SwingAnimation extends AnimationDefinition {
   SwingAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -61,6 +64,18 @@ class SwingAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Swing:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Swing(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Swing extends AnimatorWidget {
   Swing({
     Key key,

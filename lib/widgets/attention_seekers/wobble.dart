@@ -27,6 +27,9 @@ import 'package:vector_math/vector_math_64.dart' as Math;
 
 import '../../flutter_animator.dart';
 
+///Used by [Wobble] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class WobbleAnimation extends AnimationDefinition {
   WobbleAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -85,6 +88,18 @@ class WobbleAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Wobble:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Wobble(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Wobble extends AnimatorWidget {
   Wobble({
     Key key,

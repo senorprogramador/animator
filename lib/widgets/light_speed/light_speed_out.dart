@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [LightSpeedOut] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class LightSpeedOutAnimation extends AnimationDefinition {
   LightSpeedOutAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -74,6 +77,18 @@ class LightSpeedOutAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using LightSpeedOut:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return LightSpeedOut(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class LightSpeedOut extends AnimatorWidget {
   LightSpeedOut({
     Key key,

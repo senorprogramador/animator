@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlideInRight] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlideInRightAnimation extends AnimationDefinition {
   SlideInRightAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -60,6 +63,18 @@ class SlideInRightAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlideInRight:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlideInRight(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlideInRight extends AnimatorWidget {
   SlideInRight({
     Key key,

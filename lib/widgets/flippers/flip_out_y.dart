@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [FlipOutY] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FlipOutYAnimation extends AnimationDefinition {
   FlipOutYAnimation({
     AnimationPreferences preferences =
@@ -69,6 +72,18 @@ class FlipOutYAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FlipOutY:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FlipOutY(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FlipOutY extends AnimatorWidget {
   FlipOutY({
     Key key,

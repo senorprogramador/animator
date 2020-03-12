@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [Flash] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FlashAnimation extends AnimationDefinition {
   FlashAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -55,6 +58,18 @@ class FlashAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Flash:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///Zo
+///   @override
+///   Widget build(BuildContext context) {
+///     return Flash(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Flash extends AnimatorWidget {
   Flash({
     Key key,

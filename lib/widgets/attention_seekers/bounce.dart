@@ -70,8 +70,6 @@ class BounceAnimation extends AnimationDefinition {
   }
 }
 
-/// {@tool sample}
-///
 /// Example of using Bounce:
 ///
 /// ```dart
@@ -84,7 +82,6 @@ class BounceAnimation extends AnimationDefinition {
 ///
 /// }
 /// ```
-/// {@end-tool}
 class Bounce extends AnimatorWidget {
   Bounce({
     Key key,

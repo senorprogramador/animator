@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [Flip] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FlipAnimation extends AnimationDefinition {
   FlipAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -82,6 +85,18 @@ class FlipAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Flip:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Flip(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Flip extends AnimatorWidget {
   Flip({
     Key key,

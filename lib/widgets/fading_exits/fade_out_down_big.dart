@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [FadeOutDownBig] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FadeOutDownBigAnimation extends AnimationDefinition {
   FadeOutDownBigAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -65,6 +68,18 @@ class FadeOutDownBigAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FadeOutDownBig:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FadeOutDownBig(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FadeOutDownBig extends AnimatorWidget {
   FadeOutDownBig({
     Key key,

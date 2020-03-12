@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [BounceInLeft] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class BounceInLeftAnimation extends AnimationDefinition {
   BounceInLeftAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -73,6 +76,18 @@ class BounceInLeftAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using BounceInLeft:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return BounceInLeft(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class BounceInLeft extends AnimatorWidget {
   BounceInLeft({
     Key key,

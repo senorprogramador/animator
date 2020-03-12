@@ -3,6 +3,9 @@ import 'package:vector_math/vector_math_64.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlitInDiagonal] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlitInDiagonalAnimation extends AnimationDefinition {
   SlitInDiagonalAnimation({
     AnimationPreferences preferences =
@@ -59,6 +62,18 @@ class SlitInDiagonalAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlitInDiagonal:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlitInDiagonal(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlitInDiagonal extends AnimatorWidget {
   SlitInDiagonal({
     Key key,

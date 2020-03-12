@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [Shake] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class ShakeAnimation extends AnimationDefinition {
   ShakeAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -70,6 +73,18 @@ class ShakeAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Shake:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Shake(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Shake extends AnimatorWidget {
   Shake({
     Key key,

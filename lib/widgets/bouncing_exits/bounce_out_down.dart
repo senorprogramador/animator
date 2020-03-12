@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [BounceOutDown] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class BounceOutDownAnimation extends AnimationDefinition {
   BounceOutDownAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -72,6 +75,18 @@ class BounceOutDownAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using BounceOutDown:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return BounceOutDown(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class BounceOutDown extends AnimatorWidget {
   BounceOutDown({
     Key key,

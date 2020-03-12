@@ -2,6 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlitInHorizontal] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlitInHorizontalAnimation extends AnimationDefinition {
   SlitInHorizontalAnimation({
     AnimationPreferences preferences =
@@ -56,6 +59,18 @@ class SlitInHorizontalAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlitInHorizontal:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlitInHorizontal(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlitInHorizontal extends AnimatorWidget {
   SlitInHorizontal({
     Key key,

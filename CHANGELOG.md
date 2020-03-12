@@ -64,3 +64,8 @@
 ## [2.0.5] - 2020/03/11
 
 * Added documentation to classes in order to improve code later on.
+
+## [2.0.6] - 2020/03/12
+
+* Added support for Color animations
+* Minor fix for integer animations

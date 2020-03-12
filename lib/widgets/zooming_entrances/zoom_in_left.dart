@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [ZoomInLeft] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class ZoomInLeftAnimation extends AnimationDefinition {
   ZoomInLeftAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -82,6 +85,18 @@ class ZoomInLeftAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using ZoomInLeft:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return ZoomInLeft(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class ZoomInLeft extends AnimatorWidget {
   ZoomInLeft({
     Key key,

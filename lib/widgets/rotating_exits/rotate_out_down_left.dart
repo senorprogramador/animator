@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [RotateOutDownLeft] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class RotateOutDownLeftAnimation extends AnimationDefinition {
   RotateOutDownLeftAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -66,6 +69,18 @@ class RotateOutDownLeftAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using RotateOutDownLeft:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return RotateOutDownLeft(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class RotateOutDownLeft extends AnimatorWidget {
   RotateOutDownLeft({
     Key key,

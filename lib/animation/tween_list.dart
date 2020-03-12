@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import 'tween_percentage.dart';
@@ -110,6 +111,14 @@ class TweenList<T extends dynamic> extends Tween<T> {
       final Vector3 lerpScale = beginScale * (1.0 - n) + endScale * n;
 
       return Matrix4.compose(lerpTranslation, lerpRotation, lerpScale) as T;
+    }
+
+    if (T == int) {
+      return (_pair.a.value + n * (_pair.b.value - _pair.a.value)).round() as T;
+    }
+
+    if (T == Color) {
+      return Color.lerp(_pair.a.value as Color, _pair.b.value as Color, n) as T;
     }
 
     return _pair.a.value + n * (_pair.b.value - _pair.a.value) as T;

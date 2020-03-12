@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [RollIn] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class RollInAnimation extends AnimationDefinition {
   RollInAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -78,6 +81,18 @@ class RollInAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using RollIn:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return RollIn(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class RollIn extends AnimatorWidget {
   RollIn({
     Key key,

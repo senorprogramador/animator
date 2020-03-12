@@ -31,6 +31,9 @@ enum FlipInXOrigin {
   front,
 }
 
+///Used by [FlipInX] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FlipInXAnimation extends AnimationDefinition {
   final FlipInXOrigin from;
   final Alignment alignment;
@@ -92,6 +95,18 @@ class FlipInXAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FlipInX:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FlipInX(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FlipInX extends AnimatorWidget {
   FlipInX({
     Key key,

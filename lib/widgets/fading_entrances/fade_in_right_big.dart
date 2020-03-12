@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [FadeInRightBig] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FadeInRightBigAnimation extends AnimationDefinition {
   FadeInRightBigAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -69,6 +72,18 @@ class FadeInRightBigAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FadeInRightBig:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FadeInRightBig(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FadeInRightBig extends AnimatorWidget {
   FadeInRightBig({
     Key key,

@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [RubberBand] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class RubberBandAnimation extends AnimationDefinition {
   RubberBandAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -63,6 +66,18 @@ class RubberBandAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using RubberBand:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return RubberBand(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class RubberBand extends AnimatorWidget {
   RubberBand({
     Key key,

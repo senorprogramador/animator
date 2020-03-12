@@ -2,6 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlitOutVertical] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlitOutVerticalAnimation extends AnimationDefinition {
   SlitOutVerticalAnimation({
     AnimationPreferences preferences =
@@ -56,6 +59,18 @@ class SlitOutVerticalAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlitOutVertical:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlitOutVertical(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlitOutVertical extends AnimatorWidget {
   SlitOutVertical({
     Key key,

@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlideOutUp] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlideOutUpAnimation extends AnimationDefinition {
   SlideOutUpAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -56,6 +59,18 @@ class SlideOutUpAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlideOutUp:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlideOutUp(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlideOutUp extends AnimatorWidget {
   SlideOutUp({
     Key key,

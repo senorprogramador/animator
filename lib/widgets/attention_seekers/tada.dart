@@ -27,6 +27,9 @@ import 'package:vector_math/vector_math_64.dart' as Math;
 
 import '../../flutter_animator.dart';
 
+///Used by [Tada] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class TadaAnimation extends AnimationDefinition {
   TadaAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -79,6 +82,18 @@ class TadaAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using Tada:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Tada(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class Tada extends AnimatorWidget {
   Tada({
     Key key,

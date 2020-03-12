@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [FadeOutLeft] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FadeOutLeftAnimation extends AnimationDefinition {
   FadeOutLeftAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -65,6 +68,18 @@ class FadeOutLeftAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FadeOutLeft:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FadeOutLeft(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FadeOutLeft extends AnimatorWidget {
   FadeOutLeft({
     Key key,

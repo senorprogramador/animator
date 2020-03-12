@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlideInLeft] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlideInLeftAnimation extends AnimationDefinition {
   SlideInLeftAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -60,6 +63,18 @@ class SlideInLeftAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlideInLeft:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlideInLeft(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlideInLeft extends AnimatorWidget {
   SlideInLeft({
     Key key,

@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [RotateOutUpRight] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class RotateOutUpRightAnimation extends AnimationDefinition {
   RotateOutUpRightAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -66,6 +69,18 @@ class RotateOutUpRightAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using RotateOutUpRight:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return RotateOutUpRight(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class RotateOutUpRight extends AnimatorWidget {
   RotateOutUpRight({
     Key key,

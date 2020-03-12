@@ -2,6 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [SlitInVertical] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class SlitInVerticalAnimation extends AnimationDefinition {
   SlitInVerticalAnimation({
     AnimationPreferences preferences =
@@ -56,6 +59,18 @@ class SlitInVerticalAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using SlitInVertical:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return SlitInVertical(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class SlitInVertical extends AnimatorWidget {
   SlitInVertical({
     Key key,

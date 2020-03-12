@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [FadeInDown] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class FadeInDownAnimation extends AnimationDefinition {
   FadeInDownAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -69,6 +72,18 @@ class FadeInDownAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using FadeInDown:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return FadeInDown(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class FadeInDown extends AnimatorWidget {
   FadeInDown({
     Key key,

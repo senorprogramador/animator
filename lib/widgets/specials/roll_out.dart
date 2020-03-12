@@ -26,6 +26,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../flutter_animator.dart';
 
+///Used by [RollOut] widget.
+///Note: You can also pass this into an [InOutAnimation] widget to define the
+///in/out animation.
 class RollOutAnimation extends AnimationDefinition {
   RollOutAnimation({
     AnimationPreferences preferences = const AnimationPreferences(),
@@ -74,6 +77,18 @@ class RollOutAnimation extends AnimationDefinition {
   }
 }
 
+/// Example of using RollOut:
+///
+/// ```dart
+/// class ExampleWidget extends StatelessWidget {
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return RollOut(child: Text('Bounce'));
+///   }
+///
+/// }
+/// ```
 class RollOut extends AnimatorWidget {
   RollOut({
     Key key,
