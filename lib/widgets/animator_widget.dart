@@ -124,7 +124,7 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
 
   @override
   void reassemble() {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && mounted) {
       disposeExistingAnimation();
       setState(() {
         screenSize = null;

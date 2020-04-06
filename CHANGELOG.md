@@ -69,3 +69,7 @@
 
 * Added support for Color animations
 * Minor fix for integer animations
+
+## [2.0.7] - 2020/04/06
+
+* Fixed issues with reassemble, causing unmounted widgets to mount and animate.

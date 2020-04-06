@@ -71,7 +71,9 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
 
   @override
   void reassemble() {
-    handlePlayState();
+    if (mounted) {
+      handlePlayState();
+    }
     super.reassemble();
   }
 

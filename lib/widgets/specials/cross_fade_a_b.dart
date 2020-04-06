@@ -93,7 +93,7 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
 
   @override
   void reassemble() {
-    if (!kReleaseMode) {
+    if (!kReleaseMode && mounted) {
       disposeExistingAnimation();
       setState(() {
         _createAnimators();

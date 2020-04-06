@@ -75,7 +75,7 @@ packages:
       name: flutter_animator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
