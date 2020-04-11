@@ -21,7 +21,7 @@ Put the dependency inside your pubspec.yml and run packages get.
 #### Using one of the Animate.css style widgets:
 ```dart
 import 'package:flutter/widgets.dart';
-import 'package:animator/animator.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 class TestAnimatedWidget extends StatelessWidget {
   @override
@@ -39,7 +39,7 @@ class TestAnimatedWidget extends StatelessWidget {
 #### Using a GlobalKey to enable play/stop/reverse animations from code:
 ```dart
 import 'package:flutter/widgets.dart';
-import 'package:animator/animator.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 class TestAnimatedWidget extends StatefulWidget {
   @override

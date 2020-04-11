@@ -73,3 +73,7 @@
 ## [2.0.7] - 2020/04/06
 
 * Fixed issues with reassemble, causing unmounted widgets to mount and animate.
+
+## [2.0.8] - 2020/04/11
+
+* Minor fix in readme stating a wrong import. (Special thanks to @atomicsink ;) )
