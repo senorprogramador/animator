@@ -77,3 +77,7 @@
 ## [2.0.8] - 2020/04/11
 
 * Minor fix in readme stating a wrong import. (Special thanks to @atomicsink ;) )
+
+## [2.0.9] - 2020/04/24
+
+* Switched to master channel to validate web support.
