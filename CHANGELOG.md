@@ -81,3 +81,7 @@
 ## [2.0.9] - 2020/04/24
 
 * Switched to master channel to validate web support.
+
+## [2.1.0] - 2020/08/06
+
+* Added possibility to animate with Offset, Size and Rect.

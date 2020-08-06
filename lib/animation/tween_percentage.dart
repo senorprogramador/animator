@@ -8,7 +8,7 @@ class TweenPercentage<T> {
   final T value;
   final Curve curve;
 
-  TweenPercentage({
+  const TweenPercentage({
     @required this.percent,
     @required this.value,
     this.curve = Curves.ease,

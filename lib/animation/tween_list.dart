@@ -121,6 +121,19 @@ class TweenList<T extends dynamic> extends Tween<T> {
       return Color.lerp(_pair.a.value as Color, _pair.b.value as Color, n) as T;
     }
 
+    if (T == Offset) {
+      return Offset.lerp(_pair.a.value as Offset, _pair.b.value as Offset, n)
+          as T;
+    }
+
+    if (T == Size) {
+      return Size.lerp(_pair.a.value as Size, _pair.b.value as Size, n) as T;
+    }
+
+    if (T == Rect) {
+      return Rect.lerp(_pair.a.value as Rect, _pair.b.value as Rect, n) as T;
+    }
+
     return _pair.a.value + n * (_pair.b.value - _pair.a.value) as T;
   }
 }

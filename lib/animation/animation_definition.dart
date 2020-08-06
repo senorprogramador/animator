@@ -11,7 +11,7 @@ import 'animator.dart';
 abstract class AnimationDefinition {
   ///Pass [AnimationPreferences] to setup offset, duration, autoPlay and
   ///add an [AnimationStatusListener]
-  AnimationPreferences preferences;
+  final AnimationPreferences preferences;
 
   ///When true, instructs [AnimatorWidget] to preRender the child without
   ///animation and extracts the child's size in order to supply it to
@@ -29,20 +29,12 @@ abstract class AnimationDefinition {
   final double preRenderOpacity;
 
   ///Constructor with all parameters' defaults.
-  AnimationDefinition({
+  const AnimationDefinition({
     this.preferences = const AnimationPreferences(),
     this.needsWidgetSize = false,
     this.needsScreenSize = false,
     this.preRenderOpacity = 1.0,
-  }) {
-    assert(this.preferences != null, '$this preferences cannot be null');
-    assert(
-        this.needsWidgetSize != null, '$this needsWidgetSize cannot be null');
-    assert(
-        this.needsScreenSize != null, '$this needsScreenSize cannot be null');
-    assert(
-        this.preRenderOpacity != null, '$this preRenderOpacity cannot be null');
-  }
+  });
 
   ///[AnimatorWidget] calls getDefinition to gather the animation. Animations
   ///are defined using named [TweenList]s using a Map<String, TweenList>.
