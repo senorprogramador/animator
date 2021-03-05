@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class AttentionSeekers extends AnimatorGroup {
-  AttentionSeekers({Key key, AnimationPlayStates playState})
+  AttentionSeekers({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -103,7 +103,7 @@ class AttentionSeekersState extends AnimatorGroupState<AttentionSeekers> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }

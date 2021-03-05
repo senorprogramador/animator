@@ -41,21 +41,21 @@ class SlideInUpAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform.translate(
+      builder: (BuildContext context, Widget? child) => Transform.translate(
         child: child,
-        offset: Offset(0.0, animator.get("translateY").value),
+        offset: Offset(0.0, animator.get("translateY")!.value),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "translateY": TweenList<double>(
+      "translateY": TweenList<double?>(
         [
-          TweenPercentage(percent: 0, value: screenSize.height),
+          TweenPercentage(percent: 0, value: screenSize!.height),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
@@ -77,8 +77,8 @@ class SlideInUpAnimation extends AnimationDefinition {
 /// ```
 class SlideInUp extends AnimatorWidget {
   SlideInUp({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

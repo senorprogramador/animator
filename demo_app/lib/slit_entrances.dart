@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class SlitEntrances extends AnimatorGroup {
-  SlitEntrances({Key key, AnimationPlayStates playState})
+  SlitEntrances({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -56,7 +56,7 @@ class SlitEntrancesState extends AnimatorGroupState<SlitEntrances> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }

@@ -37,15 +37,15 @@ class HingeAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
+        builder: (BuildContext context, Widget? child) => Transform(
           transform: Perspective.matrix(4.0) *
               Matrix4.translationValues(
-                  0.0, animator.get("translateY").value, 0.0) *
-              Matrix4.rotationZ(animator.get("rotateZ").value),
+                  0.0, animator.get("translateY")!.value, 0.0) *
+              Matrix4.rotationZ(animator.get("rotateZ")!.value),
           child: child,
           alignment: Alignment.topLeft,
         ),
@@ -54,22 +54,22 @@ class HingeAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     const curve = Curves.easeInOut;
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 80, value: 1.0, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "translateY": TweenList<double>(
+      "translateY": TweenList<double?>(
         [
           TweenPercentage(percent: 80, value: 0.0, curve: curve),
           TweenPercentage(percent: 100, value: 700.0, curve: curve),
         ],
       ),
-      "rotateZ": TweenList<double>(
+      "rotateZ": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 20, value: 80.0 * toRad, curve: curve),
@@ -97,8 +97,8 @@ class HingeAnimation extends AnimationDefinition {
 /// ```
 class Hinge extends AnimatorWidget {
   Hinge({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

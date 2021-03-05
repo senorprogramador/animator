@@ -40,35 +40,36 @@ class BounceOutDownAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform.translate(
+        builder: (BuildContext context, Widget? child) => Transform.translate(
           child: child,
-          offset: Offset(0.0, animator.get("translateY").value),
+          offset: Offset(0.0, animator.get("translateY")!.value),
         ),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 45, value: 1.0, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "translateY": TweenList<double>(
+      "translateY": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 20, value: 10.0, curve: curve),
           TweenPercentage(percent: 40, value: -20.0, curve: curve),
           TweenPercentage(percent: 45, value: -20.0, curve: curve),
-          TweenPercentage(percent: 100, value: screenSize.height, curve: curve),
+          TweenPercentage(
+              percent: 100, value: screenSize!.height, curve: curve),
         ],
       ),
     };
@@ -89,8 +90,8 @@ class BounceOutDownAnimation extends AnimationDefinition {
 /// ```
 class BounceOutDown extends AnimatorWidget {
   BounceOutDown({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

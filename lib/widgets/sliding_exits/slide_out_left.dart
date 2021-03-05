@@ -37,22 +37,22 @@ class SlideOutLeftAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform.translate(
+      builder: (BuildContext context, Widget? child) => Transform.translate(
         child: child,
-        offset: Offset(animator.get("translateX").value, 0.0),
+        offset: Offset(animator.get("translateX")!.value, 0.0),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "translateX": TweenList<double>(
+      "translateX": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: -screenSize.width),
+          TweenPercentage(percent: 100, value: -screenSize!.width),
         ],
       ),
     };
@@ -73,8 +73,8 @@ class SlideOutLeftAnimation extends AnimationDefinition {
 /// ```
 class SlideOutLeft extends AnimatorWidget {
   SlideOutLeft({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

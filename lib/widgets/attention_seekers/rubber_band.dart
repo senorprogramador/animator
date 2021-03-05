@@ -37,21 +37,21 @@ class RubberBandAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
-        transform: animator.get("transform").value,
+        transform: animator.get("transform")!.value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final m = Matrix4.identity();
     return {
-      "transform": TweenList<Matrix4>(
+      "transform": TweenList<Matrix4?>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 30, value: m.scaled(1.25, 0.75, 1.0)),
@@ -80,8 +80,8 @@ class RubberBandAnimation extends AnimationDefinition {
 /// ```
 class RubberBand extends AnimatorWidget {
   RubberBand({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

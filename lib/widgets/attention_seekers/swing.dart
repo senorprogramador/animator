@@ -37,20 +37,20 @@ class SwingAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform.rotate(
+      builder: (BuildContext context, Widget? child) => Transform.rotate(
         child: child,
-        angle: animator.get("rotateZ").value,
+        angle: animator.get("rotateZ")!.value,
         alignment: new FractionalOffset(0.5, 0.0),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "rotateZ": TweenList<double>(
+      "rotateZ": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 20, value: 15.0 * toRad),
@@ -78,8 +78,8 @@ class SwingAnimation extends AnimationDefinition {
 /// ```
 class Swing extends AnimatorWidget {
   Swing({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

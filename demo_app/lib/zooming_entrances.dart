@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class ZoomingEntrances extends AnimatorGroup {
-  ZoomingEntrances({Key key, AnimationPlayStates playState})
+  ZoomingEntrances({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -61,7 +61,7 @@ class ZoomingEntrancesState extends AnimatorGroupState<ZoomingEntrances> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }

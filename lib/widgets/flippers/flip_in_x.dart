@@ -47,13 +47,13 @@ class FlipInXAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
+        builder: (BuildContext context, Widget? child) => Transform(
           transform: Perspective.matrix(4.0) *
-              Matrix4.rotationX(-animator.get("rotateX").value),
+              Matrix4.rotationX(-animator.get("rotateX")!.value),
           child: child,
           alignment: alignment,
         ),
@@ -62,7 +62,7 @@ class FlipInXAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     double multiplier = from == FlipInXOrigin.front ? -1.0 : 1.0;
     if (alignment == Alignment.topCenter ||
         alignment == Alignment.topLeft ||
@@ -70,13 +70,13 @@ class FlipInXAnimation extends AnimationDefinition {
       multiplier *= -1;
     }
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeIn),
           TweenPercentage(percent: 60, value: 1.0),
         ],
       ),
-      "rotateX": TweenList<double>(
+      "rotateX": TweenList<double?>(
         [
           TweenPercentage(
               percent: 0,
@@ -109,8 +109,8 @@ class FlipInXAnimation extends AnimationDefinition {
 /// ```
 class FlipInX extends AnimatorWidget {
   FlipInX({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

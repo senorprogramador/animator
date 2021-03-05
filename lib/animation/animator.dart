@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
@@ -40,50 +39,45 @@ class Animator {
   final TickerProvider vsync;
 
   ///The defined animation
-  AnimationDefinition _definition;
+  late AnimationDefinition _definition;
 
   ///Map for holding the [TweenList]s
-  Map<String, TweenList> _sequence;
+  late Map<String, TweenList> _sequence;
 
   ///Thee generated [AnimationController]
-  AnimationController _controller;
+  AnimationController? _controller;
 
   ///Getter for the [AnimationController]
-  AnimationController get controller => _controller;
+  AnimationController? get controller => _controller;
 
   ///constructor, requires a [TickerProvider]
-  Animator({@required this.vsync}) {
-    assert(
-      vsync != null,
-      '$this vsync cannot be null.',
-    );
-  }
+  Animator({required this.vsync});
 
   ///Loop an animation. Pass pingPong to loop forward and reversed.
   void loop({bool pingPong = false}) {
     if (_controller != null) {
-      _controller.repeat(reverse: pingPong);
+      _controller!.repeat(reverse: pingPong);
     }
   }
 
   ///Plays the animation forward from passed parameter.
   void forward({double from = 0.0}) {
     if (_controller != null) {
-      _controller.forward(from: from);
+      _controller!.forward(from: from);
     }
   }
 
   ///Plays the animation backwards from passed parameter.
   void reverse({double from = 1.0}) {
     if (_controller != null) {
-      _controller.reverse(from: from);
+      _controller!.reverse(from: from);
     }
   }
 
   ///Pauses the animation.
   void stop() {
     if (_controller != null) {
-      _controller.stop();
+      _controller!.stop();
     }
   }
 
@@ -96,7 +90,7 @@ class Animator {
   ///and duration from the passed in [AnimationPreferences].
   ///If needsWidgetSize and/or needsScreenSize are true inside the definition
   ///these will be passed to the [AnimationDefinition]
-  void resolveDefinition({Size widgetSize, Size screenSize}) {
+  void resolveDefinition({Size? widgetSize, Size? screenSize}) {
     _sequence = _definition.getDefinition(
       widgetSize: widgetSize,
       screenSize: screenSize,
@@ -112,12 +106,12 @@ class Animator {
       value.offset = _definition.preferences.offset;
       value.duration =
           _definition.preferences.offset + _definition.preferences.duration;
-      value.animation = value.animate(_controller);
+      value.animation = value.animate(_controller!);
     });
 
     if (_definition.preferences.animationStatusListener != null) {
-      _controller
-          .addStatusListener(_definition.preferences.animationStatusListener);
+      _controller!
+          .addStatusListener(_definition.preferences.animationStatusListener!);
     }
   }
 
@@ -129,20 +123,20 @@ class Animator {
   ///Disposes the controller.
   void dispose() {
     if (_controller != null) {
-      _controller.dispose();
+      _controller!.dispose();
       _controller = null;
     }
   }
 
   ///Returns an [Animation] registered by the user in
   ///[AnimationDefinition].getDefinition() function.
-  Animation get(String key) {
+  Animation? get(String key) {
     assert(
       _controller != null,
       '${this} _controller not initialized, did you forget to call resolveDefinition()?',
     );
 
     if (!_sequence.containsKey(key)) return null;
-    return _sequence[key].animation;
+    return _sequence[key]!.animation;
   }
 }

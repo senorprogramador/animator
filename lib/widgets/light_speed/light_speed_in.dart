@@ -41,15 +41,15 @@ class LightSpeedInAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
+        builder: (BuildContext context, Widget? child) => Transform(
           child: child,
           transform: Matrix4.translationValues(
-                  animator.get("translateX").value, 0.0, 0.0) *
-              Matrix4.skewX(animator.get("skewX").value),
+                  animator.get("translateX")!.value, 0.0, 0.0) *
+              Matrix4.skewX(animator.get("skewX")!.value),
           alignment: Alignment.center,
         ),
       ),
@@ -57,21 +57,21 @@ class LightSpeedInAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 60, value: 1.0),
         ],
       ),
-      "translateX": TweenList<double>(
+      "translateX": TweenList<double?>(
         [
-          TweenPercentage(percent: 0, value: screenSize.width),
+          TweenPercentage(percent: 0, value: screenSize!.width),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
-      "skewX": TweenList<double>(
+      "skewX": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: -30.0 * toRad),
           TweenPercentage(percent: 60, value: 20.0 * toRad),
@@ -97,8 +97,8 @@ class LightSpeedInAnimation extends AnimationDefinition {
 /// ```
 class LightSpeedIn extends AnimatorWidget {
   LightSpeedIn({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

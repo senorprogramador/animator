@@ -41,15 +41,15 @@ class ZoomInLeftAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
+        builder: (BuildContext context, Widget? child) => Transform(
           child: child,
           transform: Matrix4.translationValues(
-                  animator.get("translateX").value, 0.0, 0.0) *
-              Matrix4.identity().scaled(animator.get("scale").value),
+                  animator.get("translateX")!.value, 0.0, 0.0) *
+              Matrix4.identity().scaled(animator.get("scale")!.value),
           alignment: Alignment.centerLeft,
         ),
       ),
@@ -57,26 +57,26 @@ class ZoomInLeftAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final c0 = Cubic(0.55, 0.55, 0.675, 0.19);
     final c1 = Cubic(0.175, 0.885, 0.32, 1.0);
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: c0),
           TweenPercentage(percent: 60, value: 1.0, curve: c1),
         ],
       ),
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.1, curve: c0),
           TweenPercentage(percent: 60, value: 0.475, curve: c1),
           TweenPercentage(percent: 100, value: 1.0, curve: c1),
         ],
       ),
-      "translateX": TweenList<double>(
+      "translateX": TweenList<double?>(
         [
-          TweenPercentage(percent: 0, value: -screenSize.width, curve: c0),
+          TweenPercentage(percent: 0, value: -screenSize!.width, curve: c0),
           TweenPercentage(percent: 60, value: 60.0, curve: c1),
           TweenPercentage(percent: 100, value: 0.0, curve: c1),
         ],
@@ -99,8 +99,8 @@ class ZoomInLeftAnimation extends AnimationDefinition {
 /// ```
 class ZoomInLeft extends AnimatorWidget {
   ZoomInLeft({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

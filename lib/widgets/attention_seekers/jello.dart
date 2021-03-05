@@ -37,21 +37,21 @@ class JelloAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
         transform: Matrix4.skew(
-            animator.get("transform").value, animator.get("transform").value),
+            animator.get("transform")!.value, animator.get("transform")!.value),
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "transform": TweenList<double>(
+      "transform": TweenList<double?>(
         [
           TweenPercentage(percent: 11, value: 0.0),
           TweenPercentage(percent: 22, value: -12.5 * toRad),
@@ -82,8 +82,8 @@ class JelloAnimation extends AnimationDefinition {
 /// ```
 class Jello extends AnimatorWidget {
   Jello({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

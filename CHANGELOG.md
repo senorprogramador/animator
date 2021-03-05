@@ -85,3 +85,7 @@
 ## [2.1.0] - 2020/08/06
 
 * Added possibility to animate with Offset, Size and Rect.
+
+## [3.1.0] - 2021/03/05
+
+* Added null safety.

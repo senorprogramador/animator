@@ -37,18 +37,18 @@ class PulseAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
-        transform: Matrix4.identity().scaled(animator.get("scale").value),
+        transform: Matrix4.identity().scaled(animator.get("scale")!.value),
         alignment: new FractionalOffset(0.5, 0.5),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
       "scale": TweenList(
         [
@@ -75,8 +75,8 @@ class PulseAnimation extends AnimationDefinition {
 /// ```
 class Pulse extends AnimatorWidget {
   Pulse({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

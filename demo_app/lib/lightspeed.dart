@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class LightSpeed extends AnimatorGroup {
-  LightSpeed({Key key, AnimationPlayStates playState})
+  LightSpeed({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -40,7 +40,7 @@ class LightSpeedState extends AnimatorGroupState<LightSpeed> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }

@@ -37,24 +37,24 @@ class ShakeAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-            animator.get("translateX").value, 0.0, 0.0),
+            animator.get("translateX")!.value, 0.0, 0.0),
         alignment: new FractionalOffset(0.5, 0.5),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final a = 0.0;
     final b = -10.0;
     final c = 10.0;
     return {
-      "translateX": TweenList<double>(
+      "translateX": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: a),
           TweenPercentage(percent: 10, value: b),
@@ -87,8 +87,8 @@ class ShakeAnimation extends AnimationDefinition {
 /// ```
 class Shake extends AnimatorWidget {
   Shake({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

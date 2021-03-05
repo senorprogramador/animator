@@ -37,13 +37,13 @@ class BounceInAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform.scale(
+        builder: (BuildContext context, Widget? child) => Transform.scale(
           child: child,
-          scale: animator.get("scale").value,
+          scale: animator.get("scale")!.value,
           alignment: Alignment.center,
         ),
       ),
@@ -51,16 +51,16 @@ class BounceInAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 60, value: 1.0, curve: curve),
         ],
       ),
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.3, curve: curve),
           TweenPercentage(percent: 20, value: 1.1, curve: curve),
@@ -88,8 +88,8 @@ class BounceInAnimation extends AnimationDefinition {
 /// ```
 class BounceIn extends AnimatorWidget {
   BounceIn({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

@@ -38,18 +38,18 @@ class TadaAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
-        transform: animator.get("transform").value,
+        transform: animator.get("transform")!.value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final axis = Math.Vector3(0.0, 0.0, 1.0);
     final m = Matrix4.identity();
 
@@ -63,7 +63,7 @@ class TadaAnimation extends AnimationDefinition {
     m40.rotate(axis, -3.0 * toRad);
 
     return {
-      "transform": TweenList<Matrix4>(
+      "transform": TweenList<Matrix4?>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 10, value: m10),
@@ -96,8 +96,8 @@ class TadaAnimation extends AnimationDefinition {
 /// ```
 class Tada extends AnimatorWidget {
   Tada({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

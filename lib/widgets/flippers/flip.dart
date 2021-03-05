@@ -37,14 +37,14 @@ class FlipAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         transform: Perspective.matrix(4.0) *
             Matrix4.translationValues(
-                0.0, 0.0, animator.get("translateZ").value) *
-            Matrix4.rotationY(-animator.get("rotateY").value) *
-            Matrix4.identity().scaled(animator.get("scale").value),
+                0.0, 0.0, animator.get("translateZ")!.value) *
+            Matrix4.rotationY(-animator.get("rotateY")!.value) *
+            Matrix4.identity().scaled(animator.get("scale")!.value),
         child: child,
         alignment: Alignment.center,
       ),
@@ -52,11 +52,11 @@ class FlipAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final cIn = Curves.easeIn;
     final cOut = Curves.easeOut;
     return {
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: cOut),
           TweenPercentage(percent: 40, value: 1.0, curve: cOut),
@@ -65,7 +65,7 @@ class FlipAnimation extends AnimationDefinition {
           TweenPercentage(percent: 100, value: 1.0, curve: cIn),
         ],
       ),
-      "translateZ": TweenList<double>(
+      "translateZ": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: cOut),
           TweenPercentage(percent: 40, value: -150.0, curve: cOut),
@@ -73,7 +73,7 @@ class FlipAnimation extends AnimationDefinition {
           TweenPercentage(percent: 80, value: 0.0, curve: cIn),
         ],
       ),
-      "rotateY": TweenList<double>(
+      "rotateY": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: -360.0 * toRad, curve: cOut),
           TweenPercentage(percent: 40, value: -190.0 * toRad, curve: cOut),
@@ -99,8 +99,8 @@ class FlipAnimation extends AnimationDefinition {
 /// ```
 class Flip extends AnimatorWidget {
   Flip({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

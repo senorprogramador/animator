@@ -48,7 +48,7 @@ abstract class AnimationDefinition {
   ///   ]),
   /// };
   ///}
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize});
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize});
 
   ///[AnimatorWidget] calls build to retrieve the animated Widget.
   ///The extracted [Animator] from the getDefinition phase is injected to

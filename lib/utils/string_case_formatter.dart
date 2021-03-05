@@ -62,7 +62,7 @@ class StringCaseFormatter {
 
   ///Groups a String into words based upon the defined regexps.
   static List<String> groupIntoWords(String text) {
-    if (text == null || text.isEmpty) return [''];
+    if (text.isEmpty) return [''];
 
     StringBuffer sb = new StringBuffer();
     List<String> words = [];
@@ -70,7 +70,7 @@ class StringCaseFormatter {
 
     for (int i = 0; i < text.length; i++) {
       String char = new String.fromCharCode(text.codeUnitAt(i));
-      String nextChar = (i + 1 == text.length
+      String? nextChar = (i + 1 == text.length
           ? null
           : new String.fromCharCode(text.codeUnitAt(i + 1)));
 

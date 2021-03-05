@@ -37,21 +37,21 @@ class HeartBeatAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform.scale(
+      builder: (BuildContext context, Widget? child) => Transform.scale(
         child: child,
-        scale: animator.get("scale").value,
+        scale: animator.get("scale")!.value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Curves.easeInOut;
     return {
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: curve),
           TweenPercentage(percent: 14, value: 1.3, curve: curve),
@@ -78,8 +78,8 @@ class HeartBeatAnimation extends AnimationDefinition {
 /// ```
 class HeartBeat extends AnimatorWidget {
   HeartBeat({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

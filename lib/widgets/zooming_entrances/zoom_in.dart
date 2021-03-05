@@ -37,12 +37,12 @@ class ZoomInAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform.scale(
-          scale: animator.get("scale").value,
+        builder: (BuildContext context, Widget? child) => Transform.scale(
+          scale: animator.get("scale")!.value,
           child: child,
         ),
       ),
@@ -50,15 +50,15 @@ class ZoomInAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.3),
           TweenPercentage(percent: 100, value: 1.0),
@@ -82,8 +82,8 @@ class ZoomInAnimation extends AnimationDefinition {
 /// ```
 class ZoomIn extends AnimatorWidget {
   ZoomIn({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

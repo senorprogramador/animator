@@ -11,9 +11,9 @@ class CrossFadeAB extends StatefulWidget {
   final Widget childB;
 
   CrossFadeAB({
-    Key key,
-    @required this.childA,
-    @required this.childB,
+    Key? key,
+    required this.childA,
+    required this.childB,
   }) : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class CrossFadeAB extends StatefulWidget {
 }
 
 class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
-  Animator animatorA;
-  Animator animatorB;
+  Animator? animatorA;
+  Animator? animatorB;
   List<Ticker> _tickers = [];
   CrossFadePlayStatus status = CrossFadePlayStatus.A;
 
@@ -38,30 +38,30 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
   }
 
   void crossToA() {
-    animatorA.reverse();
-    animatorB.forward();
+    animatorA!.reverse();
+    animatorB!.forward();
   }
 
   void crossToB() {
-    animatorA.forward();
-    animatorB.reverse();
+    animatorA!.forward();
+    animatorB!.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget>[
+      children: <Widget?>[
         animatorA == null
             ? widget.childA
-            : animatorA.build(context, widget.childA),
-        animatorB == null ? null : animatorB.build(context, widget.childB),
-      ].where((widget) => widget != null).toList(),
+            : animatorA!.build(context, widget.childA),
+        animatorB == null ? null : animatorB!.build(context, widget.childB),
+      ].where((widget) => widget != null).toList() as List<Widget>,
     );
   }
 
   void _createAnimators() {
     animatorA = Animator(vsync: this);
-    animatorA.setAnimationDefinition(
+    animatorA!.setAnimationDefinition(
       FadeOutAnimation(
         preferences: AnimationPreferences(
           animationStatusListener: (AnimationStatus status) {
@@ -78,17 +78,17 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
         ),
       ),
     );
-    animatorA.resolveDefinition();
+    animatorA!.resolveDefinition();
 
     animatorB = Animator(vsync: this);
-    animatorB.setAnimationDefinition(
+    animatorB!.setAnimationDefinition(
       FadeOutAnimation(
         preferences: AnimationPreferences(),
       ),
     );
-    animatorB.resolveDefinition();
-    animatorB.reverse();
-    animatorB.stop();
+    animatorB!.resolveDefinition();
+    animatorB!.reverse();
+    animatorB!.stop();
   }
 
   @override
@@ -117,10 +117,10 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
 
   disposeExistingAnimation() {
     if (animatorA != null) {
-      animatorA.dispose();
+      animatorA!.dispose();
     }
     if (animatorB != null) {
-      animatorB.dispose();
+      animatorB!.dispose();
     }
     if (_tickers.length > 0) {
       _tickers.forEach((ticker) => ticker.dispose());

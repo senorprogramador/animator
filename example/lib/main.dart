@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_animator/flutter_animator.dart';
 
 void main() => runApp(ExampleApp());
@@ -51,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               childB: Text('B', style: TextStyle(fontSize: 20)),
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 crossFadeAnimation.currentState.cross();
               },
@@ -68,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 basicAnimation.currentState.forward();
               },
@@ -88,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               outDefinition: BounceOutDownAnimation(),
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 if (inOutAnimation.currentState.status !=
                     InOutAnimationStatus.Out) {

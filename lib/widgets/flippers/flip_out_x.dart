@@ -38,13 +38,13 @@ class FlipOutXAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
+        builder: (BuildContext context, Widget? child) => Transform(
           transform: Perspective.matrix(4.0) *
-              Matrix4.rotationX(-animator.get("rotateX").value),
+              Matrix4.rotationX(-animator.get("rotateX")!.value),
           child: child,
           alignment: Alignment.center,
         ),
@@ -53,15 +53,15 @@ class FlipOutXAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 30, value: 1.0),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
-      "rotateX": TweenList<double>(
+      "rotateX": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 30, value: -20.0 * toRad),
@@ -86,8 +86,8 @@ class FlipOutXAnimation extends AnimationDefinition {
 /// ```
 class FlipOutX extends AnimatorWidget {
   FlipOutX({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_animator/animation/animator_play_states.dart';
+import 'package:flutter_animator/flutter_animator.dart';
 
 class AnimatorCard extends StatelessWidget {
   final String title;
-  final Color color;
+  final Color? color;
   AnimatorCard(this.title, this.color);
 
   @override
@@ -26,8 +26,8 @@ class AnimatorCard extends StatelessWidget {
 }
 
 class AnimatorGroup extends StatefulWidget {
-  final AnimationPlayStates playState;
-  AnimatorGroup({Key key, @required this.playState}) : super(key: key);
+  final AnimationPlayStates? playState;
+  AnimatorGroup({Key? key, required this.playState}) : super(key: key);
 
   @override
   AnimatorGroupState createState() => AnimatorGroupState();
@@ -37,7 +37,7 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
   int get numKeys => 0;
 
   List<GlobalKey<AnimatorWidgetState>> keys = [];
-  List<Color> colors = [
+  List<Color?> colors = [
     Colors.blue[100],
     Colors.green[100],
     Colors.blue[200],
@@ -57,13 +57,13 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
     Colors.blue[900],
     Colors.green[900],
   ];
-  AnimationPlayStates playState;
+  AnimationPlayStates? playState;
 
   @override
   void initState() {
     keys = List.generate(numKeys, (_) => GlobalKey<AnimatorWidgetState>());
     playState = widget.playState;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       handlePlayState();
     });
     super.initState();
@@ -108,7 +108,7 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
   handlePlayState() {
     keys.forEach((key) {
       if (key.currentState != null) {
-        key.currentState.handlePlayState(playState);
+        key.currentState!.handlePlayState(playState);
       }
     });
   }

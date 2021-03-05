@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class FadingExits extends AnimatorGroup {
-  FadingExits({Key key, AnimationPlayStates playState})
+  FadingExits({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -89,7 +89,7 @@ class FadingExitsState extends AnimatorGroupState<FadingExits> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }

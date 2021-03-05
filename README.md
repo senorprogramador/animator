@@ -2,6 +2,9 @@
 
 Enables you to create stunning flutter animations, faster, efficient and with less code.
 
+#### Null safety:
+*For null safety please use flutter_animator: ^3.1.0, without null safety: flutter_animator: 2.1.0*
+
 Partly inspired by the amazing [Animate.css](https://daneden.github.io/animate.css/) package by Dan Eden.
 Please note, although it's inspired by Animate.css, this still is a Flutter package, meaning it will be available for all flutter-supported platforms.
 

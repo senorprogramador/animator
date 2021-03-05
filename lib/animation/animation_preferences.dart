@@ -16,11 +16,11 @@ class AnimationPreferences {
 
   ///Defines autoPlay for the [AnimationDefinition], [AnimatorWidget] uses this
   ///to initially start an animation upon render.
-  final AnimationPlayStates autoPlay;
+  final AnimationPlayStates? autoPlay;
 
   ///Adds an [AnimationStatusListener] to the generated [AnimationController]
   ///inside an [AnimatorInstance]
-  final AnimationStatusListener animationStatusListener;
+  final AnimationStatusListener? animationStatusListener;
 
   ///Constructor with defaults.
   const AnimationPreferences({
@@ -32,10 +32,10 @@ class AnimationPreferences {
 
   ///Shorthand to initialize a copy with one or more changed parameters.
   AnimationPreferences copyWith({
-    Duration offset,
-    Duration duration,
-    AnimationPlayStates autoPlay,
-    AnimationStatusListener animationStatusListener,
+    Duration? offset,
+    Duration? duration,
+    AnimationPlayStates? autoPlay,
+    AnimationStatusListener? animationStatusListener,
   }) {
     return AnimationPreferences(
       offset: offset ?? this.offset,

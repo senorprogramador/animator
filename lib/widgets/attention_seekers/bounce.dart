@@ -37,23 +37,23 @@ class BounceAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-            0.0, animator.get("translateY").value, 0.0),
+            0.0, animator.get("translateY")!.value, 0.0),
         alignment: new FractionalOffset(0.5, 1.0),
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final floorCurve = Cubic(0.215, 0.61, 0.355, 1);
     final ceilCurve = Cubic(0.755, 0.05, 0.855, 0.06);
     return {
-      "translateY": TweenList<double>(
+      "translateY": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: floorCurve),
           TweenPercentage(percent: 20, value: 0.0, curve: floorCurve),
@@ -84,8 +84,8 @@ class BounceAnimation extends AnimationDefinition {
 /// ```
 class Bounce extends AnimatorWidget {
   Bounce({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

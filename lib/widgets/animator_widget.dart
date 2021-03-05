@@ -11,13 +11,10 @@ class AnimatorWidget extends StatefulWidget {
   final AnimationDefinition definition;
 
   AnimatorWidget({
-    Key key,
-    @required this.child,
-    @required this.definition,
-  }) : super(key: key) {
-    assert(this.child != null, '$this child cannot be null');
-    assert(this.definition != null, '$this definition cannot be null');
-  }
+    Key? key,
+    required this.child,
+    required this.definition,
+  }) : super(key: key);
 
   @override
   AnimatorWidgetState createState() => AnimatorWidgetState();
@@ -25,37 +22,37 @@ class AnimatorWidget extends StatefulWidget {
 
 class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     implements TickerProvider {
-  Size widgetSize;
-  Size screenSize;
+  Size? widgetSize;
+  Size? screenSize;
 
-  Animator animator;
-  Ticker _ticker;
+  Animator? animator;
+  Ticker? _ticker;
 
   void loop({bool pingPong = false}) {
     if (animator != null) {
-      animator.loop();
+      animator!.loop();
     }
   }
 
   void forward({double from = 0.0}) {
     if (animator != null) {
-      animator.forward(from: from);
+      animator!.forward(from: from);
     }
   }
 
   void reverse({double from = 1.0}) {
     if (animator != null) {
-      animator.reverse(from: from);
+      animator!.reverse(from: from);
     }
   }
 
   void stop() {
     if (animator != null) {
-      animator.stop();
+      animator!.stop();
     }
   }
 
-  void handlePlayState(AnimationPlayStates playState) {
+  void handlePlayState(AnimationPlayStates? playState) {
     switch (playState) {
       case AnimationPlayStates.None:
         break;
@@ -70,6 +67,8 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
         break;
       case AnimationPlayStates.PingPong:
         loop(pingPong: true);
+        break;
+      default:
         break;
     }
   }
@@ -89,32 +88,32 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
         child: widget.child,
       );
     }
-    return animator.build(context, widget.child);
+    return animator!.build(context, widget.child);
   }
 
   void _createAnimator() {
     animator = Animator(vsync: this);
-    animator.setAnimationDefinition(widget.definition);
+    animator!.setAnimationDefinition(widget.definition);
     if (widget.definition.needsWidgetSize ||
         widget.definition.needsScreenSize) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         setState(() {
           if (widget.definition.needsWidgetSize) {
-            RenderBox renderBox = context.findRenderObject();
+            RenderBox renderBox = context.findRenderObject() as RenderBox;
             widgetSize = renderBox.size;
           }
           if (widget.definition.needsScreenSize) {
             screenSize = MediaQuery.of(context).size;
           }
         });
-        animator.resolveDefinition(
+        animator!.resolveDefinition(
           widgetSize: widgetSize,
           screenSize: screenSize,
         );
         handlePlayState(widget.definition.preferences.autoPlay);
       });
     } else {
-      animator.resolveDefinition(
+      animator!.resolveDefinition(
         widgetSize: widgetSize,
         screenSize: screenSize,
       );
@@ -152,10 +151,10 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
 
   disposeExistingAnimation() {
     if (animator != null) {
-      animator.dispose();
+      animator!.dispose();
     }
     if (_ticker != null) {
-      _ticker.dispose();
+      _ticker!.dispose();
       _ticker = null;
     }
   }
@@ -166,25 +165,25 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
 
     _ticker =
         Ticker(onTick, debugLabel: kDebugMode ? 'created by $this' : null);
-    return _ticker;
+    return _ticker!;
   }
 
   @override
   void didChangeDependencies() {
-    if (_ticker != null) _ticker.muted = !TickerMode.of(context);
+    if (_ticker != null) _ticker!.muted = !TickerMode.of(context);
     super.didChangeDependencies();
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    String tickerDescription;
+    String? tickerDescription;
     if (_ticker != null) {
-      if (_ticker.isActive && _ticker.muted)
+      if (_ticker!.isActive && _ticker!.muted)
         tickerDescription = 'active but muted';
-      else if (_ticker.isActive)
+      else if (_ticker!.isActive)
         tickerDescription = 'active';
-      else if (_ticker.muted)
+      else if (_ticker!.muted)
         tickerDescription = 'inactive and muted';
       else
         tickerDescription = 'inactive';

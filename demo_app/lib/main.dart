@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_animator/flutter_animator.dart';
 
 import './animator_group.dart';
@@ -57,17 +56,17 @@ class ExampleApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  AnimationGroupType _type = AnimationGroupType.AttentionSeekers;
+  AnimationGroupType? _type = AnimationGroupType.AttentionSeekers;
   GlobalKey<AnimatorGroupState> _key = GlobalKey<AnimatorGroupState>();
 
-  String _getTitleFromType(AnimationGroupType type) {
+  String _getTitleFromType(AnimationGroupType? type) {
     return StringCaseFormatter.groupIntoWords(type.toString().substring(19))
         .join(' ');
   }
@@ -103,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ))
                   .toList(),
-              onChanged: (AnimationGroupType value) {
+              onChanged: (AnimationGroupType? value) {
                 setState(() {
                   _type = value;
                 });
@@ -123,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Icons.play_arrow,
                       color: Colors.green,
                     ),
-                    onPressed: () => _key.currentState.reverse(),
+                    onPressed: () => _key.currentState!.reverse(),
                   ),
                 ),
                 IconButton(
@@ -131,21 +130,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     Icons.stop,
                     color: Colors.red,
                   ),
-                  onPressed: () => _key.currentState.stop(),
+                  onPressed: () => _key.currentState!.stop(),
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.play_arrow,
                     color: Colors.green,
                   ),
-                  onPressed: () => _key.currentState.forward(),
+                  onPressed: () => _key.currentState!.forward(),
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.repeat,
                     color: Colors.orange,
                   ),
-                  onPressed: () => _key.currentState.loop(),
+                  onPressed: () => _key.currentState!.loop(),
                 ),
               ],
             ),
@@ -155,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget renderAnimation() {
+  Widget? renderAnimation() {
     switch (_type) {
       case AnimationGroupType.AttentionSeekers:
         return AttentionSeekers(
@@ -237,7 +236,8 @@ class _MyHomePageState extends State<MyHomePage> {
           key: _key,
           playState: AnimationPlayStates.Forward,
         );
+      default:
+        return null;
     }
-    return null;
   }
 }

@@ -37,13 +37,13 @@ class JackInTheBoxAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return FadeTransition(
-      opacity: animator.get("opacity"),
+      opacity: animator.get("opacity") as Animation<double>,
       child: AnimatedBuilder(
-        animation: animator.controller,
+        animation: animator.controller!,
         child: child,
-        builder: (BuildContext context, Widget child) => Transform(
-          transform: Matrix4.rotationZ(-animator.get("rotateZ").value) *
-              Matrix4.identity().scaled(animator.get("scale").value),
+        builder: (BuildContext context, Widget? child) => Transform(
+          transform: Matrix4.rotationZ(-animator.get("rotateZ")!.value) *
+              Matrix4.identity().scaled(animator.get("scale")!.value),
           child: child,
           alignment: Alignment.center,
         ),
@@ -52,21 +52,21 @@ class JackInTheBoxAnimation extends AnimationDefinition {
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double>(
+      "opacity": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
-      "scale": TweenList<double>(
+      "scale": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.1),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
-      "rotateZ": TweenList<double>(
+      "rotateZ": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 30.0 * toRad),
           TweenPercentage(percent: 50, value: -10.0 * toRad),
@@ -92,8 +92,8 @@ class JackInTheBoxAnimation extends AnimationDefinition {
 /// ```
 class JackInTheBox extends AnimatorWidget {
   JackInTheBox({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

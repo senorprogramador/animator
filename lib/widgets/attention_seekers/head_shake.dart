@@ -37,23 +37,23 @@ class HeadShakeAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
         transform: Matrix4.translationValues(
-                animator.get("translateX").value, 0.0, 0.0) *
-            Matrix4.rotationY(animator.get("rotateY").value),
+                animator.get("translateX")!.value, 0.0, 0.0) *
+            Matrix4.rotationY(animator.get("rotateY")!.value),
         alignment: Alignment.bottomCenter,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Curves.easeInOut;
     return {
-      "translateX": TweenList<double>(
+      "translateX": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 13, value: -6.0, curve: curve),
@@ -63,7 +63,7 @@ class HeadShakeAnimation extends AnimationDefinition {
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "rotateY": TweenList<double>(
+      "rotateY": TweenList<double?>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 13, value: -9.0 * toRad, curve: curve),
@@ -91,8 +91,8 @@ class HeadShakeAnimation extends AnimationDefinition {
 /// ```
 class HeadShake extends AnimatorWidget {
   HeadShake({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

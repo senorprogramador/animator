@@ -15,10 +15,10 @@ class InOutAnimation extends StatefulWidget {
   final InOutAnimationStatus autoPlay;
 
   InOutAnimation({
-    Key key,
-    @required this.child,
-    @required this.inDefinition,
-    @required this.outDefinition,
+    Key? key,
+    required this.child,
+    required this.inDefinition,
+    required this.outDefinition,
     this.autoPlay = InOutAnimationStatus.In,
   }) : super(key: key);
 

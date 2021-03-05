@@ -41,19 +41,19 @@ class WobbleAnimation extends AnimationDefinition {
   @override
   Widget build(BuildContext context, Animator animator, Widget child) {
     return AnimatedBuilder(
-      animation: animator.controller,
+      animation: animator.controller!,
       child: child,
-      builder: (BuildContext context, Widget child) => Transform(
+      builder: (BuildContext context, Widget? child) => Transform(
         child: child,
-        transform: animator.get("transform").value,
+        transform: animator.get("transform")!.value,
         alignment: Alignment.center,
       ),
     );
   }
 
   @override
-  Map<String, TweenList> getDefinition({Size screenSize, Size widgetSize}) {
-    final width = screenSize.width;
+  Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
+    final width = screenSize!.width;
     final axis = Math.Vector3(0.0, 0.0, 1.0);
 
     final m = Matrix4.identity();
@@ -73,7 +73,7 @@ class WobbleAnimation extends AnimationDefinition {
     m75.rotate(axis, -1.0 * toRad);
 
     return {
-      "transform": TweenList<Matrix4>(
+      "transform": TweenList<Matrix4?>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 15, value: m15),
@@ -102,8 +102,8 @@ class WobbleAnimation extends AnimationDefinition {
 /// ```
 class Wobble extends AnimatorWidget {
   Wobble({
-    Key key,
-    @required Widget child,
+    Key? key,
+    required Widget child,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(
             key: key,

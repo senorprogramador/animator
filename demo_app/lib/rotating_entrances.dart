@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class RotatingEntrances extends AnimatorGroup {
-  RotatingEntrances({Key key, AnimationPlayStates playState})
+  RotatingEntrances({Key? key, AnimationPlayStates? playState})
       : super(key: key, playState: playState);
 
   @override
@@ -61,7 +61,7 @@ class RotatingEntrancesState extends AnimatorGroupState<RotatingEntrances> {
             );
         }
         return null;
-      }).where((Widget w) => w != null).toList(),
+      }).where((Widget? w) => w != null).toList() as List<Widget>,
     );
   }
 }
