@@ -17,7 +17,7 @@ class ExampleApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(padding: EdgeInsets.only(top: 20)),
             TextButton(
               onPressed: () {
-                crossFadeAnimation.currentState.cross();
+                crossFadeAnimation.currentState!.cross();
               },
               child: Text(
                 'Cross Animate',
@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(padding: EdgeInsets.only(top: 20)),
             TextButton(
               onPressed: () {
-                basicAnimation.currentState.forward();
+                basicAnimation.currentState!.forward();
               },
               child: Text(
                 'Animate Bounce',
@@ -89,11 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(padding: EdgeInsets.only(top: 20)),
             TextButton(
               onPressed: () {
-                if (inOutAnimation.currentState.status !=
+                if (inOutAnimation.currentState!.status !=
                     InOutAnimationStatus.Out) {
-                  inOutAnimation.currentState.animateOut();
+                  inOutAnimation.currentState!.animateOut();
                 } else {
-                  inOutAnimation.currentState.animateIn();
+                  inOutAnimation.currentState!.animateIn();
                 }
               },
               child: Text(
