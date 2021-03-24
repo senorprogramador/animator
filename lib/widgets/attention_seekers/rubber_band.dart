@@ -51,7 +51,7 @@ class RubberBandAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final m = Matrix4.identity();
     return {
-      "transform": TweenList<Matrix4?>(
+      "transform": TweenList<Matrix4>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 30, value: m.scaled(1.25, 0.75, 1.0)),

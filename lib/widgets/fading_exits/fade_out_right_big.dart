@@ -52,13 +52,13 @@ class FadeOutRightBigAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: screenSize!.width),

@@ -52,13 +52,13 @@ class ZoomOutAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0),
           TweenPercentage(percent: 50, value: 0.0),
         ],
       ),
-      "scale": TweenList<double?>(
+      "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0),
           TweenPercentage(percent: 50, value: 0.3),

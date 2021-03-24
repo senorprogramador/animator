@@ -51,7 +51,7 @@ class JelloAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "transform": TweenList<double?>(
+      "transform": TweenList<double>(
         [
           TweenPercentage(percent: 11, value: 0.0),
           TweenPercentage(percent: 22, value: -12.5 * toRad),

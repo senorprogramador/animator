@@ -49,7 +49,7 @@ class SlideOutDownAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "translateY": TweenList<double?>(
+      "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: screenSize!.height),

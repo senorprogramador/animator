@@ -38,20 +38,20 @@ class SlitInDiagonalAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      'opacity': TweenList<double?>(
+      'opacity': TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 54, value: 1.0),
         ],
       ),
-      'translateZ': TweenList<double?>(
+      'translateZ': TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 800.0),
           TweenPercentage(percent: 54, value: 160.0),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
-      'rotation': TweenList<double?>(
+      'rotation': TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 90.0 * toRad),
           TweenPercentage(percent: 54, value: 87.0 * toRad),

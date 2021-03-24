@@ -56,7 +56,7 @@ class FlipAnimation extends AnimationDefinition {
     final cIn = Curves.easeIn;
     final cOut = Curves.easeOut;
     return {
-      "scale": TweenList<double?>(
+      "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: cOut),
           TweenPercentage(percent: 40, value: 1.0, curve: cOut),
@@ -65,7 +65,7 @@ class FlipAnimation extends AnimationDefinition {
           TweenPercentage(percent: 100, value: 1.0, curve: cIn),
         ],
       ),
-      "translateZ": TweenList<double?>(
+      "translateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: cOut),
           TweenPercentage(percent: 40, value: -150.0, curve: cOut),
@@ -73,7 +73,7 @@ class FlipAnimation extends AnimationDefinition {
           TweenPercentage(percent: 80, value: 0.0, curve: cIn),
         ],
       ),
-      "rotateY": TweenList<double?>(
+      "rotateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: -360.0 * toRad, curve: cOut),
           TweenPercentage(percent: 40, value: -190.0 * toRad, curve: cOut),

@@ -57,19 +57,19 @@ class HingeAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     const curve = Curves.easeInOut;
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 80, value: 1.0, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "translateY": TweenList<double?>(
+      "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 80, value: 0.0, curve: curve),
           TweenPercentage(percent: 100, value: 700.0, curve: curve),
         ],
       ),
-      "rotateZ": TweenList<double?>(
+      "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 20, value: 80.0 * toRad, curve: curve),

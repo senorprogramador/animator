@@ -70,13 +70,13 @@ class FlipInXAnimation extends AnimationDefinition {
       multiplier *= -1;
     }
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeIn),
           TweenPercentage(percent: 60, value: 1.0),
         ],
       ),
-      "rotateX": TweenList<double?>(
+      "rotateX": TweenList<double>(
         [
           TweenPercentage(
               percent: 0,

@@ -12,7 +12,7 @@ import '../utils/pair.dart';
 ///value-blends.
 ///Please note that although Matrix4 tweens are supported, they tend to be a bit
 ///slower, due to the Matrix decomposition
-class TweenList<T extends dynamic> extends Tween<T?> {
+class TweenList<T extends dynamic> extends Tween<T> {
   ///Holds all the percentages.
   late List<TweenPercentage<T>> _values;
 
@@ -47,7 +47,7 @@ class TweenList<T extends dynamic> extends Tween<T?> {
 
   ///Returns a current animated value at the supplied theta.
   @override
-  T? transform(double t) {
+  T transform(double t) {
     double beginT =
         offset.inMilliseconds.toDouble() / duration.inMilliseconds.toDouble();
     double endT = 1.0;
@@ -69,7 +69,7 @@ class TweenList<T extends dynamic> extends Tween<T?> {
 
   ///Returns a lerped value based on theta.
   @override
-  T? lerp(double t) {
+  T lerp(double t) {
     if (t <= 0.0) {
       return _values.first.value;
     }
@@ -115,27 +115,27 @@ class TweenList<T extends dynamic> extends Tween<T?> {
 
     if (T == int) {
       return (_pair!.a.value + n * (_pair!.b.value - _pair!.a.value)).round()
-          as T?;
+          ;
     }
 
     if (T == Color) {
       return Color.lerp(_pair!.a.value as Color, _pair!.b.value as Color, n)
-          as T?;
+          as T;
     }
 
     if (T == Offset) {
       return Offset.lerp(_pair!.a.value as Offset, _pair!.b.value as Offset, n)
-          as T?;
+          as T;
     }
 
     if (T == Size) {
-      return Size.lerp(_pair!.a.value as Size, _pair!.b.value as Size, n) as T?;
+      return Size.lerp(_pair!.a.value as Size, _pair!.b.value as Size, n) as T;
     }
 
     if (T == Rect) {
-      return Rect.lerp(_pair!.a.value as Rect, _pair!.b.value as Rect, n) as T?;
+      return Rect.lerp(_pair!.a.value as Rect, _pair!.b.value as Rect, n) as T;
     }
 
-    return _pair!.a.value + n * (_pair!.b.value - _pair!.a.value) as T?;
+    return _pair!.a.value + n * (_pair!.b.value - _pair!.a.value) as T;
   }
 }

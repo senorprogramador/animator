@@ -73,7 +73,7 @@ class WobbleAnimation extends AnimationDefinition {
     m75.rotate(axis, -1.0 * toRad);
 
     return {
-      "transform": TweenList<Matrix4?>(
+      "transform": TweenList<Matrix4>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 15, value: m15),

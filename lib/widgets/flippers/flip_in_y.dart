@@ -54,13 +54,13 @@ class FlipInYAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: Curves.easeIn),
           TweenPercentage(percent: 60, value: 1.0),
         ],
       ),
-      "rotateY": TweenList<double?>(
+      "rotateY": TweenList<double>(
         [
           TweenPercentage(
               percent: 0, value: 90.0 * toRad, curve: Curves.easeIn),
