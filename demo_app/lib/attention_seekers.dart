@@ -101,9 +101,10 @@ class AttentionSeekersState extends AnimatorGroupState<AttentionSeekers> {
               child: AnimatorCard(labels[index], colors[index]),
               preferences: AnimationPreferences(autoPlay: playState),
             );
+          default:
+          return  SizedBox();
         }
-        return null;
-      }).where((Widget? w) => w != null).toList() as List<Widget>,
+      }),
     );
   }
 }

@@ -9,7 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  flutter_animator: ^3.1.0
+  flutter_animator:
+    path: ../
 
 dev_dependencies:
   flutter_test:

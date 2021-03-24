@@ -65,9 +65,9 @@ packages:
   flutter_animator:
     dependency: "direct main"
     description:
-      name: flutter_animator
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: ".."
+      relative: true
+    source: path
     version: "3.1.0"
   flutter_test:
     dependency: "direct dev"

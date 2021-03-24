@@ -55,8 +55,8 @@ class SlitExitsState extends AnimatorGroupState<SlitExits> {
               ),
             );
         }
-        return null;
-      }).where((Widget? w) => w != null).toList() as List<Widget>,
+       return SizedBox();
+      }),
     );
   }
 }
