@@ -50,12 +50,12 @@ class CrossFadeABState extends State<CrossFadeAB> implements TickerProvider {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget?>[
+      children: <Widget>[
         animatorA == null
             ? widget.childA
             : animatorA!.build(context, widget.childA),
-        animatorB == null ? null : animatorB!.build(context, widget.childB),
-      ].where((widget) => widget != null).toList() as List<Widget>,
+        if (animatorB != null) animatorB!.build(context, widget.childB),
+      ],
     );
   }
 
