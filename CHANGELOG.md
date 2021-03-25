@@ -89,3 +89,7 @@
 ## [3.1.0] - 2021/03/05
 
 * Added null safety.
+
+## [3.1.1] - 2021/03/25
+
+* Fix for null safety issues. Special thanks to @Ali1Ammar.

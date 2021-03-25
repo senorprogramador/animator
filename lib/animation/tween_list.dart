@@ -114,8 +114,7 @@ class TweenList<T extends dynamic> extends Tween<T> {
     }
 
     if (T == int) {
-      return (_pair!.a.value + n * (_pair!.b.value - _pair!.a.value)).round()
-          ;
+      return (_pair!.a.value + n * (_pair!.b.value - _pair!.a.value)).round();
     }
 
     if (T == Color) {

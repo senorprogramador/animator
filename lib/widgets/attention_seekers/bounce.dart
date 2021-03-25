@@ -62,7 +62,7 @@ class BounceAnimation extends AnimationDefinition {
           TweenPercentage(percent: 53, value: 0.0, curve: floorCurve),
           TweenPercentage(percent: 70, value: -15.0, curve: ceilCurve),
           TweenPercentage(percent: 80, value: 0.0, curve: floorCurve),
-          TweenPercentage(percent: 90, value: -4.0), 
+          TweenPercentage(percent: 90, value: -4.0),
           TweenPercentage(percent: 100, value: 0.0, curve: floorCurve),
         ],
       ),
