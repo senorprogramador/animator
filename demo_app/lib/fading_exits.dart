@@ -88,8 +88,8 @@ class FadingExitsState extends AnimatorGroupState<FadingExits> {
               preferences: AnimationPreferences(autoPlay: playState),
             );
         }
-        return null;
-      }).where((Widget? w) => w != null).toList() as List<Widget>,
+       return SizedBox();
+      }),
     );
   }
 }

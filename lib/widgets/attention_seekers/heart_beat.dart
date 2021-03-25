@@ -51,7 +51,7 @@ class HeartBeatAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Curves.easeInOut;
     return {
-      "scale": TweenList<double?>(
+      "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: curve),
           TweenPercentage(percent: 14, value: 1.3, curve: curve),

@@ -53,7 +53,7 @@ class HeadShakeAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Curves.easeInOut;
     return {
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 13, value: -6.0, curve: curve),
@@ -63,7 +63,7 @@ class HeadShakeAnimation extends AnimationDefinition {
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "rotateY": TweenList<double?>(
+      "rotateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 13, value: -9.0 * toRad, curve: curve),

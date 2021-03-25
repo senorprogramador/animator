@@ -56,13 +56,13 @@ class BounceOutUpAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 45, value: 1.0, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
-      "translateY": TweenList<double?>(
+      "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 20, value: -10.0, curve: curve),

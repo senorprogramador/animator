@@ -56,13 +56,13 @@ class FadeInUpBigAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
-      "translateY": TweenList<double?>(
+      "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: screenSize!.height),
           TweenPercentage(percent: 100, value: 0.0),

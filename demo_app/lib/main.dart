@@ -237,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
           playState: AnimationPlayStates.Forward,
         );
       default:
-        return null;
+       return SizedBox();
     }
   }
 }

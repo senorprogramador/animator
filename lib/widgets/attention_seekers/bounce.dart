@@ -53,7 +53,7 @@ class BounceAnimation extends AnimationDefinition {
     final floorCurve = Cubic(0.215, 0.61, 0.355, 1);
     final ceilCurve = Cubic(0.755, 0.05, 0.855, 0.06);
     return {
-      "translateY": TweenList<double?>(
+      "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: floorCurve),
           TweenPercentage(percent: 20, value: 0.0, curve: floorCurve),
@@ -62,7 +62,7 @@ class BounceAnimation extends AnimationDefinition {
           TweenPercentage(percent: 53, value: 0.0, curve: floorCurve),
           TweenPercentage(percent: 70, value: -15.0, curve: ceilCurve),
           TweenPercentage(percent: 80, value: 0.0, curve: floorCurve),
-          TweenPercentage(percent: 90, value: -4.0),
+          TweenPercentage(percent: 90, value: -4.0), 
           TweenPercentage(percent: 100, value: 0.0, curve: floorCurve),
         ],
       ),

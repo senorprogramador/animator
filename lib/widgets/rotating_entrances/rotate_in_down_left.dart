@@ -53,13 +53,13 @@ class RotateInDownLeftAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
-      "rotateZ": TweenList<double?>(
+      "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: -45.0 * toRad),
           TweenPercentage(percent: 100, value: 0.0),

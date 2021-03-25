@@ -57,13 +57,13 @@ class BounceInRightAnimation extends AnimationDefinition {
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final curve = Cubic(0.215, 0.61, 0.355, 1);
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
           TweenPercentage(percent: 60, value: 1.0, curve: curve),
         ],
       ),
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: screenSize!.width, curve: curve),
           TweenPercentage(percent: 60, value: -25.0, curve: curve),

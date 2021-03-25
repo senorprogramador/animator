@@ -63,7 +63,7 @@ class TadaAnimation extends AnimationDefinition {
     m40.rotate(axis, -3.0 * toRad);
 
     return {
-      "transform": TweenList<Matrix4?>(
+      "transform": TweenList<Matrix4>(
         [
           TweenPercentage(percent: 0, value: m),
           TweenPercentage(percent: 10, value: m10),

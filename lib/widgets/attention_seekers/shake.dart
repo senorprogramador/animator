@@ -54,7 +54,7 @@ class ShakeAnimation extends AnimationDefinition {
     final b = -10.0;
     final c = 10.0;
     return {
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: a),
           TweenPercentage(percent: 10, value: b),

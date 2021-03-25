@@ -60,8 +60,8 @@ class ZoomingEntrancesState extends AnimatorGroupState<ZoomingEntrances> {
               preferences: AnimationPreferences(autoPlay: playState),
             );
         }
-        return null;
-      }).where((Widget? w) => w != null).toList() as List<Widget>,
+       return SizedBox();
+      }),
     );
   }
 }

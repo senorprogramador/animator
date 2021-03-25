@@ -53,7 +53,7 @@ class SlideInRightAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: screenSize!.width),
           TweenPercentage(percent: 100, value: 0.0),

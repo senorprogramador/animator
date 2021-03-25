@@ -50,7 +50,7 @@ class SwingAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     return {
-      "rotateZ": TweenList<double?>(
+      "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
           TweenPercentage(percent: 20, value: 15.0 * toRad),

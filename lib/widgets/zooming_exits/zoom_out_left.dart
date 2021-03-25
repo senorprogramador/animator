@@ -57,20 +57,20 @@ class ZoomOutLeftAnimation extends AnimationDefinition {
     final c0 = Cubic(0.55, 0.55, 0.675, 0.19);
     final c1 = Cubic(0.175, 0.885, 0.32, 1.0);
     return {
-      "opacity": TweenList<double?>(
+      "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 40, value: 1.0, curve: c0),
           TweenPercentage(percent: 100, value: 0.0, curve: c1),
         ],
       ),
-      "scale": TweenList<double?>(
+      "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: c0),
           TweenPercentage(percent: 40, value: 0.475, curve: c0),
           TweenPercentage(percent: 100, value: 0.1, curve: c1),
         ],
       ),
-      "translateX": TweenList<double?>(
+      "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: c0),
           TweenPercentage(percent: 40, value: 60.0, curve: c0),

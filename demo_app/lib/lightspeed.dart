@@ -39,8 +39,8 @@ class LightSpeedState extends AnimatorGroupState<LightSpeed> {
               preferences: AnimationPreferences(autoPlay: playState),
             );
         }
-        return null;
-      }).where((Widget? w) => w != null).toList() as List<Widget>,
+       return SizedBox();
+      }),
     );
   }
 }
