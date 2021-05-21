@@ -52,6 +52,12 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     }
   }
 
+  void reset() {
+    if (animator != null) {
+      animator!.reset();
+    }
+  }
+
   void handlePlayState(AnimationPlayStates? playState) {
     switch (playState) {
       case AnimationPlayStates.None:
