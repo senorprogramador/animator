@@ -81,6 +81,13 @@ class Animator {
     }
   }
 
+  ///Rewinds and stops the animation.
+  void reset() {
+    if (_controller != null) {
+      _controller!.reset();
+    }
+  }
+
   ///Sets the [AnimationDefinition] to be used for creating a controller.
   void setAnimationDefinition(AnimationDefinition definition) {
     _definition = definition;
