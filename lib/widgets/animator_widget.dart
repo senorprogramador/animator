@@ -30,7 +30,7 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
 
   void loop({bool pingPong = false}) {
     if (animator != null) {
-      animator!.loop();
+      animator!.loop(pingPong: pingPong);
     }
   }
 

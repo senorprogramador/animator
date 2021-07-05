@@ -93,3 +93,7 @@
 ## [3.1.1] - 2021/03/25
 
 * Fix for null safety issues. Special thanks to @Ali1Ammar.
+
+## [3.1.2] - 2021/07/05
+
+* Fix for pingPong play mode.
