@@ -103,6 +103,10 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     if (widget.definition.needsWidgetSize ||
         widget.definition.needsScreenSize) {
       WidgetsBinding.instance!.addPostFrameCallback((_) {
+        if (!mounted) {
+          return;
+        }
+
         setState(() {
           if (widget.definition.needsWidgetSize) {
             RenderBox renderBox = context.findRenderObject() as RenderBox;
