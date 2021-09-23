@@ -64,10 +64,14 @@ class BounceOutAnimation extends AnimationDefinition {
       "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0),
-          TweenPercentage(percent: 20, value: 0.9),
-          TweenPercentage(percent: 50, value: 1.1),
-          TweenPercentage(percent: 55, value: 1.1),
-          TweenPercentage(percent: 100, value: 0.3),
+          TweenPercentage(
+              percent: 20, value: 1.0 - 0.1 * preferences.magnitude),
+          TweenPercentage(
+              percent: 50, value: 1.0 + 0.1 * preferences.magnitude),
+          TweenPercentage(
+              percent: 55, value: 1.0 + 0.1 * preferences.magnitude),
+          TweenPercentage(
+              percent: 100, value: 1.0 - 0.7 * preferences.magnitude),
         ],
       ),
     };

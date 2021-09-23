@@ -66,16 +66,29 @@ class HingeAnimation extends AnimationDefinition {
       "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 80, value: 0.0, curve: curve),
-          TweenPercentage(percent: 100, value: 700.0, curve: curve),
+          TweenPercentage(
+              percent: 100, value: 700.0 * preferences.magnitude, curve: curve),
         ],
       ),
       "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
-          TweenPercentage(percent: 20, value: 80.0 * toRad, curve: curve),
-          TweenPercentage(percent: 40, value: 60.0 * toRad, curve: curve),
-          TweenPercentage(percent: 60, value: 80.0 * toRad, curve: curve),
-          TweenPercentage(percent: 80, value: 60.0 * toRad, curve: curve),
+          TweenPercentage(
+              percent: 20,
+              value: 80.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 40,
+              value: 60.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 60,
+              value: 80.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 80,
+              value: 60.0 * toRad * preferences.magnitude,
+              curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),

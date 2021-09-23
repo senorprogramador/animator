@@ -64,13 +64,15 @@ class RollOutAnimation extends AnimationDefinition {
       "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: widgetSize!.width),
+          TweenPercentage(
+              percent: 100, value: widgetSize!.width * preferences.magnitude),
         ],
       ),
       "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: 120.0 * toRad),
+          TweenPercentage(
+              percent: 100, value: 120.0 * toRad * preferences.magnitude),
         ],
       ),
     };

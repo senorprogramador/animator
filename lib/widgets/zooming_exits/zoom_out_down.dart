@@ -66,14 +66,21 @@ class ZoomOutDownAnimation extends AnimationDefinition {
       "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: c0),
-          TweenPercentage(percent: 40, value: 0.475, curve: c0),
-          TweenPercentage(percent: 100, value: 0.1, curve: c1),
+          TweenPercentage(
+              percent: 40,
+              value: 1.0 - 0.525 * preferences.magnitude,
+              curve: c0),
+          TweenPercentage(
+              percent: 100,
+              value: 1.0 - 0.9 * preferences.magnitude,
+              curve: c1),
         ],
       ),
       "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: c0),
-          TweenPercentage(percent: 40, value: -60.0, curve: c0),
+          TweenPercentage(
+              percent: 40, value: -60.0 * preferences.magnitude, curve: c0),
           TweenPercentage(percent: 100, value: screenSize!.height, curve: c1),
         ],
       ),

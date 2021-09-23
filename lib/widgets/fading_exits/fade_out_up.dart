@@ -61,7 +61,8 @@ class FadeOutUpAnimation extends AnimationDefinition {
       "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: -widgetSize!.height),
+          TweenPercentage(
+              percent: 100, value: -widgetSize!.height * preferences.magnitude),
         ],
       ),
     };

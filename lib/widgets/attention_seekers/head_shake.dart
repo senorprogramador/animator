@@ -56,20 +56,36 @@ class HeadShakeAnimation extends AnimationDefinition {
       "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
-          TweenPercentage(percent: 13, value: -6.0, curve: curve),
-          TweenPercentage(percent: 37, value: 5.0, curve: curve),
-          TweenPercentage(percent: 63, value: -3.0, curve: curve),
-          TweenPercentage(percent: 87, value: 2.0, curve: curve),
+          TweenPercentage(
+              percent: 13, value: -6.0 * preferences.magnitude, curve: curve),
+          TweenPercentage(
+              percent: 37, value: 5.0 * preferences.magnitude, curve: curve),
+          TweenPercentage(
+              percent: 63, value: -3.0 * preferences.magnitude, curve: curve),
+          TweenPercentage(
+              percent: 87, value: 2.0 * preferences.magnitude, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),
       "rotateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: curve),
-          TweenPercentage(percent: 13, value: -9.0 * toRad, curve: curve),
-          TweenPercentage(percent: 37, value: 7.0 * toRad, curve: curve),
-          TweenPercentage(percent: 63, value: -5.0 * toRad, curve: curve),
-          TweenPercentage(percent: 87, value: 3.0 * toRad, curve: curve),
+          TweenPercentage(
+              percent: 13,
+              value: -9.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 37,
+              value: 7.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 63,
+              value: -5.0 * toRad * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 87,
+              value: 3.0 * toRad * preferences.magnitude,
+              curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),

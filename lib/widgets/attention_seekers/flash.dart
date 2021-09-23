@@ -48,9 +48,9 @@ class FlashAnimation extends AnimationDefinition {
       "opacity": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0),
-          TweenPercentage(percent: 25, value: 0.0),
+          TweenPercentage(percent: 25, value: 1.0 - preferences.magnitude),
           TweenPercentage(percent: 50, value: 1.0),
-          TweenPercentage(percent: 75, value: 0.0),
+          TweenPercentage(percent: 75, value: 1.0 - preferences.magnitude),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),

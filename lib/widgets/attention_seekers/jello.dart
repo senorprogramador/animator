@@ -54,13 +54,20 @@ class JelloAnimation extends AnimationDefinition {
       "transform": TweenList<double>(
         [
           TweenPercentage(percent: 11, value: 0.0),
-          TweenPercentage(percent: 22, value: -12.5 * toRad),
-          TweenPercentage(percent: 33, value: 6.25 * toRad),
-          TweenPercentage(percent: 44, value: -3.125 * toRad),
-          TweenPercentage(percent: 55, value: -1.5625 * toRad),
-          TweenPercentage(percent: 66, value: -0.78125 * toRad),
-          TweenPercentage(percent: 77, value: 0.390625 * toRad),
-          TweenPercentage(percent: 88, value: -0.1953125 * toRad),
+          TweenPercentage(
+              percent: 22, value: -12.5 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 33, value: 6.25 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 44, value: -3.125 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 55, value: -1.5625 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 66, value: -0.78125 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 77, value: 0.390625 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 88, value: -0.1953125 * toRad * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),

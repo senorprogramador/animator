@@ -62,11 +62,26 @@ class BounceInAnimation extends AnimationDefinition {
       ),
       "scale": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: 0.3, curve: curve),
-          TweenPercentage(percent: 20, value: 1.1, curve: curve),
-          TweenPercentage(percent: 40, value: 0.9, curve: curve),
-          TweenPercentage(percent: 60, value: 1.03, curve: curve),
-          TweenPercentage(percent: 80, value: 0.97, curve: curve),
+          TweenPercentage(
+              percent: 0,
+              value: 1.0 - 0.7 * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 20,
+              value: 1.0 + 0.1 * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 40,
+              value: 1.0 - 0.1 * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 60,
+              value: 1.0 + 0.03 * preferences.magnitude,
+              curve: curve),
+          TweenPercentage(
+              percent: 80,
+              value: 1.0 - 0.03 * preferences.magnitude,
+              curve: curve),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),

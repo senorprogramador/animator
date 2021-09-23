@@ -67,13 +67,15 @@ class RollInAnimation extends AnimationDefinition {
       ),
       "translateX": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: -widgetSize!.width),
+          TweenPercentage(
+              percent: 0, value: -widgetSize!.width * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
       "rotateZ": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: -120.0 * toRad),
+          TweenPercentage(
+              percent: 0, value: -120.0 * toRad * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),

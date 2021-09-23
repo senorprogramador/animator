@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-import '../../flutter_animator.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../flutter_animator.dart';
 
 ///Used by [RotateOutDownRight] widget.
 ///Note: You can also pass this into an [InOutAnimation] widget to define the
@@ -61,7 +62,8 @@ class RotateOutDownRightAnimation extends AnimationDefinition {
       "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: -45.0 * toRad),
+          TweenPercentage(
+              percent: 100, value: -45.0 * toRad * preferences.magnitude),
         ],
       ),
     };

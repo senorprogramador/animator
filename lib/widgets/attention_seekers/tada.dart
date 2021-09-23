@@ -53,14 +53,14 @@ class TadaAnimation extends AnimationDefinition {
     final axis = Math.Vector3(0.0, 0.0, 1.0);
     final m = Matrix4.identity();
 
-    final m10 = m.scaled(0.9);
-    m10.rotate(axis, -3.0 * toRad);
+    final m10 = m.scaled(1.0 - 0.1 * preferences.magnitude);
+    m10.rotate(axis, -3.0 * toRad * preferences.magnitude);
 
-    final m30 = m.scaled(1.1);
-    m30.rotate(axis, 3.0 * toRad);
+    final m30 = m.scaled(1.0 + 0.1 * preferences.magnitude);
+    m30.rotate(axis, 3.0 * toRad * preferences.magnitude);
 
-    final m40 = m.scaled(1.1);
-    m40.rotate(axis, -3.0 * toRad);
+    final m40 = m.scaled(1.0 + 0.1 * preferences.magnitude);
+    m40.rotate(axis, -3.0 * toRad * preferences.magnitude);
 
     return {
       "transform": TweenList<Matrix4>(

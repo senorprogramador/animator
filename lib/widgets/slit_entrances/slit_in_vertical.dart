@@ -43,16 +43,18 @@ class SlitInVerticalAnimation extends AnimationDefinition {
       ),
       'translateZ': TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: 800.0),
-          TweenPercentage(percent: 54, value: 160.0),
+          TweenPercentage(percent: 0, value: 800.0 * preferences.magnitude),
+          TweenPercentage(percent: 54, value: 160.0 * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
       'rotateY': TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: -90.0 * toRad),
-          TweenPercentage(percent: 54, value: -87.0 * toRad),
-          TweenPercentage(percent: 100, value: 0.0 * toRad),
+          TweenPercentage(
+              percent: 0, value: -90.0 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 54, value: -87.0 * toRad * preferences.magnitude),
+          TweenPercentage(percent: 100, value: 0.0),
         ],
       ),
     };

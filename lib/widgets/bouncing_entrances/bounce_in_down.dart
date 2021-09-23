@@ -66,9 +66,12 @@ class BounceInDownAnimation extends AnimationDefinition {
       "translateY": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: -screenSize!.height, curve: curve),
-          TweenPercentage(percent: 60, value: 25.0, curve: curve),
-          TweenPercentage(percent: 75, value: -10.0, curve: curve),
-          TweenPercentage(percent: 90, value: 5.0, curve: curve),
+          TweenPercentage(
+              percent: 60, value: 25.0 * preferences.magnitude, curve: curve),
+          TweenPercentage(
+              percent: 75, value: -10.0 * preferences.magnitude, curve: curve),
+          TweenPercentage(
+              percent: 90, value: 5.0 * preferences.magnitude, curve: curve),
           TweenPercentage(percent: 100, value: 0.0, curve: curve),
         ],
       ),

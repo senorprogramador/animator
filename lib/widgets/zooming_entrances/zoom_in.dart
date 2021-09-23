@@ -60,7 +60,7 @@ class ZoomInAnimation extends AnimationDefinition {
       ),
       "scale": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: 0.3),
+          TweenPercentage(percent: 0, value: 1.0 - 0.7 * preferences.magnitude),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),

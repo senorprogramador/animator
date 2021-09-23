@@ -70,7 +70,8 @@ class LightSpeedOutAnimation extends AnimationDefinition {
       "skewX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: 30.0 * toRad),
+          TweenPercentage(
+              percent: 100, value: 30.0 * toRad * preferences.magnitude),
         ],
       ),
     };

@@ -39,6 +39,8 @@ class TestAnimatedWidget extends StatelessWidget {
 }
 ```
 
+Please note that you can use the `magnitude` property in the AnimationPreferences to control the magnitude of the animations.
+
 #### Using a GlobalKey to enable play/stop/reverse animations from code:
 ```dart
 import 'package:flutter/widgets.dart';

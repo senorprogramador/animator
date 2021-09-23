@@ -61,7 +61,8 @@ class RotateInUpRightAnimation extends AnimationDefinition {
       ),
       "rotateZ": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: -90.0 * toRad),
+          TweenPercentage(
+              percent: 0, value: -90.0 * toRad * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),

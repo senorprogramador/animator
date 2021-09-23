@@ -61,7 +61,8 @@ class FadeOutRightAnimation extends AnimationDefinition {
       "translateX": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: widgetSize!.width),
+          TweenPercentage(
+              percent: 100, value: widgetSize!.width * preferences.magnitude),
         ],
       ),
     };

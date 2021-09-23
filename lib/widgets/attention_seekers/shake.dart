@@ -51,8 +51,8 @@ class ShakeAnimation extends AnimationDefinition {
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
     final a = 0.0;
-    final b = -10.0;
-    final c = 10.0;
+    final b = -10.0 * preferences.magnitude;
+    final c = 10.0 * preferences.magnitude;
     return {
       "translateX": TweenList<double>(
         [

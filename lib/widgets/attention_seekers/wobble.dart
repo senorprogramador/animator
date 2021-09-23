@@ -53,24 +53,24 @@ class WobbleAnimation extends AnimationDefinition {
 
   @override
   Map<String, TweenList> getDefinition({Size? screenSize, Size? widgetSize}) {
-    final width = screenSize!.width;
+    final width = screenSize!.width * preferences.magnitude;
     final axis = Math.Vector3(0.0, 0.0, 1.0);
 
     final m = Matrix4.identity();
     final m15 = Matrix4.translationValues(-0.25 * width, 0.0, 0.0);
-    m15.rotate(axis, -5.0 * toRad);
+    m15.rotate(axis, -5.0 * toRad * preferences.magnitude);
 
     final m30 = Matrix4.translationValues(0.2 * width, 0.0, 0.0);
-    m30.rotate(axis, 3.0 * toRad);
+    m30.rotate(axis, 3.0 * toRad * preferences.magnitude);
 
     final m45 = Matrix4.translationValues(-0.15 * width, 0.0, 0.0);
-    m45.rotate(axis, -3.0 * toRad);
+    m45.rotate(axis, -3.0 * toRad * preferences.magnitude);
 
     final m60 = Matrix4.translationValues(0.1 * width, 0.0, 0.0);
-    m60.rotate(axis, 2.0 * toRad);
+    m60.rotate(axis, 2.0 * toRad * preferences.magnitude);
 
     final m75 = Matrix4.translationValues(-0.05 * width, 0.0, 0.0);
-    m75.rotate(axis, -1.0 * toRad);
+    m75.rotate(axis, -1.0 * toRad * preferences.magnitude);
 
     return {
       "transform": TweenList<Matrix4>(

@@ -62,15 +62,18 @@ class JackInTheBoxAnimation extends AnimationDefinition {
       ),
       "scale": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: 0.1),
+          TweenPercentage(percent: 0, value: 1.0 - 0.9 * preferences.magnitude),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),
       "rotateZ": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: 30.0 * toRad),
-          TweenPercentage(percent: 50, value: -10.0 * toRad),
-          TweenPercentage(percent: 70, value: 3.0 * toRad),
+          TweenPercentage(
+              percent: 0, value: 30.0 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 50, value: -10.0 * toRad * preferences.magnitude),
+          TweenPercentage(
+              percent: 70, value: 3.0 * toRad * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),

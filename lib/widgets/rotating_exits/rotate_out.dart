@@ -62,7 +62,8 @@ class RotateOutAnimation extends AnimationDefinition {
       "rotateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0),
-          TweenPercentage(percent: 100, value: -200.0 * toRad),
+          TweenPercentage(
+              percent: 100, value: -200.0 * toRad * preferences.magnitude),
         ],
       ),
     };

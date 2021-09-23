@@ -97,3 +97,7 @@
 ## [3.1.2] - 2021/07/05
 
 * Fix for pingPong play mode.
+
+## [3.2.0] - 2021/09/23
+
+* Added magnitude property to the AnimationDefinition to control animation magnitude.

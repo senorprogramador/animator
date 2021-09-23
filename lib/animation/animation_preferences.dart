@@ -8,6 +8,9 @@ import '../animation/animator_play_states.dart';
 ///[AnimatorWidget] uses preferences to automatically apply offset, duration,
 ///autoPlay and add an [AnimationStatusListener].
 class AnimationPreferences {
+  ///Defines the magnitude of the animation (1.0 = 100%, 0.5 = 50%, etc.)
+  final double magnitude;
+
   ///Defines an offset for the [AnimationDefinition].
   final Duration offset;
 
@@ -24,6 +27,7 @@ class AnimationPreferences {
 
   ///Constructor with defaults.
   const AnimationPreferences({
+    this.magnitude = 1,
     this.offset = Duration.zero,
     this.duration = const Duration(seconds: 1),
     this.autoPlay = AnimationPlayStates.Forward,

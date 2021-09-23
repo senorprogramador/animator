@@ -61,7 +61,8 @@ class RotateInDownLeftAnimation extends AnimationDefinition {
       ),
       "rotateZ": TweenList<double>(
         [
-          TweenPercentage(percent: 0, value: -45.0 * toRad),
+          TweenPercentage(
+              percent: 0, value: -45.0 * toRad * preferences.magnitude),
           TweenPercentage(percent: 100, value: 0.0),
         ],
       ),

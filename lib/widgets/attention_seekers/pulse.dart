@@ -53,7 +53,8 @@ class PulseAnimation extends AnimationDefinition {
       "scale": TweenList(
         [
           TweenPercentage(percent: 0, value: 1.0),
-          TweenPercentage(percent: 50, value: 1.05),
+          TweenPercentage(
+              percent: 50, value: 1.0 + 0.05 * preferences.magnitude),
           TweenPercentage(percent: 100, value: 1.0),
         ],
       ),

@@ -54,11 +54,26 @@ class RubberBandAnimation extends AnimationDefinition {
       "transform": TweenList<Matrix4>(
         [
           TweenPercentage(percent: 0, value: m),
-          TweenPercentage(percent: 30, value: m.scaled(1.25, 0.75, 1.0)),
-          TweenPercentage(percent: 40, value: m.scaled(0.75, 1.25, 1.0)),
-          TweenPercentage(percent: 50, value: m.scaled(1.15, 0.85, 1.0)),
-          TweenPercentage(percent: 65, value: m.scaled(0.95, 1.05, 1.0)),
-          TweenPercentage(percent: 75, value: m.scaled(1.05, 0.95, 1.0)),
+          TweenPercentage(
+              percent: 30,
+              value: m.scaled(1.0 + 0.25 * preferences.magnitude,
+                  1.0 - 0.25 * preferences.magnitude, 1.0)),
+          TweenPercentage(
+              percent: 40,
+              value: m.scaled(1.0 - 0.25 * preferences.magnitude,
+                  1.0 + 0.25 * preferences.magnitude, 1.0)),
+          TweenPercentage(
+              percent: 50,
+              value: m.scaled(1.0 + 0.15 * preferences.magnitude,
+                  1.0 - 0.15 * preferences.magnitude, 1.0)),
+          TweenPercentage(
+              percent: 65,
+              value: m.scaled(1.0 - 0.05 * preferences.magnitude,
+                  1.0 + 0.05 * preferences.magnitude, 1.0)),
+          TweenPercentage(
+              percent: 75,
+              value: m.scaled(1.0 + 0.05 * preferences.magnitude,
+                  1.0 - 0.05 * preferences.magnitude, 1.0)),
           TweenPercentage(percent: 100, value: m),
         ],
       ),

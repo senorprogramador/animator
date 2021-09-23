@@ -54,9 +54,15 @@ class HeartBeatAnimation extends AnimationDefinition {
       "scale": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 1.0, curve: curve),
-          TweenPercentage(percent: 14, value: 1.3, curve: curve),
+          TweenPercentage(
+              percent: 14,
+              value: 1.0 + 0.3 * preferences.magnitude,
+              curve: curve),
           TweenPercentage(percent: 28, value: 1.0, curve: curve),
-          TweenPercentage(percent: 42, value: 1.3, curve: curve),
+          TweenPercentage(
+              percent: 42,
+              value: 1.0 + 0.3 * preferences.magnitude,
+              curve: curve),
           TweenPercentage(percent: 70, value: 1.0, curve: curve),
         ],
       ),

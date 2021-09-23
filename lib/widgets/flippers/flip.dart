@@ -61,15 +61,20 @@ class FlipAnimation extends AnimationDefinition {
           TweenPercentage(percent: 0, value: 1.0, curve: cOut),
           TweenPercentage(percent: 40, value: 1.0, curve: cOut),
           TweenPercentage(percent: 50, value: 1.0, curve: cIn),
-          TweenPercentage(percent: 80, value: 0.95, curve: cIn),
+          TweenPercentage(
+              percent: 80,
+              value: 1.0 - 0.05 * preferences.magnitude,
+              curve: cIn),
           TweenPercentage(percent: 100, value: 1.0, curve: cIn),
         ],
       ),
       "translateZ": TweenList<double>(
         [
           TweenPercentage(percent: 0, value: 0.0, curve: cOut),
-          TweenPercentage(percent: 40, value: -150.0, curve: cOut),
-          TweenPercentage(percent: 50, value: -150.0, curve: cIn),
+          TweenPercentage(
+              percent: 40, value: -150.0 * preferences.magnitude, curve: cOut),
+          TweenPercentage(
+              percent: 50, value: -150.0 * preferences.magnitude, curve: cIn),
           TweenPercentage(percent: 80, value: 0.0, curve: cIn),
         ],
       ),
