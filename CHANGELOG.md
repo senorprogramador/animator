@@ -101,3 +101,5 @@
 ## [3.2.0] - 2021/09/23
 
 * Added magnitude property to the AnimationDefinition to control animation magnitude.
+
+* Fixed issue with setState called after dispose (Thank you @rithviknishad !)
