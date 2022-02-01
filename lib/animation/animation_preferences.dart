@@ -1,8 +1,5 @@
 import 'package:flutter/animation.dart';
-import 'package:flutter_animator/animation/animation_definition.dart';
 import 'package:flutter_animator/flutter_animator.dart';
-
-import '../animation/animator_play_states.dart';
 
 ///Use this class to setup preferences inside your [AnimationDefinition]s
 ///[AnimatorWidget] uses preferences to automatically apply offset, duration,

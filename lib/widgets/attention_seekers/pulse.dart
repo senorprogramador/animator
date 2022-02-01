@@ -42,7 +42,7 @@ class PulseAnimation extends AnimationDefinition {
       builder: (BuildContext context, Widget? child) => Transform(
         child: child,
         transform: Matrix4.identity().scaled(animator.get("scale")!.value),
-        alignment: new FractionalOffset(0.5, 0.5),
+        alignment: FractionalOffset(0.5, 0.5),
       ),
     );
   }

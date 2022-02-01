@@ -1,7 +1,7 @@
 ///Provides ways to convert between different string casing.
 class StringCaseFormatter {
-  static final RegExp _upperAlphaRegex = new RegExp(r'[A-Z]');
-  static final RegExp _symbolRegex = new RegExp(r'[ ./_\-]');
+  static final RegExp _upperAlphaRegex = RegExp(r'[A-Z]');
+  static final RegExp _symbolRegex = RegExp(r'[ ./_\-]');
 
   ///Returns [pascalCase] for classNames.
   static String className(String text) {
@@ -9,22 +9,22 @@ class StringCaseFormatter {
   }
 
   ///Returns a pascal cased version of the input String.
-  static String pascalCase(String text, {String separator: ''}) {
+  static String pascalCase(String text, {String separator = ''}) {
     return _pascalCase(groupIntoWords(text), separator: separator);
   }
 
   ///Returns a snake cased version of the input String.
-  static String snakeCase(String text, {String separator: '_'}) {
+  static String snakeCase(String text, {String separator = '_'}) {
     return _snakeCase(groupIntoWords(text), separator: separator);
   }
 
   ///Returns a camel cased version of the input String.
-  static String camelCase(String text, {String separator: ''}) {
+  static String camelCase(String text, {String separator = ''}) {
     return _camelCase(groupIntoWords(text), separator: separator);
   }
 
   ///Returns a constant cased version of the input String.
-  static String constantCase(String text, {String separator: ''}) {
+  static String constantCase(String text, {String separator = ''}) {
     return _constantCase(groupIntoWords(text), separator: separator);
   }
 
@@ -39,24 +39,24 @@ class StringCaseFormatter {
   }
 
   ///Private helper function for [pascalCase].
-  static String _pascalCase(List<String> words, {String separator: ''}) {
+  static String _pascalCase(List<String> words, {String separator = ''}) {
     return words.map(upperCaseFirstLetter).join(separator);
   }
 
   ///Private helper function for [snakeCase].
-  static String _snakeCase(List<String> words, {String separator: '_'}) {
+  static String _snakeCase(List<String> words, {String separator = '_'}) {
     return words.map((word) => word.toLowerCase()).join(separator);
   }
 
   ///Private helper function for [camelCase].
-  static String _camelCase(List<String> words, {String separator: ''}) {
+  static String _camelCase(List<String> words, {String separator = ''}) {
     List<String> _words = words;
     _words[0] = _words[0].toLowerCase();
     return _words.join(separator);
   }
 
   ///Private helper function for [constantCase].
-  static String _constantCase(List<String> words, {String separator: '_'}) {
+  static String _constantCase(List<String> words, {String separator = '_'}) {
     return words.map((word) => word.toUpperCase()).join(separator);
   }
 
@@ -64,15 +64,15 @@ class StringCaseFormatter {
   static List<String> groupIntoWords(String text) {
     if (text.isEmpty) return [''];
 
-    StringBuffer sb = new StringBuffer();
+    StringBuffer sb = StringBuffer();
     List<String> words = [];
     bool isAllCaps = !text.contains(RegExp('[a-z]'));
 
     for (int i = 0; i < text.length; i++) {
-      String char = new String.fromCharCode(text.codeUnitAt(i));
+      String char = String.fromCharCode(text.codeUnitAt(i));
       String? nextChar = (i + 1 == text.length
           ? null
-          : new String.fromCharCode(text.codeUnitAt(i + 1)));
+          : String.fromCharCode(text.codeUnitAt(i + 1)));
 
       if (_symbolRegex.hasMatch(char)) {
         continue;

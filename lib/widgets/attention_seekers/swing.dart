@@ -42,7 +42,7 @@ class SwingAnimation extends AnimationDefinition {
       builder: (BuildContext context, Widget? child) => Transform.rotate(
         child: child,
         angle: animator.get("rotateZ")!.value,
-        alignment: new FractionalOffset(0.5, 0.0),
+        alignment: FractionalOffset(0.5, 0.0),
       ),
     );
   }

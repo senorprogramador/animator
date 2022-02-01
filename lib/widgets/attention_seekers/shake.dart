@@ -43,7 +43,7 @@ class ShakeAnimation extends AnimationDefinition {
         child: child,
         transform: Matrix4.translationValues(
             animator.get("translateX")!.value, 0.0, 0.0),
-        alignment: new FractionalOffset(0.5, 0.5),
+        alignment: FractionalOffset(0.5, 0.5),
       ),
     );
   }

@@ -22,12 +22,8 @@
  * SOFTWARE.
  */
 
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
-
-import 'animation_definition.dart';
-import 'tween_list.dart';
 
 ///The [Animator] class is the heart of this library.
 ///It registers and converts [TweenList]s, creates and manages controllers, etc.

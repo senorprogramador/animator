@@ -1,10 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
-import './animation_preferences.dart';
-import 'tween_list.dart';
-import 'animator.dart';
-
 ///[AnimationDefinition] allows you to define a CSS-like animation and apply
 ///it in a build phase.
 ///Override this class to define new animations.

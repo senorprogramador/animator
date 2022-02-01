@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_animator/animation/animator_play_states.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
 class AnimatorCard extends StatelessWidget {

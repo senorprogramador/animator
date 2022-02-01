@@ -40,7 +40,7 @@ class FlipInXAnimation extends AnimationDefinition {
 
   FlipInXAnimation({
     this.from = FlipInXOrigin.front,
-    this.alignment: Alignment.center,
+    this.alignment = Alignment.center,
     AnimationPreferences preferences = const AnimationPreferences(),
   }) : super(preferences: preferences);
 

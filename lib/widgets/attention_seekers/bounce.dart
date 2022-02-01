@@ -43,7 +43,7 @@ class BounceAnimation extends AnimationDefinition {
         child: child,
         transform: Matrix4.translationValues(
             0.0, animator.get("translateY")!.value, 0.0),
-        alignment: new FractionalOffset(0.5, 1.0),
+        alignment: FractionalOffset(0.5, 1.0),
       ),
     );
   }

@@ -1,11 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-import 'tween_percentage.dart';
 import '../utils/pair.dart';
+import 'tween_percentage.dart';
 
 ///[TweenList] is a [Tween] which contains a list of [TweenPercentage]s to
 ///enable users to efficiently define a multi-curved animation with multiple

@@ -3,9 +3,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 
-import '../animation/animation_definition.dart';
-import '../animation/animator.dart';
-
 class AnimatorWidget extends StatefulWidget {
   final Widget child;
   final AnimationDefinition definition;
