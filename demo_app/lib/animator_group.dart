@@ -61,7 +61,7 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
   void initState() {
     keys = List.generate(numKeys, (_) => GlobalKey<AnimatorWidgetState>());
     playState = widget.playState;
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       handlePlayState();
     });
     super.initState();
