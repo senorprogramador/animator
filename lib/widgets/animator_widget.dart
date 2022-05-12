@@ -99,7 +99,7 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     animator!.setAnimationDefinition(widget.definition);
     if (widget.definition.needsWidgetSize ||
         widget.definition.needsScreenSize) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) {
           return;
         }
