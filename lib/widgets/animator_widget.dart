@@ -94,12 +94,17 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     return animator!.build(context, widget.child);
   }
 
+  /// This allows a value of type T or T?
+  /// to be treated as a value of type T?.
+  /// _ambiguate(WidgetsBinding.instance)? will work with Flutter 3.0 and 2.x.x
+  T? _ambiguate<T>(T? value) => value;
+
   void _createAnimator() {
     animator = Animator(vsync: this);
     animator!.setAnimationDefinition(widget.definition);
     if (widget.definition.needsWidgetSize ||
         widget.definition.needsScreenSize) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _ambiguate(WidgetsBinding.instance)!.addPostFrameCallback((_) {
         if (!mounted) {
           return;
         }
