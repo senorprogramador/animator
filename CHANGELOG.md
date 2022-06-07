@@ -107,3 +107,7 @@
 ## [3.2.1] - 2022/02/01
 
 * Removed unnecessary imports.
+
+## [3.2.2] - 2022/07/06
+
+* Flutter 3 is now supported.

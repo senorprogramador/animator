@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_animator/utils/force_unwrap.dart';
 
 class AnimatorCard extends StatelessWidget {
   final String title;
@@ -61,7 +62,7 @@ class AnimatorGroupState<T extends AnimatorGroup> extends State<T> {
   void initState() {
     keys = List.generate(numKeys, (_) => GlobalKey<AnimatorWidgetState>());
     playState = widget.playState;
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    forceUnwrap(WidgetsBinding.instance)!.addPostFrameCallback((_) {
       handlePlayState();
     });
     super.initState();

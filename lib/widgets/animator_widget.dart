@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animator/flutter_animator.dart';
+import 'package:flutter_animator/utils/force_unwrap.dart';
 
 class AnimatorWidget extends StatefulWidget {
   final Widget child;
@@ -99,7 +100,7 @@ class AnimatorWidgetState<T extends AnimatorWidget> extends State<T>
     animator!.setAnimationDefinition(widget.definition);
     if (widget.definition.needsWidgetSize ||
         widget.definition.needsScreenSize) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      forceUnwrap(WidgetsBinding.instance)!.addPostFrameCallback((_) {
         if (!mounted) {
           return;
         }
